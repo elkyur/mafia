@@ -1,0 +1,2 @@
+aihekuvaus: https://github.com/elkyur/mafia/wiki/aihekuvaus
+tuntikirjanpito: https://github.com/elkyur/mafia/wiki/tuntikirjanpito
