@@ -9,12 +9,21 @@ package mafia;
  * @author Elkyur
  */
 public class Tiimi {
-    
+
     private String nimi;
-    
-    public Tiimi(String nimi)
-    {
-    this.nimi = nimi;
-    
+    boolean WorksAsTeam;
+
+    public Tiimi(String nimi) {
+        this.nimi = nimi;
+        this.WorksAsTeam = true;
+
+    }
+
+    public void AsetaWorkAsTeam(boolean abc) {
+        this.WorksAsTeam = abc;
+
+    }
+     public String PalautaNimi() {
+        return this.nimi;
     }
 }
