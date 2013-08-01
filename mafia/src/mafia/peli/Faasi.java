@@ -26,6 +26,20 @@ public class Faasi {
     public void setDay(boolean day) {
         this.day = day;
     }
+
+    public boolean palautaDay() {
+        return this.day;
+
+    }
+
+    public HashMap<Pelattava, Kyky> ReturnHash() {
+        return this.SkillzAtRightTime;
+    }
     
-    
+    public void Lisaa(Pelattava pelattava, Kyky kyky)
+    {
+    this.SkillzAtRightTime.put(pelattava, kyky);    
+        
+    }
+        
 }
