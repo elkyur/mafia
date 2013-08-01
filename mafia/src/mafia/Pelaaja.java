@@ -12,17 +12,17 @@ public class Pelaaja {
 
     private String nimi;
     private String salasana;
-    private Hahmo hahmo;
 
-    public Pelaaja(String nimi, Hahmo hahmo) {
-        this(nimi, "", hahmo);
+
+    public Pelaaja(String nimi) {
+        this(nimi, "");
 
     }
 
-    public Pelaaja(String nimi, String salasana, Hahmo hahmo) {
+    public Pelaaja(String nimi, String salasana) {
         this.nimi = nimi;
         this.salasana = salasana;
-        this.hahmo = hahmo;
+     
 
     }
 
