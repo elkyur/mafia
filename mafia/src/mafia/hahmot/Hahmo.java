@@ -5,8 +5,8 @@
 package mafia.hahmot;
 
 import java.util.ArrayList;
-import mafia.Pelaaja;
 import mafia.kyvyt.Buff;
+import mafia.kyvyt.Kyky;
 
 /**
  *
@@ -18,11 +18,15 @@ public class Hahmo implements Pelattava {
     private boolean elossa;
     private Pelaaja omistaja;
     private ArrayList<Buff> buffit;
+    private Tiimi team;
+    private ArrayList<Kyky> kyvyt;
 
     public Hahmo(String nimi) {
         this.nimi = nimi;
         this.elossa = true;
         this.buffit = new ArrayList<Buff>();
+        this.team = null;
+        this.kyvyt = new ArrayList<Kyky>();
     }
 
     public void Vaihtatilaa(boolean tila) {
@@ -54,11 +58,6 @@ public class Hahmo implements Pelattava {
         return hahmo;
     }
 
-    @Override
-    public boolean alive() {
-        return this.alive();
-    }
-
     public void lisaaBuffi(Buff buff) {
         this.buffit.add(buff);
     }
@@ -72,10 +71,37 @@ public class Hahmo implements Pelattava {
     }
 
     public boolean PoistaBuffi(Buff buffi) {
-        if (this.buffit.contains(buffi))
-        {
-        this.buffit.remove(buffi);   
-        return true;
+        if (this.buffit.contains(buffi)) {
+            this.buffit.remove(buffi);
+            return true;
+        }
+        return false;
+    }
+
+    public void asetaTiimi(Tiimi team) {
+        this.team = team;
+    }
+
+    public Tiimi PalautaTiimi() {
+
+        return this.team;
+
+    }
+
+    @Override
+    public boolean elossa() {
+        return this.elossa;
+    }
+
+    public void LaitaLisaaKykyja(Kyky z) {
+        this.kyvyt.add(z);
+
+    }
+
+    public boolean TarkistaOnkoKykyKaytossa(Kyky e) {
+        if (this.kyvyt.contains(e)) {
+            return true;
+
         }
         return false;
     }

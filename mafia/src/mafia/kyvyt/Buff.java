@@ -37,4 +37,14 @@ public class Buff {
         this.MessageToAdmin = MessageToAdmin;
 
     }
+    public String returnMessageToUser()
+    {
+        return this.MessageToUser;
+        
+    }
+    public String returnMessageToAdmin()
+    {
+        
+        return this.MessageToAdmin;
+    }
 }

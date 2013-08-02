@@ -8,6 +8,7 @@ package mafia.peli;
  *
  * @author Elkyur
  */
-public class Day {
+public class Funktionalisuus {
+    
     
 }

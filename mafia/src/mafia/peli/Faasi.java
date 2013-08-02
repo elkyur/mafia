@@ -7,6 +7,7 @@ package mafia.peli;
 import mafia.hahmot.Pelattava;
 import mafia.kyvyt.Kyky;
 import java.util.*;
+import mafia.hahmot.Hahmo;
 
 /**
  *
@@ -15,31 +16,57 @@ import java.util.*;
 public class Faasi {
 
     private String nimi;
-    boolean day;
-    private HashMap<Pelattava, Kyky> SkillzAtRightTime;
+    boolean paiva;
+    private HashMap<Kyky, ArrayList<Hahmo>> KykyJaKayttaja;
 
     public Faasi(String nimi) {
         this.nimi = nimi;
+        this.KykyJaKayttaja = new HashMap<Kyky, ArrayList<Hahmo>>();
 
     }
 
     public void setDay(boolean day) {
-        this.day = day;
+        this.paiva = day;
     }
 
     public boolean palautaDay() {
-        return this.day;
+        return this.paiva;
 
     }
 
-    public HashMap<Pelattava, Kyky> ReturnHash() {
-        return this.SkillzAtRightTime;
+    public void Lisaa(Kyky kyky, Pelattava pelattava) {
+        if (this.KykyJaKayttaja.containsKey(kyky)) {
+            ArrayList<Hahmo> hahmot = this.KykyJaKayttaja.get(kyky);
+            LisametodiLisaykseen(hahmot, pelattava);
+        } else {
+            ArrayList<Hahmo> hahmot2 = new ArrayList<Hahmo>();
+            LisametodiLisaykseen(hahmot2, pelattava);
+        }
     }
-    
-    public void Lisaa(Pelattava pelattava, Kyky kyky)
+
+    private void LisametodiLisaykseen(ArrayList<Hahmo> lista, Pelattava pelattava) {
+        for (Hahmo hahmo : pelattava.getTeam()) {
+            lista.add(hahmo);
+        }
+
+
+    }
+
+    public ArrayList<Hahmo> PalautaHahmot(Kyky kyky) {
+
+        return this.PalautaHahmot(kyky);
+    }
+
+    public String PalautaNimi() {
+        return this.nimi;
+    }
+
+    public HashMap<Kyky, ArrayList<Hahmo>> palautaKokoHomma()
     {
-    this.SkillzAtRightTime.put(pelattava, kyky);    
         
+    return this.KykyJaKayttaja;        
     }
-        
+
+
+    
 }

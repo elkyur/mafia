@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mafia.peli;
+package mafia.userinterface;
 
 /**
  *
  * @author Elkyur
  */
-public interface Phase {
+public class TextInterface {
     
 }

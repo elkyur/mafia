@@ -15,5 +15,5 @@ public interface Pelattava {
     String getNimi();
     boolean getWorksAsTeam();
     ArrayList<Hahmo> getTeam();
-    boolean alive();
+    boolean elossa();
 }

@@ -4,6 +4,8 @@
  */
 package mafia;
 
+import java.util.Random;
+
 /**
  *
  * @author Elkyur
@@ -14,6 +16,11 @@ public class Mafia {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Random generator = new Random();
+        System.out.println(generator.nextInt(2));
+        System.out.println(generator.nextInt(2));
+        System.out.println(generator.nextInt(2));
+        System.out.println(generator.nextInt(2));
+        System.out.println(generator.nextInt(2));
     }
 }

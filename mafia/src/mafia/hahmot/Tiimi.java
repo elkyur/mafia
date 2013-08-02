@@ -58,7 +58,7 @@ public class Tiimi implements Pelattava {
     }
 
     @Override
-    public boolean alive() {
+    public boolean elossa() {
         if (this.members.isEmpty()) {
             return false;
         }
