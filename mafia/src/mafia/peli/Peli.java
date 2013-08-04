@@ -15,7 +15,7 @@ public class Peli {
 
     private String nimi;
     private ArrayList<Faasi> faasiArray;
-    private ArrayList<Pelattava> Pelaajat;
+    private ArrayList<Pelattava> PelissaMukana;
 
     public Peli(String nimi) {
         this.nimi = nimi;
@@ -26,8 +26,14 @@ public class Peli {
     }
 
     public void asetaPelaajat(ArrayList<Pelattava> pelaajat) {
-        this.Pelaajat = pelaajat;
+        this.PelissaMukana = pelaajat;
 
+    }
+    
+    public void Run()
+    {
+    
+    
     }
     
     

@@ -5,7 +5,7 @@
 package mafia.hahmot;
 
 import java.util.ArrayList;
-import mafia.kyvyt.Buff;
+import mafia.kyvyt.PerusBuffi;
 import mafia.kyvyt.Kyky;
 
 /**
@@ -14,19 +14,18 @@ import mafia.kyvyt.Kyky;
  */
 public class Hahmo implements Pelattava {
 
-    private String nimi;
     private boolean elossa;
     private Pelaaja omistaja;
-    private ArrayList<Buff> buffit;
+    private ArrayList<PerusBuffi> buffit;
     private Tiimi team;
-    private ArrayList<Kyky> kyvyt;
+    private Rooli rooli;
 
-    public Hahmo(String nimi) {
-        this.nimi = nimi;
+    public Hahmo(Rooli rooli) {
         this.elossa = true;
-        this.buffit = new ArrayList<Buff>();
+        this.buffit = new ArrayList<PerusBuffi>();
         this.team = null;
-        this.kyvyt = new ArrayList<Kyky>();
+        this.rooli = rooli;
+
     }
 
     public void Vaihtatilaa(boolean tila) {
@@ -43,7 +42,7 @@ public class Hahmo implements Pelattava {
 
     @Override
     public String getNimi() {
-        return this.nimi;
+        return this.omistaja.PalautaNimi();
     }
 
     @Override
@@ -58,11 +57,11 @@ public class Hahmo implements Pelattava {
         return hahmo;
     }
 
-    public void lisaaBuffi(Buff buff) {
+    public void lisaaBuffi(PerusBuffi buff) {
         this.buffit.add(buff);
     }
 
-    public ArrayList<Buff> ListaaBuffit() {
+    public ArrayList<PerusBuffi> ListaaBuffit() {
         return this.buffit;
     }
 
@@ -70,7 +69,7 @@ public class Hahmo implements Pelattava {
         this.buffit.clear();
     }
 
-    public boolean PoistaBuffi(Buff buffi) {
+    public boolean PoistaBuffi(PerusBuffi buffi) {
         if (this.buffit.contains(buffi)) {
             this.buffit.remove(buffi);
             return true;
@@ -92,17 +91,9 @@ public class Hahmo implements Pelattava {
     public boolean elossa() {
         return this.elossa;
     }
-
-    public void LaitaLisaaKykyja(Kyky z) {
-        this.kyvyt.add(z);
-
-    }
-
-    public boolean TarkistaOnkoKykyKaytossa(Kyky e) {
-        if (this.kyvyt.contains(e)) {
-            return true;
-
-        }
-        return false;
+    public Rooli palautaRooli()
+    {
+    return this.rooli;
+    
     }
 }

@@ -18,11 +18,20 @@ public class Faasi {
     private String nimi;
     boolean paiva;
     private HashMap<Kyky, ArrayList<Hahmo>> KykyJaKayttaja;
+    String ViestiAlussa;
+    String ViestiLopussa;
 
     public Faasi(String nimi) {
         this.nimi = nimi;
         this.KykyJaKayttaja = new HashMap<Kyky, ArrayList<Hahmo>>();
-
+        this.ViestiAlussa = "";
+        this.ViestiLopussa = "";
+    }
+    
+    public void asetaViestit(String alku, String loppu)
+    {
+    this.ViestiAlussa = alku;
+    this.ViestiLopussa = loppu;
     }
 
     public void setDay(boolean day) {
