@@ -15,14 +15,31 @@ import mafia.hahmot.Pelattava;
 public class PerusKyky implements Kyky {
 
     private String name;
-    private PerusBuffi buffi;
+    private Buff buffi;
     private boolean heti;
+    private ArrayList<Buff> Tarvittavat;
+    private boolean onRequest;
+    private int usageTime;
 
-    public PerusKyky(String name, PerusBuffi buffi, boolean heti) {
+    public PerusKyky(String name, Buff buffi, boolean heti) {
         this.name = name;
         this.buffi = buffi;
         this.heti = heti;
+        this.Tarvittavat = new ArrayList<Buff>();
+        this.onRequest = false;
+        this.usageTime = -1;
     }
+    
+    public void asetaUsageTime(int i)
+    {
+    this.usageTime = i;
+    }
+
+    public void asetaTarvittavat(ArrayList<Buff> buffilista) {
+        this.Tarvittavat = buffilista;
+    }
+
+  
 
     @Override
     public String getName() {
@@ -30,10 +47,24 @@ public class PerusKyky implements Kyky {
     }
 
     @Override
-    public Object Toiminnallisuus(ArrayList<Hahmo> castaava, Hahmo vastaanottava) {
-        vastaanottava.lisaaBuffi(this.buffi);
-        return null;
+    public String Toiminnallisuus(Hahmo castaava, Hahmo vastaanottava) {
 
+        if (this.Tarvittavat.isEmpty()) {
+            return Toimi(castaava, vastaanottava);
+        } else {
+            for (Buff buffi : this.Tarvittavat) {
+                if (!this.buffi.PalautaKokoHomma().contains(buffi)) {
+                    return "";
+                }
+            }
+            return Toimi(castaava, vastaanottava);
+
+        }
+    }
+
+    public String Toimi(Hahmo castaava, Hahmo vastaanottava) {
+
+        return "";
     }
 
     @Override
@@ -46,13 +77,26 @@ public class PerusKyky implements Kyky {
     }
 
     @Override
-    public PerusBuffi getBuffi() {
+    public Buff getBuffi() {
         return this.buffi;
     }
 
     @Override
     public boolean returnHeti() {
-      return this.heti;
+        return this.heti;
     }
-    
+
+    @Override
+    public boolean returnOnRequest() {
+        return this.onRequest;
+    }
+
+    public void asetaOnRequest(boolean k) {
+        this.onRequest = k;
+    }
+
+    @Override
+    public int UsageTimes() {
+        return this.usageTime;
+    }
 }

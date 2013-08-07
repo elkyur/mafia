@@ -5,7 +5,7 @@
 package mafia.hahmot;
 
 import java.util.ArrayList;
-import mafia.kyvyt.PerusBuffi;
+import mafia.kyvyt.Buff;
 import mafia.kyvyt.Kyky;
 
 /**
@@ -14,22 +14,38 @@ import mafia.kyvyt.Kyky;
  */
 public class Hahmo implements Pelattava {
 
-    private boolean elossa;
+    private int elaminelkm;
     private Pelaaja omistaja;
-    private ArrayList<PerusBuffi> buffit;
+    private ArrayList<Buff> buffit;
     private Tiimi team;
     private Rooli rooli;
+    private ArrayList<String> ViestitHahmolle;
 
     public Hahmo(Rooli rooli) {
-        this.elossa = true;
-        this.buffit = new ArrayList<PerusBuffi>();
+        this.elaminelkm = 1;
+        this.buffit = new ArrayList<Buff>();
         this.team = null;
         this.rooli = rooli;
+        this.ViestitHahmolle = new ArrayList<String>();
 
     }
 
-    public void Vaihtatilaa(boolean tila) {
-        this.elossa = tila;
+    public void TyhjennaViestit() {
+        this.ViestitHahmolle.clear();
+
+    }
+
+    public void LisaaViesti(String k) {
+        this.ViestitHahmolle.add(k);
+
+    }
+
+    public ArrayList<String> PalautaViestit() {
+        return this.ViestitHahmolle;
+    }
+
+    public void Vaihtatilaa(int tila) {
+        this.elaminelkm = tila;
     }
 
     public void asetaOmistaja(Pelaaja pelaaja) {
@@ -57,11 +73,11 @@ public class Hahmo implements Pelattava {
         return hahmo;
     }
 
-    public void lisaaBuffi(PerusBuffi buff) {
+    public void lisaaBuffi(Buff buff) {
         this.buffit.add(buff);
     }
 
-    public ArrayList<PerusBuffi> ListaaBuffit() {
+    public ArrayList<Buff> ListaaBuffit() {
         return this.buffit;
     }
 
@@ -69,7 +85,7 @@ public class Hahmo implements Pelattava {
         this.buffit.clear();
     }
 
-    public boolean PoistaBuffi(PerusBuffi buffi) {
+    public boolean PoistaBuffi(Buff buffi) {
         if (this.buffit.contains(buffi)) {
             this.buffit.remove(buffi);
             return true;
@@ -89,11 +105,21 @@ public class Hahmo implements Pelattava {
 
     @Override
     public boolean elossa() {
-        return this.elossa;
+        if (this.elaminelkm > 0 ){
+        return true;
+        }
+        else{
+        return false;
+        }
     }
-    public Rooli palautaRooli()
-    {
-    return this.rooli;
     
+    public int returnElamienLkm()
+    {
+    return this.elaminelkm;
+    }
+
+    public Rooli palautaRooli() {
+        return this.rooli;
+
     }
 }

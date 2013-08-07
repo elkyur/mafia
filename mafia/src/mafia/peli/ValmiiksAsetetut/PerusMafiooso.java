@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mafia.peli;
+package mafia.peli.ValmiiksAsetetut;
 
+import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
 import java.util.ArrayList;
 import mafia.hahmot.*;
 

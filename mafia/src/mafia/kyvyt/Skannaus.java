@@ -16,18 +16,18 @@ import mafia.hahmot.Rooli;
 public class Skannaus implements Kyky {
 
     private String nimi;
-    private PerusBuffi buffi;
-    private HashMap<ArrayList<Rooli>, Integer> Skannaukset;
+    private Buff buffi;
+    private HashMap<ArrayList<Rooli>, String> Skannaukset;
 
-    public Skannaus(String nimi, PerusBuffi buffi) {
+    public Skannaus(String nimi, Buff buffi) {
 
         this.nimi = nimi;
         this.buffi = buffi;
-        this.Skannaukset = new HashMap<ArrayList<Rooli>, Integer>();
+        this.Skannaukset = new HashMap<ArrayList<Rooli>, String>();
 
     }
 
-    public void Lisaa(ArrayList<Rooli> roolit, int i) {
+    public void Lisaa(ArrayList<Rooli> roolit, String i) {
         this.Skannaukset.put(roolit, i);
     }
 
@@ -37,18 +37,21 @@ public class Skannaus implements Kyky {
     }
 
     @Override
-    public Object Toiminnallisuus(ArrayList<Hahmo> castaaja, Hahmo vastaanottava) {
-        
+    public String Toiminnallisuus(Hahmo castaaja, Hahmo vastaanottavaa) {
+
+        String viesti = "Scannauksen tulos: ";
+        Hahmo vastaanottava = vastaanottavaa;
+
         vastaanottava.lisaaBuffi(this.buffi);
-        
+
         for (ArrayList<Rooli> rooli : this.Skannaukset.keySet()) {
             if (rooli.contains(vastaanottava.palautaRooli())) {
-                return this.Skannaukset.get(vastaanottava.palautaRooli());
+                viesti = viesti + " " + this.Skannaukset.get(vastaanottava.palautaRooli());
             }
-            
-        }
 
-        return 0;
+        }
+        viesti = viesti + "Muu";
+        return viesti;
     }
 
     @Override
@@ -60,12 +63,22 @@ public class Skannaus implements Kyky {
     }
 
     @Override
-    public PerusBuffi getBuffi() {
+    public Buff getBuffi() {
         return this.buffi;
     }
 
     @Override
     public boolean returnHeti() {
         return true;
+    }
+
+    @Override
+    public boolean returnOnRequest() {
+       return false;
+    }
+
+    @Override
+    public int UsageTimes() {
+        return -1;
     }
 }

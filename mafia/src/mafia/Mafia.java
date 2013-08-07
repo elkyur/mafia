@@ -9,10 +9,11 @@ import java.util.Random;
 import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelaaja;
 import mafia.hahmot.Rooli;
-import mafia.kyvyt.PerusBuffi;
+import mafia.kyvyt.Buff;
+import mafia.kyvyt.BuffinTyyppi;
 import mafia.kyvyt.Kyky;
 import mafia.kyvyt.PerusKyky;
-import mafia.peli.Sekoittaja;
+import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
 
 /**
  *
@@ -24,11 +25,15 @@ public class Mafia {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        KokeilleYhtasuuruutta();
+        
+     //  System.out.println("does the line break work? \nlet see");
+      //  KokeilleYhtasuuruutta();
     }
 
     public static void KokeilleYhtasuuruutta() {
-        PerusBuffi buffi = new PerusBuffi("salama", "tappava", 0);
+        
+        BuffinTyyppi tyyppi = new BuffinTyyppi("k");
+        Buff buffi = new Buff("salama", "tappava", 0, tyyppi);
         PerusKyky murhata = new PerusKyky("123", buffi, false);
         PerusKyky murhatar = new PerusKyky("1233", buffi, false);
         if (murhata.equals(murhatar)) {

@@ -27,11 +27,10 @@ public class Faasi {
         this.ViestiAlussa = "";
         this.ViestiLopussa = "";
     }
-    
-    public void asetaViestit(String alku, String loppu)
-    {
-    this.ViestiAlussa = alku;
-    this.ViestiLopussa = loppu;
+
+    public void asetaViestit(String alku, String loppu) {
+        this.ViestiAlussa = alku;
+        this.ViestiLopussa = loppu;
     }
 
     public void setDay(boolean day) {
@@ -70,12 +69,27 @@ public class Faasi {
         return this.nimi;
     }
 
-    public HashMap<Kyky, ArrayList<Hahmo>> palautaKokoHomma()
-    {
-        
-    return this.KykyJaKayttaja;        
+    public HashMap<Kyky, ArrayList<Hahmo>> palautaKokoHomma() {
+
+        return this.KykyJaKayttaja;
     }
 
+    public void UudistaJaPaivita() {
 
-    
+        for (Kyky kyky : this.KykyJaKayttaja.keySet()) {
+            if (kyky.UsageTimes() != 0) {
+                for (Hahmo hahmo : this.KykyJaKayttaja.get(kyky)) {
+                    if (!hahmo.elossa()) {
+                        this.KykyJaKayttaja.get(kyky).remove(hahmo);
+                    }
+                    if (this.KykyJaKayttaja.get(kyky).isEmpty()) {
+                        this.KykyJaKayttaja.remove(kyky);
+                    }
+                }
+
+            } else {
+                this.KykyJaKayttaja.remove(kyky);
+            }
+        }
+    }
 }

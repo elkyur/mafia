@@ -15,9 +15,13 @@ import java.util.ArrayList;
 public interface Kyky {
     
     String getName();
-    Object Toiminnallisuus(ArrayList<Hahmo> castaaja, Hahmo vastaanottava);
+    String Toiminnallisuus(Hahmo castaaja, Hahmo vastaanottava);
     boolean equals(Kyky kyky);
-    PerusBuffi getBuffi();
+    Buff getBuffi();
     boolean returnHeti();
+    boolean returnOnRequest();
+    int UsageTimes();
+    
+    
     
 }
