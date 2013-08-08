@@ -16,20 +16,20 @@ import mafia.hahmot.Pelattava;
  */
 public class Sekoittaja {
 
-    public void SekoitaKayttenTiimeja(ArrayList<Pelattava> pelattavat, ArrayList<Pelaaja> pelaajat) {
+    public boolean SekoitaKayttenTiimeja(ArrayList<Pelattava> pelattavat, ArrayList<Pelaaja> pelaajat) {
         ArrayList<Hahmo> hahmot = new ArrayList<Hahmo>();
         for (Pelattava pelattva : pelattavat) {
             for (Hahmo hahmo : pelattva.getTeam()) {
                 hahmot.add(hahmo);
             }
         }
-        Sekoita(hahmot, pelaajat);
+        return Sekoita(hahmot, pelaajat);
 
     }
 
-    public void Sekoita(ArrayList<Hahmo> hahmot, ArrayList<Pelaaja> pelaajat) {
+    public boolean Sekoita(ArrayList<Hahmo> hahmot, ArrayList<Pelaaja> pelaajat) {
         if (hahmot.size() != pelaajat.size()) {
-            return;
+            return false;
         }
         ArrayList<Hahmo> hahmote = (ArrayList<Hahmo>) hahmot.clone();
         ArrayList<Pelaaja> pelaajate = (ArrayList<Pelaaja>) pelaajat.clone();
@@ -44,6 +44,7 @@ public class Sekoittaja {
             pelaajate.remove(b);
 
         }
+        return true;
 
 
 

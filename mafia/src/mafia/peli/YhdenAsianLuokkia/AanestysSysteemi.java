@@ -15,18 +15,25 @@ import mafia.hahmot.Hahmo;
 public class AanestysSysteemi {
 
     private HashMap<Hahmo, ArrayList<Hahmo>> Aanestys;
-    private ArrayList<Hahmo> NightAanestys;
+    private ArrayList<Hahmo> Aanestaneet;
     private ArrayList<Hahmo> AanestyksessaMukana;
-    private boolean YoAanestysMukana;
 
-    public AanestysSysteemi(ArrayList<Hahmo> AanestyksessaMukana, boolean YoAanestysMukana) {
+    public AanestysSysteemi(ArrayList<Hahmo> AanestyksessaMukana) {
         this.Aanestys = new HashMap<Hahmo, ArrayList<Hahmo>>();
+        this.Aanestaneet = new ArrayList<Hahmo>();
         this.AanestyksessaMukana = AanestyksessaMukana;
-        this.NightAanestys = new ArrayList<Hahmo>();
-        this.YoAanestysMukana = YoAanestysMukana;
+
+
     }
 
     public Hahmo Aanesta(Hahmo hyokkaaja, Hahmo puolustaja) {
+        if (this.Aanestaneet.contains(hyokkaaja)) {
+            return null;
+        }
+        if (!this.AanestyksessaMukana.contains(hyokkaaja)) {
+            return null;
+        }
+        this.Aanestaneet.add(hyokkaaja);
         if (this.Aanestys.containsKey(puolustaja)) {
             this.Aanestys.get(puolustaja).add(hyokkaaja);
 
@@ -45,13 +52,33 @@ public class AanestysSysteemi {
         }
     }
 
-    public void UnAanesta(Hahmo hyokkaaja, Hahmo puolustaja) {
+    public boolean UnAanesta(Hahmo hyokkaaja, Hahmo puolustaja) {
+        if (!this.Aanestaneet.contains(hyokkaaja)) {
+            return false;
+        }
+
         if (this.Aanestys.containsKey(puolustaja)) {
             if (this.Aanestys.get(puolustaja).contains(hyokkaaja)) {
-                this.Aanestys.remove(hyokkaaja);
-
+                this.Aanestys.get(puolustaja).remove(hyokkaaja);
             }
+            if (this.Aanestys.get(puolustaja).isEmpty()) {
+                this.Aanestys.remove(puolustaja);
+            }
+            return true;
         }
+        return false;
     }
-   
+
+    public String AanestysLaskelmat() {
+        String k = "";
+        for (Hahmo hahmo : this.Aanestys.keySet()) {
+            k = k + hahmo.getOmistajanNimi() + ": " + this.Aanestys.get(hahmo) + '\n';
+
+        }
+        return k;
+    }
+
+    public int YhteensaMukana() {
+        return this.Aanestaneet.size();
+    }
 }

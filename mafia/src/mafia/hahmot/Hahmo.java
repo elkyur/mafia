@@ -58,7 +58,12 @@ public class Hahmo implements Pelattava {
 
     @Override
     public String getNimi() {
-        return this.omistaja.PalautaNimi();
+        return this.rooli.PalautaNimi();
+    }
+    
+    public String getOmistajanNimi()
+    {
+    return this.omistaja.PalautaNimi();
     }
 
     @Override
