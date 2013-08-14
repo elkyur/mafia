@@ -54,14 +54,13 @@ public class Skannaus implements Kyky {
         return viesti;
     }
 
-    @Override
-    public boolean equals(Kyky kyky) {
-        if (this.nimi == kyky.getName() && this.buffi.equals(kyky.getBuffi())) {
-            return true;
-        }
-        return false;
-    }
-
+    //   @Override
+    //   public boolean equals(Kyky kyky) {
+    //       if (this.nimi == kyky.getName() && this.buffi.equals(kyky.getBuffi())) {
+    //           return true;
+    //       }
+    //       return false;
+    //   }
     @Override
     public Buff getBuffi() {
         return this.buffi;
@@ -74,7 +73,7 @@ public class Skannaus implements Kyky {
 
     @Override
     public boolean returnOnRequest() {
-       return false;
+        return false;
     }
 
     @Override

@@ -12,21 +12,19 @@ import mafia.hahmot.Pelattava;
  *
  * @author Elkyur
  */
-public class PerusKyky implements Kyky {
+public class NormiKyky implements Kyky {
 
     private String name;
     private Buff buffi;
-    private boolean heti;
     private ArrayList<Buff> Tarvittavat;
     private boolean onRequest;
     private int usageTime;
 
-    public PerusKyky(String name, Buff buffi, boolean heti) {
+    public NormiKyky(String name, Buff buffi, boolean heti) {
         this.name = name;
         this.buffi = buffi;
-        this.heti = heti;
         this.Tarvittavat = new ArrayList<Buff>();
-        this.onRequest = false;
+        this.onRequest = heti;
         this.usageTime = -1;
     }
     
@@ -67,14 +65,16 @@ public class PerusKyky implements Kyky {
         return "";
     }
 
-    @Override
-    public boolean equals(Kyky kyky) {
-        if (this.name == kyky.getName() && this.buffi.equals(kyky.getBuffi())) {
-            return true;
-        }
-
-        return false;
-    }
+   
+  //  @Override
+ //   public boolean equals(Kyky kyky) {
+ //       if (this.name == kyky.getName() && this.buffi.equals(kyky.getBuffi())) {
+ //           return true;
+ //       }
+        
+ //       return false;
+ //   }
+   
 
     @Override
     public Buff getBuffi() {
@@ -83,7 +83,7 @@ public class PerusKyky implements Kyky {
 
     @Override
     public boolean returnHeti() {
-        return this.heti;
+        return this.onRequest;
     }
 
     @Override
@@ -99,4 +99,6 @@ public class PerusKyky implements Kyky {
     public int UsageTimes() {
         return this.usageTime;
     }
+
+   
 }

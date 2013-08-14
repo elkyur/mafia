@@ -5,8 +5,11 @@
 package mafia.peli;
 
 import java.util.ArrayList;
+import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelattava;
-import mafia.userinterface.TextInterface;
+import mafia.kyvyt.Buff;
+import mafia.peli.YhdenAsianLuokkia.AanestysSysteemi;
+import mafia.userinterface.TekstiRajapinta;
 
 /**
  *
@@ -14,15 +17,19 @@ import mafia.userinterface.TextInterface;
  */
 public class Peli {
 
-    private String nimi;
+
     private ArrayList<Faasi> faasiArray;
     private ArrayList<Pelattava> PelissaMukana;
-    private TextInterface tekstirajapinta;
-    
+    private TekstiRajapinta tekstirajapinta;
+    private AanestysSysteemi aanestysSysteemi;
 
-    public Peli(String nimi, TextInterface tekstirajapinta) {
-        this.nimi = nimi;
+    public Peli(String nimi, TekstiRajapinta tekstirajapinta) {
+     
         this.tekstirajapinta = tekstirajapinta;
+    }
+
+    public void asetaAanestysSysteemi(AanestysSysteemi aanestysSysteemi) {
+        this.aanestysSysteemi = aanestysSysteemi;
     }
 
     public void asetaFaasit(ArrayList<Faasi> faasit) {
@@ -35,14 +42,36 @@ public class Peli {
     }
 
     public void Run() {
-        
-        
+        int i = 0;
+        while (true) {
+            System.out.println("Koittaa Faasi numero: " + i );
+            this.faasiArray.get(i % this.faasiArray.size()).Run(this.aanestysSysteemi, this.tekstirajapinta);
+            BuffitVanhetuvat();
+            if (!tarkistaJatkuukoPeli()) {
+                this.tekstirajapinta.JulistaVoittaja(this.PelissaMukana.get(0));
+                break;
+            }
+            i++;
+        }
+
+
     }
 
     public boolean tarkistaJatkuukoPeli() {
         if (this.PelissaMukana.size() <= 1) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
+    }
+
+    public void BuffitVanhetuvat() {
+        for (Pelattava pelattava : this.PelissaMukana) {
+            for (Hahmo hahmo : pelattava.getTeam()) {
+                hahmo.BuffitVanhetuvat();
+                
+
+            }
+
+        }
     }
 }

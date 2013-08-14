@@ -4,16 +4,19 @@
  */
 package mafia;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelaaja;
 import mafia.hahmot.Rooli;
 import mafia.kyvyt.Buff;
 import mafia.kyvyt.BuffinTyyppi;
 import mafia.kyvyt.Kyky;
-import mafia.kyvyt.PerusKyky;
+import mafia.kyvyt.NormiKyky;
 import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
+import mafia.peli.YhdenAsianLuokkia.SortKyky;
+import java.lang.Object;
+import mafia.peli.ValmiiksAsetetut.AlkuperainenMafiooso;
+import mafia.userinterface.TekstiRajapinta;
 
 /**
  *
@@ -25,17 +28,17 @@ public class Mafia {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-     //  System.out.println("does the line break work? \nlet see");
-      //  KokeilleYhtasuuruutta();
+
+        KokeillePelia();
+
     }
 
     public static void KokeilleYhtasuuruutta() {
-        
+
         BuffinTyyppi tyyppi = new BuffinTyyppi("k");
-        Buff buffi = new Buff("salama", "tappava", 0, tyyppi);
-        PerusKyky murhata = new PerusKyky("123", buffi, false);
-        PerusKyky murhatar = new PerusKyky("1233", buffi, false);
+        Buff buffi = new Buff("salama", 0, tyyppi);
+        NormiKyky murhata = new NormiKyky("123", buffi, false);
+        NormiKyky murhatar = new NormiKyky("1233", buffi, false);
         if (murhata.equals(murhatar)) {
             System.out.println("Se onnistui");
         } else {
@@ -86,5 +89,68 @@ public class Mafia {
         for (Hahmo hahmo : hahmot) {
             System.out.println("Pelaaja: " + hahmo.palautaOmistaja().PalautaNimi() + " hahmo: " + hahmo.getNimi());
         }
+    }
+
+    public static void SortausKokeilu() {
+
+        Comparator comp = new SortKyky();
+
+
+        TreeMap<Kyky, Pelaaja> mappi = new TreeMap<Kyky, Pelaaja>(comp);
+
+        BuffinTyyppi tyyppi0 = new BuffinTyyppi("tuli", 1);
+        BuffinTyyppi tyyppi1 = new BuffinTyyppi("vesi", 1);
+        BuffinTyyppi tyyppi2 = new BuffinTyyppi("salama", 2);
+
+        Buff buffi0 = new Buff("tuli", 0, tyyppi0);
+        Buff buffi1 = new Buff("tuli", 0, tyyppi1);
+        Buff buffi2 = new Buff("tuli", 0, tyyppi2);
+
+        Pelaaja pelaaja1 = new Pelaaja("p1");
+        Pelaaja pelaaja2 = new Pelaaja("p2");
+        Pelaaja pelaaja3 = new Pelaaja("p3");
+
+        Kyky kyky1 = new NormiKyky("", buffi0, true);
+        Kyky kyky2 = new NormiKyky("", buffi1, true);
+        Kyky kyky3 = new NormiKyky("", buffi2, true);
+
+        mappi.put(kyky3, pelaaja3);
+        mappi.put(kyky2, pelaaja2);
+        mappi.put(kyky1, pelaaja1);
+
+
+
+        for (Kyky kyky : mappi.keySet()) {
+            System.out.println(kyky.getBuffi().returnBuffinTyyppi().palautaPrioriteetti());
+        }
+
+
+
+    }
+
+    public static void kokeilleToimiikoCastaaminenOikein() {
+        ArrayList<Object> objektilista = new ArrayList<Object>();
+        objektilista.add(new Pelaaja("p1"));
+        objektilista.add(new Pelaaja("p2"));
+        objektilista.add(new Pelaaja("p3"));
+
+
+
+    }
+    // Vihdoinkin!
+
+    public static void KokeillePelia() {
+        Scanner lukija = new Scanner(System.in);
+        TekstiRajapinta rajapinta = new TekstiRajapinta(lukija);
+        Sekoittaja sekoittaja = new Sekoittaja();
+        ArrayList<Pelaaja> pelaajat = new ArrayList<Pelaaja>();
+
+        for (int i = 1; i <= 8; i++) {
+            pelaajat.add(new Pelaaja("player" + i));
+        }
+
+        AlkuperainenMafiooso mafiooso = new AlkuperainenMafiooso(pelaajat, sekoittaja, rajapinta);
+        mafiooso.Run();
+
     }
 }

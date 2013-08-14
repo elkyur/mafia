@@ -12,8 +12,17 @@ public class BuffinTyyppi {
 
     private String tyyppi;
     private Class TietoTyyppi;
+    private int Prioriteetti;
 
-    public BuffinTyyppi(String tyyppi, Class TietoTyyppi) {
+    public BuffinTyyppi(String tyyppi, int Prioriteetti) {
+        this.Prioriteetti = Prioriteetti;
+        this.tyyppi = tyyppi;
+
+
+    }
+
+    public BuffinTyyppi(String tyyppi, Class TietoTyyppi, int Prioriteetti) {
+        this.Prioriteetti = Prioriteetti;
         this.tyyppi = tyyppi;
         this.TietoTyyppi = TietoTyyppi;
 
@@ -23,9 +32,12 @@ public class BuffinTyyppi {
         this.tyyppi = k;
         this.TietoTyyppi = null;
     }
-    
-    public Class returnTyyppi()
-    {
-    return this.TietoTyyppi;
+
+    public Class returnTyyppi() {
+        return this.TietoTyyppi;
+    }
+
+    public int palautaPrioriteetti() {
+        return this.Prioriteetti;
     }
 }

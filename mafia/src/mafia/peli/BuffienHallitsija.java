@@ -11,28 +11,50 @@ import mafia.hahmot.Pelattava;
 import mafia.kyvyt.Kyky;
 import mafia.kyvyt.Buff;
 import mafia.kyvyt.BuffinTyyppi;
-import mafia.kyvyt.PerusKyky;
+import mafia.kyvyt.NormiKyky;
+import mafia.userinterface.TekstiRajapinta;
 
 /**
  *
  * @author Elkyur
  */
-public class BuffManager {
+public class BuffienHallitsija {
 
     private BuffinTyyppi TappoBuffit;
     private BuffinTyyppi SuhdeBuffit;
     private BuffinTyyppi LaukaisuEstot;
     private BuffinTyyppi MuutosEstot;
     private BuffinTyyppi KostoBuffit;
-    private ArrayList<Hahmo> TargetetutPelaajat;
+    private ArrayList<Hahmo> KuolemassaOlevatPelaajat;
     private ArrayList<Pelattava> ViittausTiimeihin;
+    private ArrayList<Hahmo> KostoKandidaatit;
     // HashMap<PerusBuffi, ArrayList<Kyky>> Estot;
 
-    public BuffManager(BuffinTyyppi TappavatBuffit) {
-        this.TappoBuffit = TappavatBuffit;
-        this.TargetetutPelaajat = new ArrayList<Hahmo>();
+    public BuffienHallitsija(ArrayList<Pelattava> ViittausTiimeihin) {
+        this.ViittausTiimeihin = ViittausTiimeihin;
+        this.KuolemassaOlevatPelaajat = new ArrayList<Hahmo>();
+        this.KostoKandidaatit = new ArrayList<Hahmo>();
 
+    }
 
+    public void asetaTappo(BuffinTyyppi tyyppi) {
+        this.TappoBuffit = tyyppi;
+    }
+
+    public void asetaSuhde(BuffinTyyppi tyyppi) {
+        this.SuhdeBuffit = tyyppi;
+    }
+
+    public void asetaLaukaisuEsto(BuffinTyyppi tyyppi) {
+        this.LaukaisuEstot = tyyppi;
+    }
+
+    public void asetaMuutosEsto(BuffinTyyppi tyyppi) {
+        this.MuutosEstot = tyyppi;
+    }
+
+    public void asetaKosto(BuffinTyyppi tyyppi) {
+        this.KostoBuffit = tyyppi;
     }
 
     public String TekeeTaikaa(Hahmo hahmo, Kyky kyky, Hahmo vastaanottava) {
@@ -54,34 +76,29 @@ public class BuffManager {
         return null;
     }
 
-    public void TarkistusKierros() {
-    }
-
-    public ArrayList<Hahmo> tarkistettavat() {
+    public HashMap<Hahmo, ArrayList<Object>> tarkistettavat() {
         if (this.KostoBuffit == null) {
             return null;
         }
+        HashMap<Hahmo, ArrayList<Object>> KokoHomma = new HashMap<Hahmo, ArrayList<Object>>();
 
-        ArrayList<Hahmo> hahmo = new ArrayList<Hahmo>();
-
-        for (Hahmo hahmor : this.TargetetutPelaajat) {
-            for (Buff buffi : hahmor.ListaaBuffit()) {
-                if (buffi.returnBuffinTyyppi().equals(this.KostoBuffit)) {
-                    hahmo.add(hahmor);
-                }
-
+        for (Hahmo hahmor : this.KostoKandidaatit) {
+            ArrayList<Object> kyvyt = checkForKosto(hahmor);
+            if (kyvyt != null) {
+                KokoHomma.put(hahmor, kyvyt);
             }
+            this.KostoKandidaatit.remove(hahmor);
         }
-        if (hahmo.isEmpty()) {
+        if (KokoHomma.isEmpty()) {
             return null;
         }
 
-        return hahmo;
+        return KokoHomma;
 
     }
 
     public void tyhjennaTargetutPelaajat() {
-        this.TargetetutPelaajat.clear();
+        this.KuolemassaOlevatPelaajat.clear();
     }
 
     public boolean checkForCategoryBuffit(Hahmo hahmo, Kyky kyky, BuffinTyyppi tyyppi) {
@@ -98,11 +115,16 @@ public class BuffManager {
     }
 
     public void Kuolemassa(Hahmo hahmo) {
+        if (this.KuolemassaOlevatPelaajat.contains(hahmo)) {
+            return;
+        }
+
         if (hahmo.returnElamienLkm() == 1) {
             hahmo.Vaihtatilaa(0);
-            this.TargetetutPelaajat.add(hahmo);
+            this.KuolemassaOlevatPelaajat.add(hahmo);
+            this.KostoKandidaatit.add(hahmo);
             for (Buff buffi : hahmo.ListaaBuffit()) {
-                if (buffi.returnBuffinTyyppi().equals(this.TappoBuffit)) {
+                if (buffi.returnBuffinTyyppi().equals(this.SuhdeBuffit)) {
                     for (Object objekti : buffi.PalautaKokoHomma()) {
                         Hahmo hahmoa = (Hahmo) objekti;
                         Kuolemassa(hahmoa);
@@ -127,6 +149,25 @@ public class BuffManager {
 
     }
 
-    public void InstantKill() {
+    public void PuhdistetaanKuolleet() {
+        for (Hahmo hahmo : this.KuolemassaOlevatPelaajat) {
+            etsiJaPoista(hahmo);
+        }
+
+    }
+
+    public void etsiJaPoista(Hahmo hahmo) {
+        for (Pelattava pelattava : this.ViittausTiimeihin) {
+            {
+                if (pelattava.getTeam().contains(hahmo)) {
+                    pelattava.getTeam().remove(hahmo);
+                }
+
+            }
+        }
+    }
+
+    public ArrayList<Hahmo> palautaKuolleet() {
+        return this.KuolemassaOlevatPelaajat;
     }
 }

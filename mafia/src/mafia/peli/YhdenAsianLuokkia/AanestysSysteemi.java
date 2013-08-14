@@ -17,20 +17,33 @@ public class AanestysSysteemi {
     private HashMap<Hahmo, ArrayList<Hahmo>> Aanestys;
     private ArrayList<Hahmo> Aanestaneet;
     private ArrayList<Hahmo> AanestyksessaMukana;
+    private ArrayList<Hahmo> AanestysOikeutetut;
 
     public AanestysSysteemi(ArrayList<Hahmo> AanestyksessaMukana) {
         this.Aanestys = new HashMap<Hahmo, ArrayList<Hahmo>>();
         this.Aanestaneet = new ArrayList<Hahmo>();
         this.AanestyksessaMukana = AanestyksessaMukana;
+        this.AanestysOikeutetut = this.AanestyksessaMukana;
 
+    }
 
+    public void asetaAanestysOikeutetut(ArrayList<Hahmo> mukanaolevat) {
+        this.AanestysOikeutetut = mukanaolevat;
+    }
+    
+    public void Reset()
+    {
+    this.AanestysOikeutetut = this.AanestyksessaMukana;
     }
 
     public Hahmo Aanesta(Hahmo hyokkaaja, Hahmo puolustaja) {
         if (this.Aanestaneet.contains(hyokkaaja)) {
             return null;
         }
-        if (!this.AanestyksessaMukana.contains(hyokkaaja)) {
+        if (!this.AanestysOikeutetut.contains(hyokkaaja)) {
+            return null;
+        }
+        if (!this.AanestyksessaMukana.contains(puolustaja)) {
             return null;
         }
         this.Aanestaneet.add(hyokkaaja);
@@ -43,7 +56,7 @@ public class AanestysSysteemi {
             this.Aanestys.put(puolustaja, hyokkaajat);
 
         }
-        if (2 * this.Aanestys.get(puolustaja).size() > this.AanestyksessaMukana.size()) {
+        if (2 * this.Aanestys.get(puolustaja).size() > this.AanestysOikeutetut.size()) {
             return puolustaja;
         } else {
 
@@ -80,5 +93,9 @@ public class AanestysSysteemi {
 
     public int YhteensaMukana() {
         return this.Aanestaneet.size();
+    }
+
+    public ArrayList<Hahmo> palautaMukanaOlevat() {
+        return this.AanestyksessaMukana;
     }
 }

@@ -16,11 +16,12 @@ public interface Kyky {
     
     String getName();
     String Toiminnallisuus(Hahmo castaaja, Hahmo vastaanottava);
-    boolean equals(Kyky kyky);
     Buff getBuffi();
     boolean returnHeti();
     boolean returnOnRequest();
     int UsageTimes();
+
+    
     
     
     

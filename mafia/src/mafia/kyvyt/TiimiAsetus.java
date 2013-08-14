@@ -49,10 +49,10 @@ public class TiimiAsetus implements Kyky {
 
     }
 
-    @Override
-    public boolean equals(Kyky kyky) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+ //   @Override
+ //   public boolean equals(Kyky kyky) {
+ //       throw new UnsupportedOperationException("Not supported yet.");
+ //   }
 
     @Override
     public Buff getBuffi() {

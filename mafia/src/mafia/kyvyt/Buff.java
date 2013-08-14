@@ -14,14 +14,13 @@ import mafia.hahmot.Pelattava;
 public class Buff {
 
     private String nimi;
-    private String type;
     private ArrayList<String> MessageToVictim;
     private String MessageToAdmin;
     private int ExpireRate;
     private BuffinTyyppi tyyppi;
     private ArrayList<Object> erikoisViittauksia;
 
-    public Buff(String nimi, String type, int ExpireRate, BuffinTyyppi tyyppi) {
+    public Buff(String nimi, int ExpireRate, BuffinTyyppi tyyppi) {
         this.nimi = nimi;
         this.ExpireRate = ExpireRate;
         this.tyyppi = tyyppi;
@@ -34,13 +33,6 @@ public class Buff {
         return this.nimi;
     }
 
-    public void SetType(String typez) {
-        this.type = typez;
-    }
-
-    public String returnType() {
-        return this.type;
-    }
 
     public void setaddMessages(String MessageToUser, String MessageToAdmin) {
         this.MessageToVictim.add(MessageToUser);
@@ -77,5 +69,10 @@ public class Buff {
     public BuffinTyyppi returnBuffinTyyppi() {
         return this.tyyppi;
 
+    }
+    
+    public void Expire()
+    {
+    this.ExpireRate--;
     }
 }
