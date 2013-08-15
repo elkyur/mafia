@@ -8,6 +8,6 @@ package mafia.peli;
  *
  * Tarkoituksena on luoda luokka joka käyttäjän syötteestä rakentaisi pelin.
  */
-public class GameConstructor {
+public class PelinRakentaja {
     
 }
