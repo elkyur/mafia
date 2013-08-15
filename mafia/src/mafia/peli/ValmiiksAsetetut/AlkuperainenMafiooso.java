@@ -18,7 +18,7 @@ import mafia.userinterface.TekstiRajapinta;
 
 /**
  *
- * @author Elkyur
+ * Massiivinen luokka tämän ohjelman testaamiseksi. 
  */
 public class AlkuperainenMafiooso {
 
@@ -29,6 +29,12 @@ public class AlkuperainenMafiooso {
     private Misc misc;
     private TekstiRajapinta rajapinta;
 
+    /**
+     * 
+     * @param pelaajat
+     * @param sekoittaja
+     * @param rajapinta
+     */
     public AlkuperainenMafiooso(ArrayList<Pelaaja> pelaajat, Sekoittaja sekoittaja, TekstiRajapinta rajapinta) {
         this.pelaajat = pelaajat;
         this.sekoittaja = sekoittaja;
@@ -38,6 +44,9 @@ public class AlkuperainenMafiooso {
 
     }
 
+    /**
+     * 
+     */
     public void Run() {
 
         Rooli mafia = new Rooli("Mafia");
@@ -94,6 +103,14 @@ public class AlkuperainenMafiooso {
 
     }
 
+    /**
+     * 
+     * @param mafia
+     * @param hullu
+     * @param hilleri
+     * @param poliisi
+     * @param kansalainen
+     */
     public void RoolitInitToiminallisuus(Rooli mafia, Rooli hullu, Rooli hilleri, Rooli poliisi, Rooli kansalainen) {
 
         // pelaajien lukumaarat:

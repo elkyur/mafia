@@ -12,7 +12,7 @@ import mafia.peli.YhdenAsianLuokkia.AanestysSysteemi;
 import mafia.userinterface.TekstiRajapinta;
 
 /**
- *
+ * Kantaa vastuun koko pelistä. 
  *
  */
 public class Peli {
@@ -23,24 +23,44 @@ public class Peli {
     private TekstiRajapinta tekstirajapinta;
     private AanestysSysteemi aanestysSysteemi;
 
+    /**
+     * 
+     * @param nimi
+     * @param tekstirajapinta
+     */
     public Peli(String nimi, TekstiRajapinta tekstirajapinta) {
      
         this.tekstirajapinta = tekstirajapinta;
     }
 
+    /**
+     * 
+     * @param aanestysSysteemi
+     */
     public void asetaAanestysSysteemi(AanestysSysteemi aanestysSysteemi) {
         this.aanestysSysteemi = aanestysSysteemi;
     }
 
+    /**
+     * 
+     * @param faasit
+     */
     public void asetaFaasit(ArrayList<Faasi> faasit) {
         this.faasiArray = faasit;
     }
 
+    /**
+     * 
+     * @param pelaajat
+     */
     public void asetaPelaajat(ArrayList<Pelattava> pelaajat) {
         this.PelissaMukana = pelaajat;
 
     }
 
+    /**
+     * 
+     */
     public void Run() {
         int i = 0;
         while (true) {
@@ -57,6 +77,10 @@ public class Peli {
 
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean tarkistaJatkuukoPeli() {
         if (this.PelissaMukana.size() <= 1) {
             return false;
@@ -64,6 +88,9 @@ public class Peli {
         return true;
     }
 
+    /**
+     * 
+     */
     public void BuffitVanhetuvat() {
         for (Pelattava pelattava : this.PelissaMukana) {
             for (Hahmo hahmo : pelattava.getTeam()) {

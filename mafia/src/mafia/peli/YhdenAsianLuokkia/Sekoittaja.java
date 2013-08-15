@@ -12,10 +12,16 @@ import mafia.hahmot.Pelattava;
 
 /**
  *
- * @author Elkyur
+ * Tässä luokassa jaetaan Hahmot pelaajille. 
  */
 public class Sekoittaja {
 
+    /**
+     * 
+     * @param pelattavat
+     * @param pelaajat
+     * @return
+     */
     public boolean SekoitaKayttenTiimeja(ArrayList<Pelattava> pelattavat, ArrayList<Pelaaja> pelaajat) {
         ArrayList<Hahmo> hahmot = new ArrayList<Hahmo>();
         for (Pelattava pelattva : pelattavat) {
@@ -27,6 +33,12 @@ public class Sekoittaja {
 
     }
 
+    /**
+     * 
+     * @param hahmot
+     * @param pelaajat
+     * @return
+     */
     public boolean Sekoita(ArrayList<Hahmo> hahmot, ArrayList<Pelaaja> pelaajat) {
         if (hahmot.size() != pelaajat.size()) {
             return false;

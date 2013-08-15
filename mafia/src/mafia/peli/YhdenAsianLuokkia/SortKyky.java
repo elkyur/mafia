@@ -5,30 +5,23 @@
 package mafia.peli.YhdenAsianLuokkia;
 
 import java.util.Comparator;
+import mafia.kyvyt.Atribuutti;
 import mafia.kyvyt.Kyky;
 
 /**
  *
- * @author Elkyur
+ * Tässä luokassa on metodi Atribuuttien sortaamista varten.
  */
-public class SortKyky implements Comparator<Kyky> {
+public class SortKyky implements Comparator<Atribuutti> {
 
     @Override
-    public int compare(Kyky o1, Kyky o2) {
+    public int compare(Atribuutti o1, Atribuutti o2) {
 
-        int i = o2.getBuffi().returnBuffinTyyppi().palautaPrioriteetti();
-        int j = o1.getBuffi().returnBuffinTyyppi().palautaPrioriteetti();
+        int i = o2.palautaKyky().getBuffi().returnBuffinTyyppi().palautaPrioriteetti();
+        int j = o1.palautaKyky().getBuffi().returnBuffinTyyppi().palautaPrioriteetti();
 
-        if (o1.equals(o2)) {
-            return 0;
-        }
+        return i - j;
 
-        else if (i == j) {
-            return 0;
-
-        } else {
-            return i-j;
-        }
 
 
 

@@ -11,49 +11,59 @@ import mafia.hahmot.Rooli;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka vastaa Scannaus tyyppisitä kyvyistä.
  */
-public class Skannaus implements Kyky {
+public class Skannaus extends Kyky {
 
-    private String nimi;
-    private Buff buffi;
     private HashMap<ArrayList<Rooli>, String> Skannaukset;
 
+    /**
+     *
+     * @param nimi
+     * @param buffi
+     */
     public Skannaus(String nimi, Buff buffi) {
 
-        this.nimi = nimi;
-        this.buffi = buffi;
+        super(nimi, buffi, true);
         this.Skannaukset = new HashMap<ArrayList<Rooli>, String>();
 
     }
 
+    /**
+     *
+     * Lisaa HashMappiin rooli ja sen arvo minkä se palauttaa skannauksen
+     * aikana.
+     *
+     */
     public void Lisaa(ArrayList<Rooli> roolit, String i) {
         this.Skannaukset.put(roolit, i);
     }
 
-    @Override
-    public String getName() {
-        return this.nimi;
-    }
-
+    /**
+     *
+     * @param castaaja
+     * @param vastaanottavaa
+     * @return
+     */
     @Override
     public String Toiminnallisuus(Hahmo castaaja, Hahmo vastaanottavaa) {
 
         String viesti = "Scannauksen tulos: ";
         Hahmo vastaanottava = vastaanottavaa;
 
-        vastaanottava.lisaaBuffi(this.buffi);
+        vastaanottava.lisaaBuffi(super.palautaBuffi());
 
         for (ArrayList<Rooli> rooli : this.Skannaukset.keySet()) {
             if (rooli.contains(vastaanottava.palautaRooli())) {
-                viesti = viesti + " " + this.Skannaukset.get(vastaanottava.palautaRooli());
+                String ka = this.Skannaukset.get(rooli);
+                viesti = viesti + ka;
+                return viesti;
             }
 
         }
         viesti = viesti + "Muu";
         return viesti;
     }
-
     //   @Override
     //   public boolean equals(Kyky kyky) {
     //       if (this.nimi == kyky.getName() && this.buffi.equals(kyky.getBuffi())) {
@@ -61,23 +71,4 @@ public class Skannaus implements Kyky {
     //       }
     //       return false;
     //   }
-    @Override
-    public Buff getBuffi() {
-        return this.buffi;
-    }
-
-    @Override
-    public boolean returnHeti() {
-        return true;
-    }
-
-    @Override
-    public boolean returnOnRequest() {
-        return false;
-    }
-
-    @Override
-    public int UsageTimes() {
-        return -1;
-    }
 }

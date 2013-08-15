@@ -11,10 +11,15 @@ import mafia.hahmot.Rooli;
 
 /**
  *
- * @author Elkyur
+ * Tässä luokassa on pientä toiminnalisuutta, Kuten Pelattavien muuttaminen Hahmoiksi.
  */
 public class Misc {
 
+    /**
+     * 
+     * @param pelattavat
+     * @return
+     */
     public ArrayList<Hahmo> Muutos(ArrayList<Pelattava> pelattavat) {
         ArrayList<Hahmo> hahmot = new ArrayList<Hahmo>();
         for (Pelattava pelattva : pelattavat) {
@@ -26,6 +31,12 @@ public class Misc {
 
     }
 
+    /**
+     * 
+     * @param etsittavat
+     * @param rooli
+     * @return
+     */
     public ArrayList<Hahmo> Etsi(ArrayList<Hahmo> etsittavat, Rooli rooli) {
         ArrayList<Hahmo> hahmot = new ArrayList<Hahmo>();
         for (Hahmo hahmo : etsittavat) {
@@ -37,6 +48,11 @@ public class Misc {
         return hahmot;
     }
 
+    /**
+     * 
+     * @param kohde
+     * @param mistakopioidaan
+     */
     public void ListanLisaaminenListaan(ArrayList<Hahmo> kohde, ArrayList<Hahmo> mistakopioidaan) {
         for (Hahmo hahmo : mistakopioidaan) {
             kohde.add(hahmo);

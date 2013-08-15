@@ -10,95 +10,62 @@ import mafia.hahmot.Pelattava;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka vastaa tavallistista kyvyistä, jossa lähetetään pelkästään buffi hahmolle.
  */
-public class NormiKyky implements Kyky {
-
-    private String name;
-    private Buff buffi;
-    private ArrayList<Buff> Tarvittavat;
-    private boolean onRequest;
-    private int usageTime;
-
+public class NormiKyky extends Kyky {
+    
+    /**
+     * 
+     * @param name
+     * @param buffi
+     * @param heti
+     */
     public NormiKyky(String name, Buff buffi, boolean heti) {
-        this.name = name;
-        this.buffi = buffi;
-        this.Tarvittavat = new ArrayList<Buff>();
-        this.onRequest = heti;
-        this.usageTime = -1;
+        super(name, buffi, heti);
     }
     
-    public void asetaUsageTime(int i)
-    {
-    this.usageTime = i;
-    }
-
-    public void asetaTarvittavat(ArrayList<Buff> buffilista) {
-        this.Tarvittavat = buffilista;
-    }
-
-  
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
+    /**
+     * 
+     * @param
+     * @param
+     * @return
+     */
     @Override
     public String Toiminnallisuus(Hahmo castaava, Hahmo vastaanottava) {
-
-        if (this.Tarvittavat.isEmpty()) {
+        if (super.palautaTarvittavat() == null)
+        {
+        return Toimi(castaava, vastaanottava);
+        }
+        else if (super.palautaTarvittavat().isEmpty()) {
             return Toimi(castaava, vastaanottava);
         } else {
-            for (Buff buffi : this.Tarvittavat) {
-                if (!this.buffi.PalautaKokoHomma().contains(buffi)) {
+            for (Buff buffi : super.palautaTarvittavat()) {
+                if (!super.getBuffi().PalautaKokoHomma().contains(buffi)) {
                     return "";
                 }
             }
             return Toimi(castaava, vastaanottava);
-
+            
         }
     }
-
+    
+    /**
+     * 
+     * @param castaava
+     * @param vastaanottava
+     * @return
+     */
     public String Toimi(Hahmo castaava, Hahmo vastaanottava) {
-
+        
+        vastaanottava.lisaaBuffi(super.palautaBuffi());
         return "";
     }
-
-   
-  //  @Override
- //   public boolean equals(Kyky kyky) {
- //       if (this.name == kyky.getName() && this.buffi.equals(kyky.getBuffi())) {
- //           return true;
- //       }
-        
- //       return false;
- //   }
-   
-
-    @Override
-    public Buff getBuffi() {
-        return this.buffi;
-    }
-
-    @Override
-    public boolean returnHeti() {
-        return this.onRequest;
-    }
-
-    @Override
-    public boolean returnOnRequest() {
-        return this.onRequest;
-    }
-
-    public void asetaOnRequest(boolean k) {
-        this.onRequest = k;
-    }
-
-    @Override
-    public int UsageTimes() {
-        return this.usageTime;
-    }
-
-   
+    
+    //  @Override
+    //   public boolean equals(Kyky kyky) {
+    //       if (this.name == kyky.getName() && this.buffi.equals(kyky.getBuffi())) {
+    //           return true;
+    //       }
+    //       return false;
+    //   }
 }

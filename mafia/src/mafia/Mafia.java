@@ -15,6 +15,7 @@ import mafia.kyvyt.NormiKyky;
 import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
 import mafia.peli.YhdenAsianLuokkia.SortKyky;
 import java.lang.Object;
+import mafia.kyvyt.*;
 import mafia.peli.ValmiiksAsetetut.AlkuperainenMafiooso;
 import mafia.userinterface.TekstiRajapinta;
 
@@ -33,6 +34,9 @@ public class Mafia {
 
     }
 
+    /**
+     * 
+     */
     public static void KokeilleYhtasuuruutta() {
 
         BuffinTyyppi tyyppi = new BuffinTyyppi("k");
@@ -46,6 +50,9 @@ public class Mafia {
         }
     }
 
+    /**
+     * 
+     */
     public static void KokeilleSekoittajaa() {
         Rooli mafia = new Rooli("Mafia");
         Rooli kansalainen = new Rooli("Kansalainen");
@@ -91,6 +98,9 @@ public class Mafia {
         }
     }
 
+    /**
+     * 
+     */
     public static void SortausKokeilu() {
 
         Comparator comp = new SortKyky();
@@ -128,6 +138,9 @@ public class Mafia {
 
     }
 
+    /**
+     * 
+     */
     public static void kokeilleToimiikoCastaaminenOikein() {
         ArrayList<Object> objektilista = new ArrayList<Object>();
         objektilista.add(new Pelaaja("p1"));
@@ -139,6 +152,9 @@ public class Mafia {
     }
     // Vihdoinkin!
 
+    /**
+     * 
+     */
     public static void KokeillePelia() {
         Scanner lukija = new Scanner(System.in);
         TekstiRajapinta rajapinta = new TekstiRajapinta(lukija);
@@ -153,4 +169,6 @@ public class Mafia {
         mafiooso.Run();
 
     }
+    
+
 }

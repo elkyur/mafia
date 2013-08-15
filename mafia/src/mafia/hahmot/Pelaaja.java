@@ -5,8 +5,8 @@
 package mafia.hahmot;
 
 /**
- *
- * @author Elkyur
+ * 
+ * Tämä luokka kantaa vastuun Pelaajasta ja sen tiedoista
  */
 public class Pelaaja {
 
@@ -14,11 +14,20 @@ public class Pelaaja {
     private String salasana;
 
 
+    /**
+     * 
+     * @param nimi
+     */
     public Pelaaja(String nimi) {
         this(nimi, "");
 
     }
 
+    /**
+     * 
+     * @param nimi
+     * @param salasana
+     */
     public Pelaaja(String nimi, String salasana) {
         this.nimi = nimi;
         this.salasana = salasana;
@@ -26,6 +35,10 @@ public class Pelaaja {
 
     }
 
+    /**
+     * 
+     * @return
+     */
     public String PalautaNimi() {
         return this.nimi;
     }

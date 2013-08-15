@@ -9,22 +9,32 @@ import java.util.Scanner;
 import java.util.Set;
 import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelattava;
+import mafia.kyvyt.Atribuutti;
 import mafia.kyvyt.Kyky;
 import mafia.peli.Faasi;
 import mafia.peli.YhdenAsianLuokkia.AanestysSysteemi;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka kantaa vastuun tekstikäyttöliittymästä. 
  */
 public class TekstiRajapinta {
 
     private Scanner lukija;
 
+    /**
+     * 
+     * @param lukija
+     */
     public TekstiRajapinta(Scanner lukija) {
         this.lukija = lukija;
     }
 
+    /**
+     * 
+     * @param hahmot
+     * @return
+     */
     public Hahmo ValitsePelaaja(ArrayList<Hahmo> hahmot) {
         while (true) {
             System.out.print("Valitse kohteesi: ");
@@ -45,6 +55,9 @@ public class TekstiRajapinta {
 
     }
 
+    /**
+     * 
+     */
     public void ListaaMahdollisuudet() {
         System.out.println("Olet admini, voit tehdä seuraavia asioita: ");
         System.out.println("[0] Poistu Consolesta");
@@ -57,6 +70,11 @@ public class TekstiRajapinta {
 
     }
 
+    /**
+     * 
+     * @param faasi
+     * @param pelattavat
+     */
     public void Console(Faasi faasi, ArrayList<Pelattava> pelattavat) {
         ListaaMahdollisuudet();
         String vastaus = "";
@@ -67,12 +85,17 @@ public class TekstiRajapinta {
             } else if (vastaus.equals("1")) {
                 printtaaTiimit(pelattavat);
             } else if (vastaus.equals("5")) {
-                ListaaKyvyt(faasi.palautaKokoHomma().keySet());
+                ListaaKyvyt(faasi.palautaKokoHomma());
             }
         }
 
     }
 
+    /**
+     * 
+     * @param systeemi
+     * @return
+     */
     public Hahmo Aanestys(AanestysSysteemi systeemi) {
         System.out.println("Äänestys on aloitettu");
         while (true) {
@@ -88,6 +111,10 @@ public class TekstiRajapinta {
         }
     }
 
+    /**
+     * 
+     * @param pelattavat
+     */
     public void printtaaTiimit(ArrayList<Pelattava> pelattavat) {
         if ((pelattavat == null) || (pelattavat.isEmpty())) {
             System.out.println("Tällä hetkellä pelissä ei ole tiimejä");
@@ -101,6 +128,10 @@ public class TekstiRajapinta {
 
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean varmistus() {
         System.out.println("Oletko varma, että haluat tehdä tämän? Vastaa: y");
         String k = this.lukija.nextLine();
@@ -111,15 +142,27 @@ public class TekstiRajapinta {
 
     }
 
+    /**
+     * 
+     * @param pelattava
+     */
     public void JulistaVoittaja(Pelattava pelattava) {
         System.out.println("Pelin voitti: " + pelattava.getNimi());
 
     }
 
+    /**
+     * 
+     * @param k
+     */
     public void TulostaViesti(String k) {
         System.out.println(k);
     }
 
+    /**
+     * 
+     * @param hahmot
+     */
     public void JulistaKuolleiksi(ArrayList<Hahmo> hahmot) {
         System.out.println("Kuolivat seuraavat pelaajat:");
         for (Hahmo hahmo : hahmot) {
@@ -129,15 +172,23 @@ public class TekstiRajapinta {
 
     }
 
-    public void ListaaKyvyt(Set<Kyky> kyvyt) {
+    /**
+     * 
+     * @param atribuutit
+     */
+    public void ListaaKyvyt(ArrayList<Atribuutti> atribuutit) {
         System.out.println("Seuraavat kyvyt ovat käytettävissä tässä faasissa:");
-        for (Kyky kyky : kyvyt) {
-            System.out.println(kyky.getName());
+        for (Atribuutti atr : atribuutit) {
+            System.out.println(atr.palautaKyky().palautaNimi());
 
         }
 
     }
 
+    /**
+     * 
+     * @param hahmot
+     */
     public void HerataPelaajat(ArrayList<Hahmo> hahmot) {
         System.out.println("Herata seuraavat: ");
         for (Hahmo hahmo : hahmot) {

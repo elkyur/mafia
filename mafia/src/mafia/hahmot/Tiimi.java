@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka vastaa Tiimeistä 
  */
 public class Tiimi implements Pelattava {
 
@@ -17,22 +17,38 @@ public class Tiimi implements Pelattava {
     boolean WorksAsTeam;
     private ArrayList<Hahmo> members;
 
+    /**
+     * 
+     * @param nimi
+     */
     public Tiimi(String nimi) {
         this.nimi = nimi;
         this.WorksAsTeam = true;
         this.members = new ArrayList<Hahmo>();
     }
 
+    /**
+     * 
+     * Asettaa toimiiko tiimi tiiminä
+     */
     public void AsetaWorkAsTeam(boolean abc) {
         this.WorksAsTeam = abc;
 
     }
 
+    /**
+     * 
+     * Lisää pelaajan tiimiin
+     */
     public void LisaaPelaaja(Hahmo hahmo) {
         this.members.add(hahmo);
 
     }
 
+    /**
+     * 
+     * Poista tiimistä pelaajan, palautta true jos onnistui
+     */
     public boolean poistaPelaaja(Hahmo hahmo) {
         if (this.members.contains(hahmo)) {
 
@@ -42,21 +58,37 @@ public class Tiimi implements Pelattava {
         return false;
     }
 
+    /**
+     * 
+     * Palauttaa nimen
+     */
     @Override
     public String getNimi() {
         return this.nimi;
     }
 
+    /**
+     * 
+     * Palauttaa toimiiko tiiminä
+     */
     @Override
     public boolean getWorksAsTeam() {
         return this.WorksAsTeam;
     }
 
+    /**
+     * 
+     * Palauttaa koko tiimin
+     */
     @Override
     public ArrayList<Hahmo> getTeam() {
         return this.members;
     }
 
+    /**
+     * 
+     * Palauttaa onko tiimi viellä elsosa
+     */
     @Override
     public boolean elossa() {
         if (this.members.isEmpty()) {

@@ -10,67 +10,51 @@ import mafia.hahmot.Tiimi;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka vastaa kyvyistä, jossa tiimit rakenne voi muuttua.
  */
-public class TiimiAsetus implements Kyky {
+public class TiimiAsetus extends Kyky {
 
     private Tiimi tiimi;
-    private String nimi;
-    private Buff buffi;
-    private int usageTime;
 
+    /**
+     * 
+     * @param nimi
+     * @param tiimi
+     * @param buffi
+     */
     public TiimiAsetus(String nimi, Tiimi tiimi, Buff buffi) {
-        this.nimi = nimi;
+        super(nimi, buffi, true);
+        ;
         this.tiimi = tiimi;
-        this.buffi = buffi;
+
 
     }
 
+    /**
+     * 
+     * @return
+     */
     public Tiimi palautaTiimi() {
 
         return this.tiimi;
     }
 
-    public void asetaUsageTime(int j) {
-        this.usageTime = j;
-    }
-
-    @Override
-    public String getName() {
-        return this.nimi;
-    }
-
+    /**
+     * 
+     * @param castaaja
+     * @param vastaanottava
+     * @return
+     */
     @Override
     public String Toiminnallisuus(Hahmo castaaja, Hahmo vastaanottava) {
         tiimi.LisaaPelaaja(vastaanottava);
-        vastaanottava.lisaaBuffi(this.buffi);
+        vastaanottava.lisaaBuffi(super.palautaBuffi());
         return "";
 
 
     }
-
- //   @Override
- //   public boolean equals(Kyky kyky) {
- //       throw new UnsupportedOperationException("Not supported yet.");
- //   }
-
-    @Override
-    public Buff getBuffi() {
-        return this.buffi;
-    }
-
-    @Override
-    public boolean returnHeti() {
-        return true;
-    }
-
-    @Override
-    public boolean returnOnRequest() {
-        return true;
-    }
-
-    @Override
-    public int UsageTimes() {
-        return this.usageTime;
-    }
+    //   @Override
+    //   public boolean equals(Kyky kyky) {
+    //       throw new UnsupportedOperationException("Not supported yet.");
+    //   }
 }

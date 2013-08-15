@@ -9,7 +9,7 @@ import mafia.hahmot.Pelattava;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka vastaan Buffeista eli effekteistä hahmoihin, jotka voivat rajoittaa, suojata, estää tai tappaa hahmon.
  */
 public class Buff {
 
@@ -20,6 +20,12 @@ public class Buff {
     private BuffinTyyppi tyyppi;
     private ArrayList<Object> erikoisViittauksia;
 
+    /**
+     * 
+     * @param nimi
+     * @param ExpireRate
+     * @param tyyppi
+     */
     public Buff(String nimi, int ExpireRate, BuffinTyyppi tyyppi) {
         this.nimi = nimi;
         this.ExpireRate = ExpireRate;
@@ -29,48 +35,88 @@ public class Buff {
 
     }
 
+    /**
+     * 
+     * Palauttaa nimen
+     */
     public String getNimi() {
         return this.nimi;
     }
 
 
+    /**
+     *  
+     * 
+     * Asettaa viestit hahmolle ja pelinjohtajalle
+     */
     public void setaddMessages(String MessageToUser, String MessageToAdmin) {
         this.MessageToVictim.add(MessageToUser);
         this.MessageToAdmin = MessageToAdmin;
 
     }
 
+    /**
+     * 
+     * Palauttaa koko boxin viestejä
+     */
     public ArrayList<String> returnMessageToUser() {
         return this.MessageToVictim;
 
     }
 
+    /**
+     * Tyhjentää viestit
+     */
     public void ClearUserMessages() {
         this.MessageToVictim.clear();
     }
 
+    /**
+     * 
+     * palauttaa pelinjohtajalle tarkoitetun viestin
+     */
     public String returnMessageToAdmin() {
 
         return this.MessageToAdmin;
     }
 
+    /**
+     * 
+     * Palauttaa expireraten eli paljon buffila on elinaikaa jäljellä
+     */
     public int returnExpireRate() {
         return this.ExpireRate;
     }
 
+    /**
+     * 
+     * Riippuen buffityypistä lisää vittauksia. Esimerkiksi kostobuffissa viittauksena on kyvyt joita Hahmo voi käyttää heti kuoleman jälkeen.
+     * 
+     */
     public Object lisaaErikoisViittaus(Object objekti) {
         return this.erikoisViittauksia.add(objekti);
     }
 
+    /**
+     * 
+     * Palauttaa erikoisviittaukset
+     */
     public ArrayList<Object> PalautaKokoHomma() {
         return this.erikoisViittauksia;
     }
 
+    /**
+     * 
+     * Palauttaa mitä tyyppiä buffi on 
+     */
     public BuffinTyyppi returnBuffinTyyppi() {
         return this.tyyppi;
 
     }
     
+    /**
+     * Vähentää elinikää
+     */
     public void Expire()
     {
     this.ExpireRate--;

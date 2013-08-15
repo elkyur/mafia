@@ -6,7 +6,7 @@ package mafia.peli;
 
 /**
  *
- * @author Elkyur
+ * Tarkoituksena on luoda luokka joka käyttäjän syötteestä rakentaisi pelin.
  */
 public class GameConstructor {
     

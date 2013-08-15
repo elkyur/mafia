@@ -10,7 +10,7 @@ import mafia.hahmot.Hahmo;
 
 /**
  *
- * This System let players find solution who to choose.
+ * Jos kykyä castaavia on monta. On pidettävä äänestys hahmojen välillä. Tämä luokka kantaa vastuun siitä. 
  */
 public class AanestysSysteemi {
 
@@ -19,6 +19,10 @@ public class AanestysSysteemi {
     private ArrayList<Hahmo> AanestyksessaMukana;
     private ArrayList<Hahmo> AanestysOikeutetut;
 
+    /**
+     * 
+     * @param AanestyksessaMukana
+     */
     public AanestysSysteemi(ArrayList<Hahmo> AanestyksessaMukana) {
         this.Aanestys = new HashMap<Hahmo, ArrayList<Hahmo>>();
         this.Aanestaneet = new ArrayList<Hahmo>();
@@ -27,15 +31,28 @@ public class AanestysSysteemi {
 
     }
 
+    /**
+     * 
+     * @param mukanaolevat
+     */
     public void asetaAanestysOikeutetut(ArrayList<Hahmo> mukanaolevat) {
         this.AanestysOikeutetut = mukanaolevat;
     }
     
+    /**
+     * 
+     */
     public void Reset()
     {
     this.AanestysOikeutetut = this.AanestyksessaMukana;
     }
 
+    /**
+     * 
+     * @param hyokkaaja
+     * @param puolustaja
+     * @return
+     */
     public Hahmo Aanesta(Hahmo hyokkaaja, Hahmo puolustaja) {
         if (this.Aanestaneet.contains(hyokkaaja)) {
             return null;
@@ -65,6 +82,12 @@ public class AanestysSysteemi {
         }
     }
 
+    /**
+     * 
+     * @param hyokkaaja
+     * @param puolustaja
+     * @return
+     */
     public boolean UnAanesta(Hahmo hyokkaaja, Hahmo puolustaja) {
         if (!this.Aanestaneet.contains(hyokkaaja)) {
             return false;
@@ -82,6 +105,10 @@ public class AanestysSysteemi {
         return false;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String AanestysLaskelmat() {
         String k = "";
         for (Hahmo hahmo : this.Aanestys.keySet()) {
@@ -91,10 +118,18 @@ public class AanestysSysteemi {
         return k;
     }
 
+    /**
+     * 
+     * @return
+     */
     public int YhteensaMukana() {
         return this.Aanestaneet.size();
     }
 
+    /**
+     * 
+     * @return
+     */
     public ArrayList<Hahmo> palautaMukanaOlevat() {
         return this.AanestyksessaMukana;
     }

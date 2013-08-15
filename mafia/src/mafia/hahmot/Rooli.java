@@ -9,24 +9,37 @@ import mafia.kyvyt.Kyky;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka vastaa Roolista. Jokaisella Hahmolla on jokin Rooli. 
  */
 public class Rooli {
 
     private String nimi;
     private ArrayList<Kyky> MahdollisetKyvyt;
 
+    /**
+     * 
+     * Asetetaan Roolille nimet
+     */
     public Rooli(String nimi) {
         this.nimi = nimi;
         this.MahdollisetKyvyt = new ArrayList<Kyky>();
 
     }
 
+    /**
+     * 
+     * Asetetaan mahdolliset kyvyt roolille
+     */
     public void LaitaLisaaKykyja(Kyky z) {
         this.MahdollisetKyvyt.add(z);
 
     }
 
+    /**
+     * 
+     * Tarkistetaan onko kyky mahdollisien kykyjen listalla
+     * 
+     */
     public boolean TarkistaOnkoKykyKaytossa(Kyky e) {
         if (this.MahdollisetKyvyt.contains(e)) {
             return true;
@@ -34,6 +47,10 @@ public class Rooli {
         }
         return false;
     }
+    /**
+     * 
+     * Palautetaan Roolin nimi
+     */
     public String PalautaNimi()
     {
     return this.nimi;
