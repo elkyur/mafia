@@ -16,7 +16,7 @@ public abstract class Kyky {
     private String nimi;
     private Buff buffi;
     private ArrayList<Buff> Tarvittavat;
-    private boolean onRequest;
+    private boolean Active;
     private int kayttoKerta;
 
 
@@ -26,11 +26,11 @@ public abstract class Kyky {
      * @param buffi
      * @param onRequest
      */
-    public Kyky(String nimi, Buff buffi, boolean onRequest) {
-        this.onRequest = onRequest;
+    public Kyky(String nimi, Buff buffi, boolean onDeath) {
+        this.Active = onDeath;
         this.buffi = buffi;
         this.nimi = nimi;
-        this.kayttoKerta = 0;
+        this.kayttoKerta = -1;
         
 
     }
@@ -72,7 +72,7 @@ public abstract class Kyky {
      * Palauttaa variablen heti
      */
     public boolean palautaHeti() {
-        return this.onRequest;
+        return this.Active;
     }
 
   
@@ -82,7 +82,7 @@ public abstract class Kyky {
      * Asettaa pitääkö kykyä käyttää heti
      */
     public void asetaOnRequest(boolean k) {
-        this.onRequest = k;
+        this.Active = k;
     }
 
     /**

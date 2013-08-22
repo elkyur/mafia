@@ -12,6 +12,7 @@ import mafia.kyvyt.Kyky;
 import mafia.kyvyt.Buff;
 import mafia.kyvyt.BuffinTyyppi;
 import mafia.kyvyt.NormiKyky;
+import mafia.peli.Logit.LogWriter;
 import mafia.userinterface.TekstiRajapinta;
 
 /**
@@ -28,31 +29,34 @@ public class BuffienHallitsija {
     private ArrayList<Hahmo> KuolemassaOlevatPelaajat;
     private ArrayList<Pelattava> ViittausTiimeihin;
     private ArrayList<Hahmo> KostoKandidaatit;
-    
+
 
     /**
-     * 
+     *
      * @param ViittausTiimeihin
      */
     public BuffienHallitsija(ArrayList<Pelattava> ViittausTiimeihin) {
         this.ViittausTiimeihin = ViittausTiimeihin;
         this.KuolemassaOlevatPelaajat = new ArrayList<Hahmo>();
         this.KostoKandidaatit = new ArrayList<Hahmo>();
+      
+          
 
     }
 
-    
-
     /**
-     * 
+     *
      * @param tyyppi
      */
     public void asetaTappo(BuffinTyyppi tyyppi) {
         this.TappoBuffit = tyyppi;
     }
+    
+    
+ 
 
     /**
-     * 
+     *
      * @param tyyppi
      */
     public void asetaSuhde(BuffinTyyppi tyyppi) {
@@ -60,7 +64,7 @@ public class BuffienHallitsija {
     }
 
     /**
-     * 
+     *
      * @param tyyppi
      */
     public void asetaLaukaisuEsto(BuffinTyyppi tyyppi) {
@@ -68,7 +72,7 @@ public class BuffienHallitsija {
     }
 
     /**
-     * 
+     *
      * @param tyyppi
      */
     public void asetaMuutosEsto(BuffinTyyppi tyyppi) {
@@ -76,7 +80,7 @@ public class BuffienHallitsija {
     }
 
     /**
-     * 
+     *
      * @param tyyppi
      */
     public void asetaKosto(BuffinTyyppi tyyppi) {
@@ -84,14 +88,16 @@ public class BuffienHallitsija {
     }
 
     /**
-     * 
-     * Metodi castaataan kuin jokin Hahmo tekee kyvyn. Ensin tarkistetaan onko castaavalla hahmolla laukaisuestoja 
-     * Sitten tarkistetaan onko vastaanottavalla muutosestoja. Jos buffi oli tappo tyyppiä ja meni läpi
+     *
+     * Metodi castaataan kuin jokin Hahmo tekee kyvyn. Ensin tarkistetaan onko
+     * castaavalla hahmolla laukaisuestoja Sitten tarkistetaan onko
+     * vastaanottavalla muutosestoja. Jos buffi oli tappo tyyppiä ja meni läpi
      * Silloin castataan Kuolemassa() metodi
-     * 
+     *
      */
     public String TekeeTaikaa(Hahmo hahmo, Kyky kyky, Hahmo vastaanottava) {
-
+        
+       
         if (checkForCategoryBuffit(hahmo, kyky, this.LaukaisuEstot)) {
 
             if (checkForCategoryBuffit(vastaanottava, kyky, this.MuutosEstot)) {
@@ -101,22 +107,18 @@ public class BuffienHallitsija {
                 }
 
                 String k = kyky.Toiminnallisuus(hahmo, vastaanottava);
-                if (k == null) {
-                    return null;
-                } else {
-                    if (k != "") {
-                        return k;
-                    }
-                }
+               
+                    return k;
+                
             }
         }
         return null;
     }
 
     /**
-     * 
-     * Palautetaan HashMap rakenne jossa avaimena on hahmoja joilla on kostokykyjä
-     * ja kostokyvyt mapattavina ArrayListinä. 
+     *
+     * Palautetaan HashMap rakenne jossa avaimena on hahmoja joilla on
+     * kostokykyjä ja kostokyvyt mapattavina ArrayListinä.
      */
     public HashMap<Hahmo, ArrayList<Object>> tarkistettavat() {
         if (this.KostoBuffit == null) {
@@ -129,8 +131,8 @@ public class BuffienHallitsija {
             if (kyvyt != null) {
                 KokoHomma.put(hahmor, kyvyt);
             }
-            this.KostoKandidaatit.remove(hahmor);
         }
+        this.KostoKandidaatit.clear();
         if (KokoHomma.isEmpty()) {
             return null;
         }
@@ -147,10 +149,11 @@ public class BuffienHallitsija {
     }
 
     /**
-     * 
-     * Tarkistaa onko hahmolla esto buffeja, joissa olisi erikoisviittauksia jossa olisi kyseinen kyky. 
-     * 
-     * 
+     *
+     * Tarkistaa onko hahmolla esto buffeja, joissa olisi erikoisviittauksia
+     * jossa olisi kyseinen kyky.
+     *
+     *
      * @return
      */
     public boolean checkForCategoryBuffit(Hahmo hahmo, Kyky kyky, BuffinTyyppi tyyppi) {
@@ -167,11 +170,12 @@ public class BuffienHallitsija {
     }
 
     /**
-     * 
-     * Kun hahmo on kuolemassa castataan tämä metodi. Ensin tarkistetaan onko Hahmolla lisäelämiä.
-     * Sitten asetetaan Hahmon kuolleeksi ja lisätään se kuolevien hahmojen listalle.
-     * Jos Hahmolla on joitakin suhteita, kuten jos Hahmo kuolee niin jokin toinen Hahmo kuolee myös.
-     * Lisätään se toinen Hahmo kuolevien listalle. 
+     *
+     * Kun hahmo on kuolemassa castataan tämä metodi. Ensin tarkistetaan onko
+     * Hahmolla lisäelämiä. Sitten asetetaan Hahmon kuolleeksi ja lisätään se
+     * kuolevien hahmojen listalle. Jos Hahmolla on joitakin suhteita, kuten jos
+     * Hahmo kuolee niin jokin toinen Hahmo kuolee myös. Lisätään se toinen
+     * Hahmo kuolevien listalle.
      */
     public void Kuolemassa(Hahmo hahmo) {
         if (this.KuolemassaOlevatPelaajat.contains(hahmo)) {
@@ -188,7 +192,7 @@ public class BuffienHallitsija {
 
         }
     }
-    
+
     public void SuhdeBuffit(Hahmo hahmo) {
         for (Buff buffi : hahmo.ListaaBuffit()) {
             if (buffi.returnBuffinTyyppi().equals(this.SuhdeBuffit)) {
@@ -200,14 +204,11 @@ public class BuffienHallitsija {
 
         }
     }
-    
-    
-    
 
     /**
-     * 
+     *
      * Tarkistaa onko hahmolla kosto kykyjä.
-     * 
+     *
      */
     public ArrayList<Object> checkForKosto(Hahmo hahmo) {
         for (Buff buffi : hahmo.ListaaBuffit()) {
@@ -227,29 +228,54 @@ public class BuffienHallitsija {
         for (Hahmo hahmo : this.KuolemassaOlevatPelaajat) {
             etsiJaPoista(hahmo);
         }
+        this.KuolemassaOlevatPelaajat.clear();
 
     }
 
     /**
-     * 
-     * 
+     * Etsii Pelaajan elossa olevien listalta ja tuhoaa sen.
+     *
      */
     private void etsiJaPoista(Hahmo hahmo) {
+        ArrayList<Pelattava> pelattavatjotkaPoistetaan = new ArrayList<Pelattava>();
         for (Pelattava pelattava : this.ViittausTiimeihin) {
             {
                 if (pelattava.getTeam().contains(hahmo)) {
-                    pelattava.getTeam().remove(hahmo);
+                    if (pelattava.poistaTiimista(hahmo)) {
+                        pelattavatjotkaPoistetaan.add(pelattava);
+
+                    }
                 }
 
             }
+           
         }
+        for (Pelattava pelattavar : pelattavatjotkaPoistetaan) {
+               this.ViittausTiimeihin.remove(pelattavar);
+            }
     }
 
     /**
-     * 
+     *
      * Palauttaa listan jossa on kuolemassa olevat pelaajat.
      */
     public ArrayList<Hahmo> palautaKuolleet() {
         return this.KuolemassaOlevatPelaajat;
+    }
+
+    public void BuffitVanhetuvat() {
+        for (Pelattava pelattava : this.ViittausTiimeihin) {
+            for (Hahmo hahmo : pelattava.getTeam()) {
+                hahmo.BuffitVanhetuvat();
+
+
+            }
+
+        }
+    }
+    
+    public ArrayList<Pelattava> Palautetaanpelattavat()
+    {
+    return this.ViittausTiimeihin;
     }
 }

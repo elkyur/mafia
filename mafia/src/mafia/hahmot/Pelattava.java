@@ -16,20 +16,23 @@ public interface Pelattava {
      * 
      * Palauttaa nimen
      */
-    String getNimi();
+    public String getNimi();
     /**
      * 
      * Palauttaa toimiiko tiimina
      */
-    boolean getWorksAsTeam();
+    public boolean getWorksAsTeam();
     /**
      * 
      * Palauttaa koko tiimin
      */
-    ArrayList<Hahmo> getTeam();
+    public ArrayList<Hahmo> getTeam();
     /**
      * 
      * Palauttaa onko vielä elossa
      */
-    boolean elossa();
+    public boolean elossa();
+    
+    
+    public boolean poistaTiimista(Hahmo hahmo);
 }

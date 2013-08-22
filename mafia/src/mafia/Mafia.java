@@ -4,6 +4,8 @@
  */
 package mafia;
 
+import GraphicInterface.gamemenu;
+import java.io.*;
 import java.util.*;
 import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelaaja;
@@ -15,7 +17,11 @@ import mafia.kyvyt.NormiKyky;
 import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
 import mafia.peli.YhdenAsianLuokkia.SortKyky;
 import java.lang.Object;
+import mafia.hahmot.Tiimi;
 import mafia.kyvyt.*;
+import mafia.peli.Logit.LogWriter;
+import mafia.peli.ReadWriting.Kirjoittaja;
+import mafia.peli.ReadWriting.Loader;
 import mafia.peli.ValmiiksAsetetut.AlkuperainenMafiooso;
 import mafia.userinterface.TekstiRajapinta;
 
@@ -28,14 +34,20 @@ public class Mafia {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-
-        KokeillePelia();
-
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+      // RectangleProgram rectObj = new RectangleProgram();
+       //gamemenu valikko = new gamemenu();
+        //  KokeilelArrayListisa();
+        //KokeillePelia();
+       // LogWrtierTest();
+        //FileTest();
+        // WriterTest();
+      //  ReadingTest();
+        KirjoittajaTestOsa2();
     }
 
     /**
-     * 
+     *
      */
     public static void KokeilleYhtasuuruutta() {
 
@@ -51,7 +63,7 @@ public class Mafia {
     }
 
     /**
-     * 
+     *
      */
     public static void KokeilleSekoittajaa() {
         Rooli mafia = new Rooli("Mafia");
@@ -99,7 +111,7 @@ public class Mafia {
     }
 
     /**
-     * 
+     *
      */
     public static void SortausKokeilu() {
 
@@ -137,9 +149,8 @@ public class Mafia {
 
 
     }
-
     /**
-     * 
+     *
      */
     public static void kokeilleToimiikoCastaaminenOikein() {
         ArrayList<Object> objektilista = new ArrayList<Object>();
@@ -153,9 +164,9 @@ public class Mafia {
     // Vihdoinkin!
 
     /**
-     * 
+     *
      */
-    public static void KokeillePelia() {
+    public static void KokeillePelia() throws FileNotFoundException, UnsupportedEncodingException {
         Scanner lukija = new Scanner(System.in);
         TekstiRajapinta rajapinta = new TekstiRajapinta(lukija);
         Sekoittaja sekoittaja = new Sekoittaja();
@@ -169,6 +180,83 @@ public class Mafia {
         mafiooso.Run();
 
     }
-    
 
+    public static void KokeilelArrayListisa() {
+        ArrayList<String> lista = new ArrayList<String>();
+        lista.add("yksi");
+        lista.add("kaksi");
+        lista.add("kolme");
+        lista.add("nelja");
+        ListaaElementit(lista);
+        lista.remove(1);
+        System.out.println(lista.get(1));
+
+
+    }
+
+    public static void ListaaElementit(ArrayList<String> listaus) {
+        for (int i = 0; i < listaus.size(); i++) {
+            System.out.println(listaus.get(i));
+        }
+
+    }
+    
+    public static void LogWrtierTest() throws FileNotFoundException, UnsupportedEncodingException
+    {
+    LogWriter kirjoittaja = new LogWriter();
+    kirjoittaja.LogWriterInit(null);
+    kirjoittaja.Write("testaus");
+    kirjoittaja.Write("testaus");
+    kirjoittaja.Write("testaus");
+    kirjoittaja.Write("testaus");
+    kirjoittaja.Write("testaus");
+    kirjoittaja.Write("testaus");
+    
+    }
+    public static void FileTest() throws FileNotFoundException, IOException
+    {
+   
+ //   FileOutputStream is = new FileOutputStream(tiedosto);
+ //   OutputStreamWriter osw = new OutputStreamWriter(is);    
+ //    Writer w = new BufferedWriter(osw);
+ //    w.write("toimiiko");
+ //    w.flush();
+      File tiedosto = new File("gamedata/structures/faasit.txt");  
+     FileWriter fw = new FileWriter(tiedosto,true);
+     fw.append("lisaa");
+     fw.close();
+     
+     
+    
+    }
+    
+    public static void WriterTest() throws IOException
+    {
+    Kirjoittaja kirjoittaja = new Kirjoittaja();
+    kirjoittaja.asetaPelaajat(new File("gamedata/structures/Pelaajat.txt"));
+    kirjoittaja.LisaaPelaaja(new Pelaaja("pikachu"));
+    
+    }
+    
+    public static void ReadingTest() throws FileNotFoundException
+    {
+    Loader loader = new Loader();
+    loader.setPelaajat(new File("gamedata/structures/Pelaajat.txt"));
+    ArrayList<Pelaaja> pelaajat = loader.palautaPelaajat();
+    for (Pelaaja pelaaja: pelaajat)
+    {
+    System.out.println(pelaaja.PalautaNimi());
+    System.out.println(pelaaja.palautaStatistiikka().palautaVoittojenLkm());
+    }
+    
+    }
+    
+    public static void KirjoittajaTestOsa2() throws IOException
+    {
+    Kirjoittaja kirjoittaja = new Kirjoittaja();
+    kirjoittaja.asetaRooli(new File(Settings.Settings.roolitlocation));
+    Tiimi mafia = new Tiimi("Pahat");
+    Rooli mafiar = new Rooli("Mafiooso");
+    kirjoittaja.LisaaRooli(mafiar, mafia);
+    }
 }

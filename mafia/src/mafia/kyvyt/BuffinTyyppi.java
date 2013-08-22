@@ -63,4 +63,13 @@ public class BuffinTyyppi {
     public int palautaPrioriteetti() {
         return this.Prioriteetti;
     }
+      /**
+     * 
+     * Palauttaa buffi tyypin nimen
+     */
+    
+    public String palautaTyyppi()
+    {
+    return this.tyyppi;
+    }
 }

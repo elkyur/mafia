@@ -14,7 +14,7 @@ import mafia.hahmot.Pelattava;
 public class Buff {
 
     private String nimi;
-    private ArrayList<String> MessageToVictim;
+    private String MessageToVictim;
     private String MessageToAdmin;
     private int ExpireRate;
     private BuffinTyyppi tyyppi;
@@ -30,7 +30,7 @@ public class Buff {
         this.nimi = nimi;
         this.ExpireRate = ExpireRate;
         this.tyyppi = tyyppi;
-        this.MessageToVictim = new ArrayList<String>();
+ 
         this.erikoisViittauksia = new ArrayList<Object>();
 
     }
@@ -50,26 +50,20 @@ public class Buff {
      * Asettaa viestit hahmolle ja pelinjohtajalle
      */
     public void setaddMessages(String MessageToUser, String MessageToAdmin) {
-        this.MessageToVictim.add(MessageToUser);
+        this.MessageToVictim = MessageToUser;
         this.MessageToAdmin = MessageToAdmin;
 
     }
 
     /**
      * 
-     * Palauttaa koko boxin viestejä
+     * Palauttaa viesitn;
      */
-    public ArrayList<String> returnMessageToUser() {
+    public String returnMessageToUser() {
         return this.MessageToVictim;
 
     }
 
-    /**
-     * Tyhjentää viestit
-     */
-    public void ClearUserMessages() {
-        this.MessageToVictim.clear();
-    }
 
     /**
      * 
@@ -106,6 +100,7 @@ public class Buff {
     }
 
     /**
+     * 
      * 
      * Palauttaa mitä tyyppiä buffi on 
      */

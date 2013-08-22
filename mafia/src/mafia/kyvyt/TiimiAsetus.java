@@ -4,6 +4,7 @@
  */
 package mafia.kyvyt;
 
+import java.util.ArrayList;
 import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelattava;
 import mafia.hahmot.Tiimi;
@@ -14,24 +15,28 @@ import mafia.hahmot.Tiimi;
  */
 public class TiimiAsetus extends Kyky {
 
+    private ArrayList<Pelattava> viittausTiimeihin;
     private Tiimi tiimi;
+    boolean ehdollinen;
 
     /**
-     * 
+     *
      * @param nimi
      * @param tiimi
      * @param buffi
      */
-    public TiimiAsetus(String nimi, Tiimi tiimi, Buff buffi) {
+    public TiimiAsetus(String nimi, Tiimi tiimi, Buff buffi, ArrayList<Pelattava> viittausTiimeihin) {
         super(nimi, buffi, true);
         ;
         this.tiimi = tiimi;
+        this.viittausTiimeihin = viittausTiimeihin;
+       
 
 
     }
 
     /**
-     * 
+     *
      * @return
      */
     public Tiimi palautaTiimi() {
@@ -39,8 +44,22 @@ public class TiimiAsetus extends Kyky {
         return this.tiimi;
     }
 
+    public Pelattava loydatiimit(Hahmo hahmo) {
+        for (Pelattava pelattava : this.viittausTiimeihin) {
+            for (Hahmo hahm : pelattava.getTeam()) {
+                if (hahm.equals(hahmo)) {
+                    return pelattava;
+                }
+
+            }
+        }
+        return null;
+    }
+
+  
+
     /**
-     * 
+     *
      * @param castaaja
      * @param vastaanottava
      * @return
@@ -49,6 +68,7 @@ public class TiimiAsetus extends Kyky {
     public String Toiminnallisuus(Hahmo castaaja, Hahmo vastaanottava) {
         tiimi.LisaaPelaaja(vastaanottava);
         vastaanottava.lisaaBuffi(super.palautaBuffi());
+       
         return "";
 
 

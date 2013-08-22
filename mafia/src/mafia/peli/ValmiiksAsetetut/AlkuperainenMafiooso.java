@@ -4,6 +4,8 @@
  */
 package mafia.peli.ValmiiksAsetetut;
 
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
 import java.util.ArrayList;
 import mafia.hahmot.*;
@@ -11,6 +13,7 @@ import mafia.kyvyt.*;
 
 import mafia.peli.BuffienHallitsija;
 import mafia.peli.Faasi;
+import mafia.peli.Logit.LogWriter;
 import mafia.peli.Peli;
 import mafia.peli.YhdenAsianLuokkia.AanestysSysteemi;
 import mafia.peli.YhdenAsianLuokkia.Misc;
@@ -28,6 +31,7 @@ public class AlkuperainenMafiooso {
     private BuffienHallitsija hallitsija;
     private Misc misc;
     private TekstiRajapinta rajapinta;
+    private LogWriter logit;
 
     /**
      * 
@@ -41,13 +45,14 @@ public class AlkuperainenMafiooso {
         this.misc = new Misc();
         this.rajapinta = rajapinta;
         this.pelattavat = new ArrayList<Pelattava>();
+        this.logit = new LogWriter();
 
     }
 
     /**
      * 
      */
-    public void Run() {
+    public void Run() throws FileNotFoundException, UnsupportedEncodingException {
 
         Rooli mafia = new Rooli("Mafia");
         Rooli kansalainen = new Rooli("Kansalainen");
@@ -64,6 +69,8 @@ public class AlkuperainenMafiooso {
 
         Buff Tappo = new Buff("Hullun tai mafian kyky tappaa", 0, tappo);
         Buff Healaus = new Buff("Lääkäri healaa", 0, healaus);
+        
+        
         Buff Scannaus = new Buff("Poliisi scannaa", 0, PoliisiScanni);
 
         Kyky YleinenTappo = new NormiKyky("Mafia tappaa", Tappo, true);
@@ -71,16 +78,18 @@ public class AlkuperainenMafiooso {
         Kyky Lynkkays = new NormiKyky("KansaLoytaaJaTappaa", Tappo, true);
         Kyky heali = new NormiKyky("Lääkäri healaa", Healaus, true);
         Skannaus scanni = new Skannaus("Poliisi scannaa", Scannaus);
-
+        Healaus.lisaaErikoisViittaus(YleinenTappo);
+        Healaus.lisaaErikoisViittaus(HulluTappo);
+        
 
         ArrayList<Rooli> yksinkretainen = new ArrayList<Rooli>();
         yksinkretainen.add(mafia);
         scanni.Lisaa(yksinkretainen, "Mafia");
 
         ArrayList<Faasi> faasit = new ArrayList<Faasi>();
-        faasit.add(new Faasi("Yo", this.hallitsija, this.pelattavat));
-        faasit.add(new Faasi("Paiva", this.hallitsija, this.pelattavat));
-        Peli peli = new Peli("PerusMafiooso", this.rajapinta);
+        faasit.add(new Faasi("Yo", this.hallitsija));
+        faasit.add(new Faasi("Paiva", this.hallitsija));
+        Peli peli = new Peli("PerusMafiooso", this.rajapinta, this.logit);
         peli.asetaFaasit(faasit);
         peli.asetaPelaajat(this.pelattavat);
         faasit.get(0).Lisaa(YleinenTappo, this.misc.Etsi(this.misc.Muutos(this.pelattavat), mafia));

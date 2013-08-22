@@ -12,6 +12,7 @@ public class Pelaaja {
 
     private String nimi;
     private String salasana;
+    private Statistiikka statistics;
 
 
     /**
@@ -42,4 +43,15 @@ public class Pelaaja {
     public String PalautaNimi() {
         return this.nimi;
     }
+    
+    public void setStatistics(Statistiikka stat)
+    {
+    this.statistics = stat;
+    }
+    public Statistiikka palautaStatistiikka()
+    {
+    return this.statistics;
+    }
+
+    
 }

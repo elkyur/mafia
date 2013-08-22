@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * Tämä luokka vastaa Tiimeistä 
+ * Tämä luokka vastaa Tiimeistä
  */
 public class Tiimi implements Pelattava {
 
@@ -18,7 +18,7 @@ public class Tiimi implements Pelattava {
     private ArrayList<Hahmo> members;
 
     /**
-     * 
+     *
      * @param nimi
      */
     public Tiimi(String nimi) {
@@ -28,7 +28,7 @@ public class Tiimi implements Pelattava {
     }
 
     /**
-     * 
+     *
      * Asettaa toimiiko tiimi tiiminä
      */
     public void AsetaWorkAsTeam(boolean abc) {
@@ -37,7 +37,7 @@ public class Tiimi implements Pelattava {
     }
 
     /**
-     * 
+     *
      * Lisää pelaajan tiimiin
      */
     public void LisaaPelaaja(Hahmo hahmo) {
@@ -46,7 +46,7 @@ public class Tiimi implements Pelattava {
     }
 
     /**
-     * 
+     *
      * Poista tiimistä pelaajan, palautta true jos onnistui
      */
     public boolean poistaPelaaja(Hahmo hahmo) {
@@ -59,7 +59,7 @@ public class Tiimi implements Pelattava {
     }
 
     /**
-     * 
+     *
      * Palauttaa nimen
      */
     @Override
@@ -68,7 +68,7 @@ public class Tiimi implements Pelattava {
     }
 
     /**
-     * 
+     *
      * Palauttaa toimiiko tiiminä
      */
     @Override
@@ -77,7 +77,7 @@ public class Tiimi implements Pelattava {
     }
 
     /**
-     * 
+     *
      * Palauttaa koko tiimin
      */
     @Override
@@ -86,7 +86,7 @@ public class Tiimi implements Pelattava {
     }
 
     /**
-     * 
+     *
      * Palauttaa onko tiimi viellä elsosa
      */
     @Override
@@ -95,5 +95,21 @@ public class Tiimi implements Pelattava {
             return false;
         }
         return true;
+    }
+    /**
+     *
+     * Poistetaan tiimistä, palauttaa true jos tiimi on viellä elossa. 
+     */
+    @Override
+    public boolean poistaTiimista(Hahmo hahmo) {
+        if (this.members.contains(hahmo)) {
+            this.members.remove(hahmo);
+            if (this.members.isEmpty()) {
+                return true;
+            }
+
+        }
+        return false;
+
     }
 }

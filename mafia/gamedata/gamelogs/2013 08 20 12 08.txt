@@ -1,0 +1,28 @@
+Pelissä olivat mukana seuraavat
+Pahat mafiat
+player8 : Mafia
+player6 : Mafia
+---
+Hyvät kansalaiset
+player2 : heaalaja
+player7 : Poliisi
+player1 : Kansalainen
+player4 : Kansalainen
+player5 : Kansalainen
+---
+player3 : Hullu
+---
+Yo
+player2: Lääkäri healaa :player2
+player8, player6: Mafia tappaa :player5
+player3: Hullu tappaa :player3
+player7: Poliisi scannaa :player4
+Paiva
+player8, player6, player2, player7, player1, player4: KansaLoytaaJaTappaa :player6
+Yo
+player2: Lääkäri healaa :player2
+player8: Mafia tappaa :player2
+player7: Poliisi scannaa :player4
+Paiva
+player8, player2, player7, player1, player4: KansaLoytaaJaTappaa :player8
+Pelin voitti: Hyvät kansalaiset

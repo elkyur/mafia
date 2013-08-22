@@ -30,6 +30,16 @@ public class TekstiRajapinta {
         this.lukija = lukija;
     }
 
+    public void PelaajaListaus(ArrayList<Pelattava> pelattavat) {
+        for (Pelattava pelattava: pelattavat)
+        {
+        for (Hahmo hahmo: pelattava.getTeam())
+        {
+        System.out.println(hahmo.getOmistajanNimi());
+        }
+        }
+    }
+
     /**
      * 
      * @param hahmot
@@ -66,6 +76,7 @@ public class TekstiRajapinta {
         System.out.println("[3] Manuaalisesti uudellen järjestä tiimit");
         System.out.println("[4] Aloita aanestys");
         System.out.println("[5] Listaa faasin kyvyt");
+        System.out.println("[6] Listaa elossa olevat pelaajat");
 
 
     }
@@ -85,11 +96,17 @@ public class TekstiRajapinta {
             } else if (vastaus.equals("1")) {
                 printtaaTiimit(pelattavat);
             } else if (vastaus.equals("5")) {
-                ListaaKyvyt(faasi.palautaKokoHomma());
+                ListaaKyvyt(faasi.palautaAtribuutit());
+            }
+            else if (vastaus.equals("6"))
+            {
+                PelaajaListaus(pelattavat);
             }
         }
 
     }
+    
+   
 
     /**
      * 

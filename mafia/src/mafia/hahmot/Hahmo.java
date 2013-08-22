@@ -231,4 +231,13 @@ public class Hahmo implements Pelattava {
         }
 
     }
+
+    @Override
+    public boolean poistaTiimista(Hahmo hahmo) {
+        if(hahmo.equals(this))
+        {
+        return true;
+        }
+        return false;
+    }
 }
