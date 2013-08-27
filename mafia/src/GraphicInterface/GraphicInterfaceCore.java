@@ -21,10 +21,10 @@ public class GraphicInterfaceCore extends JFrame {
     private JMenuItem UusiPeli, Poistu, LisaaBuffi, LisaaKyky, LisaaRooli, LiitaRooliinKyky, lisaaFaasi, ConfigFaasinKyvyt, LisaaPelaaja, ListaaInfo;
     private JPanel Gamechooser, infopanelli;
     private JPanel Alkupanelli;
-    private JPanerManager manager;
+    private PanelliManageri manager;
     public Container pane;
 
-    public GraphicInterfaceCore(JPanerManager manager) {
+    public GraphicInterfaceCore(PanelliManageri manager) {
          this.manager = manager;
          
          ConfigurateMenu();

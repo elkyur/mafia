@@ -5,7 +5,7 @@
 package mafia;
 
 
-import GraphicInterface.JPanerManager;
+import GraphicInterface.PanelliManageri;
 import GraphicInterface.GraphicInterfaceCore;
 import java.io.*;
 import java.util.*;
@@ -61,7 +61,7 @@ public class Mafia {
         PelinRakentaja rakentaja = new PelinRakentaja();
         rakentaja.asetaParamaterit();
         PeliKaynnistaja kaynnistaja = new PeliKaynnistaja();
-        JPanerManager manager = new JPanerManager(rakentaja, kaynnistaja);
+        PanelliManageri manager = new PanelliManageri(rakentaja, kaynnistaja);
         
       //  manager.LoadAll();
         GraphicInterfaceCore valikko = new GraphicInterfaceCore(manager);

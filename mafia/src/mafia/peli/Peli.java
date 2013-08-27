@@ -4,7 +4,7 @@
  */
 package mafia.peli;
 
-import GraphicInterface.JPanerManager;
+import GraphicInterface.PanelliManageri;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class Peli {
     private ArrayList<Faasi> faasiArray;
     private ArrayList<Pelattava> PelissaMukana;
     private TekstiRajapinta tekstirajapinta;
-    private JPanerManager manageri;
+    private PanelliManageri manageri;
     private AanestysSysteemi aanestysSysteemi;
     private LogWriter logikiroittaja;
     private boolean graafisenKayttaminen;
@@ -45,7 +45,7 @@ public class Peli {
 
     }
 
-    public Peli(String nimi, JPanerManager paneeli, LogWriter kirjoittaja) {
+    public Peli(String nimi, PanelliManageri paneeli, LogWriter kirjoittaja) {
 
         this.graafisenKayttaminen = true;
         this.manageri = paneeli;

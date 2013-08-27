@@ -5,7 +5,7 @@
 package mafia.peli.ValmiiksAsetetut;
 
 import GraphicInterface.GraphicInterfaceCore;
-import GraphicInterface.JPanerManager;
+import GraphicInterface.PanelliManageri;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
@@ -34,7 +34,7 @@ public class AlkuperainenMafiooso {
     private BuffienHallitsija hallitsija;
     private Misc misc;
     private TekstiRajapinta rajapinta;
-    private JPanerManager GraphicManager;
+    private PanelliManageri GraphicManager;
     private LogWriter logit;
     private boolean way;
     private GraphicRunHelper helper;
@@ -56,7 +56,7 @@ public class AlkuperainenMafiooso {
 
     }
 
-    public AlkuperainenMafiooso(ArrayList<Pelaaja> pelaajat, Sekoittaja sekoittaja, JPanerManager core) {
+    public AlkuperainenMafiooso(ArrayList<Pelaaja> pelaajat, Sekoittaja sekoittaja, PanelliManageri core) {
         this.GraphicManager = core;
         this.pelattavat = new ArrayList<Pelattava>();
         this.logit = new LogWriter();

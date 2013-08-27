@@ -28,13 +28,13 @@ import mafia.peli.ReadWriting.PelinRakentaja;
  * @author Elkyur
  *
  */
-public final class JPanerManager {
+public final class PanelliManageri {
 
     private JButton aloitaFaasi;
     private GameStartingMenuAction action;
-    private JPanel GameChooser, info, UnderGameChooser, ButtonPanel, InsideTheGame, ButtonPanelInsideTheGame, OtherStuffInsideTheGame;
-    private JList leftlist, rightlist, hahmoList, kykyList;
-    private JButton Valinta, poistu, LisaaUusi, CustomGame, BasicGame;
+    private JPanel GameChooser, info, ButtonPanel, InsideTheGame, ButtonPanelInsideTheGame, OtherStuffInsideTheGame;
+    JList hahmoList, kykyList;
+    private JButton poistu, LisaaUusi, CustomGame, BasicGame;
     private PelinRakentaja rakentaja;
     private ArrayList<Pelaaja> pelaajat;
     private String[] pelaajaVector;
@@ -45,7 +45,7 @@ public final class JPanerManager {
     private GraphicRunHelper Peli;
     private valintaBlokki uusiBlokki;
 
-    public JPanerManager(PelinRakentaja rakentaja, PeliKaynnistaja kaynnistaja) throws FileNotFoundException {
+    public PanelliManageri(PelinRakentaja rakentaja, PeliKaynnistaja kaynnistaja) throws FileNotFoundException {
 
         this.rakentaja = rakentaja;
         this.hahmoList = new JList();
@@ -56,7 +56,7 @@ public final class JPanerManager {
 
         this.action = new GameStartingMenuAction();
         LoadAll();
-        KokeilleJotakinUutta();
+   
     }
 
     public void setContainer(Container pane) {
@@ -67,9 +67,9 @@ public final class JPanerManager {
         ConfigaaButtonit();
 
         this.GameChooser = new JPanel();
-        this.UnderGameChooser = new JPanel();
+
         this.GameChooser.setLayout(new BorderLayout());
-        this.GameChooser.add(this.UnderGameChooser, BorderLayout.CENTER);
+
         this.GameChooser.add(this.ButtonPanel, BorderLayout.SOUTH);
 
 
@@ -77,34 +77,19 @@ public final class JPanerManager {
 
         rakentaja.LataaPelaajat();
         this.pelaajat = rakentaja.PalautaPelaajat();
-        this.pelaajaVector = new String[this.pelaajat.size()];
-        InitPelaajaVector();
 
-        rightlist = new JList();
-        rightlist.setVisibleRowCount(10);
-        leftlist = new JList(pelaajaVector);
-        leftlist.setVisibleRowCount(10);
-        leftlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        Valinta = new JButton("Valitaan");
-        Valinta.addActionListener(this.action);
 
         this.uusiBlokki = new valintaBlokki("Valitse Näistä", 100, this.pelaajat);
         JPanel panel = this.uusiBlokki.palautaBlokki();
-        // Adding stuff
+        this.GameChooser.add(panel, BorderLayout.CENTER);
 
-        UnderGameChooser.add(new JScrollPane(leftlist));
-        UnderGameChooser.add(new JScrollPane(rightlist));
-        UnderGameChooser.add(Valinta);
-        UnderGameChooser.add(panel);
+
+
 
     }
-    
-    public void KokeilleJotakinUutta()
-    {
-   
-    
-    }
+
+  
 
     private void ConfigaaButtonit() {
 
@@ -166,16 +151,17 @@ public final class JPanerManager {
         this.InsideTheGame.add(scrollauspnaeelli2);
         hahmoList.setVisibleRowCount(15);
         kykyList.setVisibleRowCount(15);
-        
         this.aloitaFaasi = new JButton("Aloita faasi");
         this.aloitaFaasi.addActionListener(this.action);
         this.KyseisetHahmotValittuina = new ArrayList<Hahmo>();
         this.InsideTheGame.add(this.aloitaFaasi);
         this.InsideTheGame.setVisible(false);
     }
+    
+    
+  
 
     public void Console(Faasi faasi, ArrayList<Pelattava> pelattavat) {
-
 
         String Taulukko[] = new String[faasi.LaskePelattavat()];
         String KykyTaulukko[] = new String[faasi.palautaAtribuutit().size()];
@@ -191,19 +177,17 @@ public final class JPanerManager {
             }
         }
         int j = 0;
-        for (Atribuutti atr : faasi.palautaAtribuutit())
-        {
-        String k = atr.palautaKyky().palautaNimi();
-        KykyTaulukko[j] = k;
-        j++;
+        for (Atribuutti atr : faasi.palautaAtribuutit()) {
+            String k = atr.palautaKyky().palautaNimi();
+            KykyTaulukko[j] = k;
+            j++;
         }
-        
+
         this.hahmoList.setListData(Taulukko);
         this.kykyList.setListData(KykyTaulukko);
         // this.InsideTheGame.setVisible(true);
         pane.validate();
         pane.repaint();
-
 
     }
 
@@ -220,51 +204,40 @@ public final class JPanerManager {
 
 
             // pelaajate.clear();
-             //  selected.clear();
-               
-            if (e.getSource() == Valinta) {
-                rightlist.setListData(leftlist.getSelectedValues());
-                int[] indexit = leftlist.getSelectedIndices();
-
-                for (int i = 0; i < indexit.length; i++) {
-                    selected.add(pelaajat.get(indexit[i]));
-                }
+            //  selected.clear();
 
 
-            } else if (e.getSource() == BasicGame) {
+            if (e.getSource() == BasicGame) {
 
+                ArrayList<Pelaaja> valittujenlista = uusiBlokki.palautavalitut();
 
-                if (selected.size() > 7) {
+                if (valittujenlista.size() > 7) {
+
                     pane.removeAll();
                     pane.add(InsideTheGame);
                     InsideTheGame.setVisible(true);
                     pane.validate();
                     pane.repaint();
-                    kaynnistaja.asetaPelaajat(selected);
+                    kaynnistaja.asetaPelaajat(valittujenlista);
                     try {
                         Peli = kaynnistaja.LaitaePerusMafioosoPaalle();
                     } catch (FileNotFoundException ex) {
-                        Logger.getLogger(JPanerManager.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PanelliManageri.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (UnsupportedEncodingException ex) {
-                        Logger.getLogger(JPanerManager.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PanelliManageri.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     Peli.Run();
                     //   String k = scan.nextLine();
 
-
                 }
-            }
-            
-            else if (e.getSource() == aloitaFaasi)
-            {
-            pane.removeAll();
-            pane.validate();
-            pane.repaint();
-            
+
+            } else if (e.getSource() == aloitaFaasi) {
+                pane.removeAll();
+                pane.validate();
+                pane.repaint();
+
             }
         }
-        
-        
     }
 }

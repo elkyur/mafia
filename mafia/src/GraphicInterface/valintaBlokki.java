@@ -5,6 +5,7 @@
 package GraphicInterface;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -28,9 +29,11 @@ public final class valintaBlokki {
     private ArrayList<String> uudet, valitutuudet;
     private int selectionlimit;
     private Listener listen;
-    
+    private Container pane;
 
-    public valintaBlokki(String nimi, int selectionlimit, ArrayList<Pelaaja> pelaaja) {
+
+    public valintaBlokki(String nimi, int selectionlimit, ArrayList<Pelaaja> pelaaja ) {
+        this.pane = pane;
         this.pelaajat = pelaaja;
         this.listen = new Listener();
         this.nimi = nimi;
@@ -38,6 +41,8 @@ public final class valintaBlokki {
         this.valitutuudet = new ArrayList<String>();
         this.selectionlimit = selectionlimit;
         Configaa();
+        this.valitutPelaajat = new ArrayList<Pelaaja>();
+
 
     }
 
@@ -46,6 +51,10 @@ public final class valintaBlokki {
     }
 
     public void Configaa() {
+
+        InitLeftString();
+        this.left = new JList();
+        this.right = new JList();
         this.Lisaa = new JButton("Lisaa");
         this.Lisaa.addActionListener(this.listen);
         this.Tyhjenna = new JButton("Tyhjenna");
@@ -57,28 +66,28 @@ public final class valintaBlokki {
         this.Leftpanel = new JPanel();
         this.Rightpanel = new JPanel();
         this.FusionPanel = new JPanel();
+        this.FusionPanel.add(new JScrollPane(left));
+        this.FusionPanel.add(new JScrollPane(right));
+        this.FusionPanel.add(this.Buttonpanel);
         this.Mainpanel = new JPanel();
         this.Mainpanel.setLayout(new BorderLayout());
         this.label = new JLabel(this.nimi);
         this.Mainpanel.add(this.label, BorderLayout.NORTH);
         this.Mainpanel.add(this.FusionPanel, BorderLayout.CENTER);
         this.FusionPanel.setLayout(new BoxLayout(this.FusionPanel, BoxLayout.X_AXIS));
-        this.left = new JList();
-        this.right = new JList();
-        
-        
-        this.FusionPanel.add(left);
-        this.FusionPanel.add(right);
-        this.FusionPanel.add(this.Buttonpanel);
-        
-         left.setVisibleRowCount(10);
+
+
+
+
+
+        left.setVisibleRowCount(10);
         left.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         left.setListData(this.uudet.toArray());
-        
-        
-        
+
+
+
         right.setVisibleRowCount(10);
-        InitLeftString();
+
     }
 
     public void DisplayData() {
@@ -101,48 +110,50 @@ public final class valintaBlokki {
             this.uudet.add(this.pelaajat.get(i).PalautaNimi());
         }
     }
-      public void InitRightString() {
-        this.valitutuudet.clear();
-        for (int i = 0; i < this.valitutuudet.size(); i++) {
-            this.valitutuudet.add(this.pelaajat.get(i).PalautaNimi());
+
+    public void InitRightString() {
+         this.valitutuudet.clear();
+        for (int i = 0; i < this.valitutPelaajat.size(); i++) {
+            this.valitutuudet.add(this.valitutPelaajat.get(i).PalautaNimi());
         }
     }
-    
-    private class Listener implements ActionListener
-     {
+
+    public void PrinttaaValitut() {
+        for (Pelaaja pelaaja : valitutPelaajat) {
+            System.out.println("Valittu: " + pelaaja.PalautaNimi());
+        }
+    }
+
+    private class Listener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-           if(e.getSource() == Lisaa)
-           {
-           int j = 0;    
-           if (valitutPelaajat.size() < selectionlimit)    
-               
-           j = left.getSelectedIndex();
-           if (!valitutPelaajat.contains(pelaajat.get(j)))
-           {
-           valitutPelaajat.add(pelaajat.get(j));
-           InitRightString();
-           right.setListData(valitutuudet.toArray());
-           Mainpanel.validate();
-           }
-           
-               
-           }
-           else if (e.getSource() == Tyhjenna)
-           {
-           valitutPelaajat.clear();
-           InitRightString();
-           right.setListData(valitutuudet.toArray());
-           Mainpanel.validate();
-           
-           }
-        }
-        
+            if (e.getSource() == Lisaa) {
+                int j = 0;
+                if (valitutPelaajat.size() < selectionlimit) {
+                }
+                j = left.getSelectedIndex();
+                if (!valitutPelaajat.contains(pelaajat.get(j))) {
+                    valitutPelaajat.add(pelaajat.get(j));
        
-        
-        
+                    InitRightString();
+
+                    right.setListData(valitutuudet.toArray());
+    
+                    right.validate();
+                    right.repaint();
+                 
+                }
+
+
+            } else if (e.getSource() == Tyhjenna) {
+                valitutPelaajat.clear();
+                
+                InitRightString();
+                right.setListData(valitutuudet.toArray());
+                Mainpanel.validate();
+
+            }
+        }
     }
-    
-    
 }

@@ -4,7 +4,7 @@
  */
 package mafia.peli;
 
-import GraphicInterface.JPanerManager;
+import GraphicInterface.PanelliManageri;
 import java.util.ArrayList;
 import mafia.hahmot.Pelaaja;
 import mafia.hahmot.Pelattava;
@@ -18,14 +18,14 @@ import mafia.peli.YhdenAsianLuokkia.AanestysSysteemi;
 public class GraphicRunHelper {
     
     private LogWriter kirjoittaja;
-    private JPanerManager paneeli;
+    private PanelliManageri paneeli;
     private ArrayList<Faasi> faasiArray;
     private ArrayList<Pelattava> PelissaMukana;
     private int PhaseNumber;
     private Faasi onRunning;
     private AanestysSysteemi aanestyssteemi;
     
-    public GraphicRunHelper(JPanerManager paneeli)
+    public GraphicRunHelper(PanelliManageri paneeli)
     {
     this.paneeli = paneeli;    
     this.PhaseNumber = 0;

@@ -4,7 +4,7 @@
  */
 package mafia.peli;
 
-import GraphicInterface.JPanerManager;
+import GraphicInterface.PanelliManageri;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -211,7 +211,7 @@ public class Faasi {
      * Käynnistää faasin graafisella liittymällä
      */
     
-    public void GraphicRun(AanestysSysteemi aanestysSysteemi, JPanerManager manageri, LogWriter kirjoittaja) {
+    public void GraphicRun(AanestysSysteemi aanestysSysteemi, PanelliManageri manageri, LogWriter kirjoittaja) {
         UudistaJaPaivita();
         manageri.Console(this, this.pelattavat);
 
