@@ -11,8 +11,8 @@ package Settings;
 
 
 public class Settings {
-    public static final int windowWidth = 300;
-    public static final int windowHeight = 500;
+    public static final int windowWidth = 700;
+    public static final int windowHeight = 600;
     
     public static final String PelaajatLocation = "gamedata/structures/Pelaajat.txt";
     public static final String faasitlocation = "gamedata/structures/faasit.txt";
@@ -21,4 +21,5 @@ public class Settings {
     public static final String kyvytlocation = "gamedata/structures/kyvyt.txt";
     public static final String buffitlocation = "gamedata/structures/buffs.txt";
     public static final String buffiTyyppiLocation = "gamedata/asetukset/buffityyppiennimitykset.txt";
+    public static final String buffitErikoisViittaukset = "gamedata/asetukset/buffitErikoisViittaukset.txt";
 }

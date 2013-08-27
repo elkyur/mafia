@@ -4,6 +4,7 @@
  */
 package mafia.peli;
 
+import GraphicInterface.JPanerManager;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -15,32 +16,50 @@ import mafia.peli.YhdenAsianLuokkia.AanestysSysteemi;
 import mafia.userinterface.TekstiRajapinta;
 
 /**
- * Kantaa vastuun koko pelistä. 
+ * Kantaa vastuun koko pelistä.
  *
  */
 public class Peli {
 
-
     private ArrayList<Faasi> faasiArray;
     private ArrayList<Pelattava> PelissaMukana;
     private TekstiRajapinta tekstirajapinta;
+    private JPanerManager manageri;
     private AanestysSysteemi aanestysSysteemi;
     private LogWriter logikiroittaja;
+    private boolean graafisenKayttaminen;
+    private boolean logWrittaa;
 
     /**
-     * 
+     *
      * @param nimi
      * @param tekstirajapinta
      */
+    
+    
     public Peli(String nimi, TekstiRajapinta tekstirajapinta, LogWriter kirjoittaja) {
-     
+
         this.tekstirajapinta = tekstirajapinta;
         this.logikiroittaja = kirjoittaja;
-        
+        this.graafisenKayttaminen = false;
+
     }
 
+    public Peli(String nimi, JPanerManager paneeli, LogWriter kirjoittaja) {
+
+        this.graafisenKayttaminen = true;
+        this.manageri = paneeli;
+        this.logikiroittaja = kirjoittaja;
+   
+
+    }
+    
+    public void logWritingSet()
+    {
+    
+    }
     /**
-     * 
+     *
      * asettaa äänestysysteemin
      */
     public void asetaAanestysSysteemi(AanestysSysteemi aanestysSysteemi) {
@@ -48,7 +67,7 @@ public class Peli {
     }
 
     /**
-     * 
+     *
      * asettaa faasilistan
      */
     public void asetaFaasit(ArrayList<Faasi> faasit) {
@@ -56,7 +75,7 @@ public class Peli {
     }
 
     /**
-     * 
+     *
      * asettaa viittauksen pelajiin
      */
     public void asetaPelaajat(ArrayList<Pelattava> pelaajat) {
@@ -65,17 +84,21 @@ public class Peli {
     }
 
     /**
-     *  käynnistää pelin
+     * käynnistää pelin
      */
     public void Run() throws FileNotFoundException, UnsupportedEncodingException {
         this.logikiroittaja.LogWriterInit(null);
-        this.logikiroittaja.Alkup(this.PelissaMukana);
+         this.logikiroittaja.Alkup(this.PelissaMukana);
         int i = 0;
         while (true) {
-            this.logikiroittaja.AloitaFaasi(this.faasiArray.get(i % this.faasiArray.size()));
-            System.out.println("Koittaa Faasi numero: " + i );
-            this.faasiArray.get(i % this.faasiArray.size()).Run(this.aanestysSysteemi, this.tekstirajapinta, this.logikiroittaja);
-           
+           this.logikiroittaja.AloitaFaasi(this.faasiArray.get(i % this.faasiArray.size()));
+           // Vain ja vain testausta varten
+            System.out.println("Koittaa Faasi numero: " + i);
+            if (this.graafisenKayttaminen == true) {
+                this.faasiArray.get(i % this.faasiArray.size()).GraphicRun(this.aanestysSysteemi, this.manageri, this.logikiroittaja);
+            } else {
+                this.faasiArray.get(i % this.faasiArray.size()).Run(this.aanestysSysteemi, this.tekstirajapinta, this.logikiroittaja);
+            }
             if (!tarkistaJatkuukoPeli()) {
                 this.logikiroittaja.Write("Pelin voitti: " + this.PelissaMukana.get(0).getNimi());
                 this.tekstirajapinta.JulistaVoittaja(this.PelissaMukana.get(0));
@@ -86,9 +109,15 @@ public class Peli {
 
 
     }
+    
+    public void GraphicRun()
+    {
+    
+    
+    }
 
     /**
-     * 
+     *
      * Tarkistaa jatkuuko vielä peli
      */
     public boolean tarkistaJatkuukoPeli() {
@@ -98,8 +127,10 @@ public class Peli {
         return true;
     }
 
+    public ArrayList<Pelattava> PalautaPelaajat() {
+        return this.PelissaMukana;
+    }
     /**
-     * 
+     *
      */
-   
 }

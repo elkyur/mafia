@@ -4,6 +4,8 @@
  */
 package mafia.peli.ValmiiksAsetetut;
 
+import GraphicInterface.GraphicInterfaceCore;
+import GraphicInterface.JPanerManager;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import mafia.peli.YhdenAsianLuokkia.Sekoittaja;
@@ -13,6 +15,7 @@ import mafia.kyvyt.*;
 
 import mafia.peli.BuffienHallitsija;
 import mafia.peli.Faasi;
+import mafia.peli.GraphicRunHelper;
 import mafia.peli.Logit.LogWriter;
 import mafia.peli.Peli;
 import mafia.peli.YhdenAsianLuokkia.AanestysSysteemi;
@@ -21,7 +24,7 @@ import mafia.userinterface.TekstiRajapinta;
 
 /**
  *
- * Massiivinen luokka tämän ohjelman testaamiseksi. 
+ * Massiivinen luokka tämän ohjelman testaamiseksi.
  */
 public class AlkuperainenMafiooso {
 
@@ -31,10 +34,13 @@ public class AlkuperainenMafiooso {
     private BuffienHallitsija hallitsija;
     private Misc misc;
     private TekstiRajapinta rajapinta;
+    private JPanerManager GraphicManager;
     private LogWriter logit;
+    private boolean way;
+    private GraphicRunHelper helper;
 
     /**
-     * 
+     *
      * @param pelaajat
      * @param sekoittaja
      * @param rajapinta
@@ -46,11 +52,22 @@ public class AlkuperainenMafiooso {
         this.rajapinta = rajapinta;
         this.pelattavat = new ArrayList<Pelattava>();
         this.logit = new LogWriter();
+        this.way = false;
 
     }
 
+    public AlkuperainenMafiooso(ArrayList<Pelaaja> pelaajat, Sekoittaja sekoittaja, JPanerManager core) {
+        this.GraphicManager = core;
+        this.pelattavat = new ArrayList<Pelattava>();
+        this.logit = new LogWriter();
+        this.pelaajat = pelaajat;
+        this.sekoittaja = sekoittaja;
+        this.misc = new Misc();
+        this.way = true;
+    }
+
     /**
-     * 
+     *
      */
     public void Run() throws FileNotFoundException, UnsupportedEncodingException {
 
@@ -69,8 +86,8 @@ public class AlkuperainenMafiooso {
 
         Buff Tappo = new Buff("Hullun tai mafian kyky tappaa", 0, tappo);
         Buff Healaus = new Buff("Lääkäri healaa", 0, healaus);
-        
-        
+
+
         Buff Scannaus = new Buff("Poliisi scannaa", 0, PoliisiScanni);
 
         Kyky YleinenTappo = new NormiKyky("Mafia tappaa", Tappo, true);
@@ -80,7 +97,7 @@ public class AlkuperainenMafiooso {
         Skannaus scanni = new Skannaus("Poliisi scannaa", Scannaus);
         Healaus.lisaaErikoisViittaus(YleinenTappo);
         Healaus.lisaaErikoisViittaus(HulluTappo);
-        
+
 
         ArrayList<Rooli> yksinkretainen = new ArrayList<Rooli>();
         yksinkretainen.add(mafia);
@@ -89,9 +106,7 @@ public class AlkuperainenMafiooso {
         ArrayList<Faasi> faasit = new ArrayList<Faasi>();
         faasit.add(new Faasi("Yo", this.hallitsija));
         faasit.add(new Faasi("Paiva", this.hallitsija));
-        Peli peli = new Peli("PerusMafiooso", this.rajapinta, this.logit);
-        peli.asetaFaasit(faasit);
-        peli.asetaPelaajat(this.pelattavat);
+
         faasit.get(0).Lisaa(YleinenTappo, this.misc.Etsi(this.misc.Muutos(this.pelattavat), mafia));
         faasit.get(0).Lisaa(HulluTappo, this.misc.Etsi(this.misc.Muutos(this.pelattavat), hullu));
         faasit.get(0).Lisaa(heali, this.misc.Etsi(this.misc.Muutos(this.pelattavat), hilleri));
@@ -100,8 +115,23 @@ public class AlkuperainenMafiooso {
         this.hallitsija.asetaTappo(tappo);
         this.hallitsija.asetaMuutosEsto(healaus);
         AanestysSysteemi aanestysysteemi = new AanestysSysteemi(this.misc.Muutos(this.pelattavat));
-        peli.asetaAanestysSysteemi(aanestysysteemi);
-        peli.Run();
+
+        if (this.way == true) {
+            this.helper = new GraphicRunHelper(this.GraphicManager);
+            helper.asetaFaasit(faasit);
+            helper.asetaPelaajat(this.pelattavat);
+            helper.getNext();
+         //   helper.Run();
+        } else {
+            Peli peli = new Peli("PerusMafiooso", this.rajapinta, this.logit);
+            peli.asetaFaasit(faasit);
+            peli.asetaPelaajat(this.pelattavat);
+            peli.asetaAanestysSysteemi(aanestysysteemi);
+            peli.Run();
+        }
+        
+
+
 
 
 
@@ -113,13 +143,20 @@ public class AlkuperainenMafiooso {
     }
 
     /**
-     * 
+     *
      * @param mafia
      * @param hullu
      * @param hilleri
      * @param poliisi
      * @param kansalainen
      */
+    
+     public GraphicRunHelper Steal()
+      {
+        
+        return this.helper;
+        }
+    
     public void RoolitInitToiminallisuus(Rooli mafia, Rooli hullu, Rooli hilleri, Rooli poliisi, Rooli kansalainen) {
 
         // pelaajien lukumaarat:

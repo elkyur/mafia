@@ -1,0 +1,15 @@
+Pelissä olivat mukana seuraavat
+Pahat mafiat
+player5 : Mafia
+player7 : Mafia
+---
+Hyvät kansalaiset
+player4 : heaalaja
+player2 : Poliisi
+player1 : Kansalainen
+player6 : Kansalainen
+player3 : Kansalainen
+---
+player8 : Hullu
+---
+Yo

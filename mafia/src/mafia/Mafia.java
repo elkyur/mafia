@@ -4,7 +4,9 @@
  */
 package mafia;
 
-import GraphicInterface.gamemenu;
+
+import GraphicInterface.JPanerManager;
+import GraphicInterface.GraphicInterfaceCore;
 import java.io.*;
 import java.util.*;
 import mafia.hahmot.Hahmo;
@@ -22,6 +24,8 @@ import mafia.kyvyt.*;
 import mafia.peli.Logit.LogWriter;
 import mafia.peli.ReadWriting.Kirjoittaja;
 import mafia.peli.ReadWriting.Loader;
+import mafia.peli.ReadWriting.PeliKaynnistaja;
+import mafia.peli.ReadWriting.PelinRakentaja;
 import mafia.peli.ValmiiksAsetetut.AlkuperainenMafiooso;
 import mafia.userinterface.TekstiRajapinta;
 
@@ -36,19 +40,35 @@ public class Mafia {
      */
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
       // RectangleProgram rectObj = new RectangleProgram();
-       //gamemenu valikko = new gamemenu();
+       
+        GraphicsTest();
+     
         //  KokeilelArrayListisa();
-        //KokeillePelia();
+       //KokeillePelia();
        // LogWrtierTest();
         //FileTest();
         // WriterTest();
-      //  ReadingTest();
-        KirjoittajaTestOsa2();
+     //  ReadingTest();
+       // KirjoittajaTestOsa2();
     }
 
     /**
      *
      */
+    
+    public static void GraphicsTest() throws IOException
+    {
+        PelinRakentaja rakentaja = new PelinRakentaja();
+        rakentaja.asetaParamaterit();
+        PeliKaynnistaja kaynnistaja = new PeliKaynnistaja();
+        JPanerManager manager = new JPanerManager(rakentaja, kaynnistaja);
+        
+      //  manager.LoadAll();
+        GraphicInterfaceCore valikko = new GraphicInterfaceCore(manager);
+    
+    
+    }
+    
     public static void KokeilleYhtasuuruutta() {
 
         BuffinTyyppi tyyppi = new BuffinTyyppi("k");
@@ -238,18 +258,18 @@ public class Mafia {
     
     }
     
-    public static void ReadingTest() throws FileNotFoundException
-    {
-    Loader loader = new Loader();
-    loader.setPelaajat(new File("gamedata/structures/Pelaajat.txt"));
-    ArrayList<Pelaaja> pelaajat = loader.palautaPelaajat();
-    for (Pelaaja pelaaja: pelaajat)
-    {
-    System.out.println(pelaaja.PalautaNimi());
-    System.out.println(pelaaja.palautaStatistiikka().palautaVoittojenLkm());
-    }
+    public static void ReadingTest() throws FileNotFoundException {
+        Loader loader = new Loader();
+        loader.setPelaajat(new File("gamedata/structures/Pelaajat.txt"));
+        ArrayList<Pelaaja> pelaajat = loader.palautaPelaajat();
+        for (Pelaaja pelaaja : pelaajat) {
+            System.out.println(pelaaja.PalautaNimi());
+            System.out.println(pelaaja.palautaStatistiikka().palautaVoittojenLkm());
+        }
     
     }
+    
+   
     
     public static void KirjoittajaTestOsa2() throws IOException
     {

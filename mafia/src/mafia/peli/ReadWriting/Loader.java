@@ -6,6 +6,8 @@ package mafia.peli.ReadWriting;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -20,15 +22,28 @@ import mafia.kyvyt.BuffinTyyppi;
  */
 public class Loader {
     
-    private File pelaajat;
-    private File buffityypit;
-    private Scanner buffityyppilukija;
-    private Scanner pelaajaLukija;
+    private File pelaajat, hahmot, buffit, kyvyt, faasit, tiimit, buffityypit;
+    private Scanner buffityyppilukija, pelaajaLukija, RooliLukija, KykyLukija, FaasiLukija, TiimiLukija, buffilukija;
+
     
     public Loader() {
         
         
         
+    }
+       public void asetaTietokannat(File pelaajat, File hahmot, File buffit, File kyvyt, File faasit, File tiimit) throws IOException {
+        this.buffit = buffit;
+        this.buffilukija = new Scanner(buffit);
+        this.pelaajat = pelaajat;
+        this.pelaajaLukija = new Scanner(pelaajat);
+        this.kyvyt = kyvyt;
+        this.KykyLukija = new Scanner(kyvyt);
+        this.faasit = faasit;
+        this.FaasiLukija = new Scanner(faasit);
+        this.hahmot = hahmot;
+        this.RooliLukija = new Scanner(hahmot);
+        this.tiimit = tiimit;
+        this.TiimiLukija = new Scanner(tiimit);
     }
     
     public void setBuffiLukija(File file) throws FileNotFoundException
