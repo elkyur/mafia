@@ -117,7 +117,7 @@ public class AlkuperainenMafiooso {
         AanestysSysteemi aanestysysteemi = new AanestysSysteemi(this.misc.Muutos(this.pelattavat));
 
         if (this.way == true) {
-            this.helper = new GraphicRunHelper(this.GraphicManager);
+            this.helper = new GraphicRunHelper(this.GraphicManager, this.hallitsija);
             helper.asetaFaasit(faasit);
             helper.asetaPelaajat(this.pelattavat);
             helper.getNext();

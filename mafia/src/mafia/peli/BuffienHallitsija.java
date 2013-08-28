@@ -112,7 +112,7 @@ public class BuffienHallitsija {
                 
             }
         }
-        return null;
+        return "";
     }
 
     /**

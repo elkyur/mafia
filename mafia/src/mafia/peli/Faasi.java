@@ -205,6 +205,11 @@ public class Faasi {
 
     }
     
+    public void Sort()
+    {
+    Collections.sort(this.KykyJaKayttaja, this.comp);
+    }
+    
        /**
      *
      *
@@ -330,5 +335,10 @@ public class Faasi {
             }
         }
         return i;
+    }
+    
+    public BuffienHallitsija PalautaHallitsija()
+    {
+        return this.buffiHallitsija;
     }
 }

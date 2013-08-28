@@ -4,6 +4,7 @@
  */
 package GraphicInterface;
 
+import GraphicInterface.pikkuObjektit.messagePanel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,11 +23,14 @@ public class GraphicInterfaceCore extends JFrame {
     private JPanel Gamechooser, infopanelli;
     private JPanel Alkupanelli;
     private PanelliManageri manager;
-    public Container pane;
+    private Container pane;
+
+   
+    
 
     public GraphicInterfaceCore(PanelliManageri manager) {
-         this.manager = manager;
          
+         this.manager = manager;
          ConfigurateMenu();
          ImportStuff();
        

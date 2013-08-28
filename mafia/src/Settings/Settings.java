@@ -11,7 +11,7 @@ package Settings;
 
 
 public class Settings {
-    public static final int windowWidth = 700;
+    public static final int windowWidth = 900;
     public static final int windowHeight = 600;
     
     public static final String PelaajatLocation = "gamedata/structures/Pelaajat.txt";

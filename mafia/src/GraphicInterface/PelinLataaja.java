@@ -7,10 +7,13 @@ package GraphicInterface;
 import GraphicInterface.pikkuObjektit.KykyjenListaus;
 import GraphicInterface.pikkuObjektit.PelattavienListaus;
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import mafia.hahmot.Pelattava;
 import mafia.peli.Faasi;
 
 /**
@@ -19,15 +22,15 @@ import mafia.peli.Faasi;
  */
 public class PelinLataaja {
     
-    JPanel mainpanel;
-    JPanel Underpanel;
-    JPanel pelattavienlistaus;
-    JPanel FaasiKyvyt;
-    PelattavienListaus pel;
-    JButton SiirryFaasin;
-    JLabel label;
-    KykyjenListaus listaus;
-    Faasi onRunningFaasi;
+    private JPanel mainpanel;
+    private JPanel Underpanel;
+    private JPanel pelattavienlistaus;
+    private JPanel FaasiKyvyt;
+    private PelattavienListaus pel;
+    private JButton SiirryFaasin;
+    private JLabel label;
+    private KykyjenListaus listaus;
+    private Faasi onRunningFaasi;
     
     
     public PelinLataaja(PelattavienListaus pel)
@@ -35,10 +38,11 @@ public class PelinLataaja {
     this.listaus = new KykyjenListaus();
     FaasiKyvyt = this.listaus.palautaMainPanelli();
     this.label = new JLabel("faasi");
+    this.label.setFont(new Font("Serif", Font.PLAIN, 20));
     this.pel = pel;
     this.mainpanel = new JPanel();
     this.Underpanel = new JPanel();
-    this.Underpanel.setLayout(new BoxLayout(this.mainpanel, BoxLayout.X_AXIS));
+    this.Underpanel.setLayout(new BoxLayout(this.Underpanel, BoxLayout.X_AXIS));
     this.SiirryFaasin = new JButton("Aloita Faasi");
     this.mainpanel.setLayout(new BorderLayout());
     this.mainpanel.add(this.label, BorderLayout.NORTH);
@@ -50,13 +54,15 @@ public class PelinLataaja {
    
     }
     
-    public void UpdateFaasi(Faasi faasi)
+    public void UpdateFaasi(Faasi faasi, ArrayList<Pelattava> pel)
     {
      this.onRunningFaasi = faasi;
-     this.pel.Update();
+     this.pel.Lataa(pel);
      this.listaus.Lataa(faasi.palautaAtribuutit());
+     
      this.mainpanel.validate();
      this.mainpanel.repaint();
+    
      
     }
     
@@ -74,6 +80,8 @@ public class PelinLataaja {
     {
     return this.mainpanel;
     }
+    
+
     
     
     

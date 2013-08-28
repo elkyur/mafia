@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
+import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelaaja;
 
 /**
@@ -29,12 +30,16 @@ public final class valintaBlokki {
     private ArrayList<String> uudet, valitutuudet;
     private int selectionlimit;
     private Listener listen;
-    private Container pane;
+    private ArrayList<Hahmo> hahmot;
+    private int size;
+    private boolean way;
+
+    public valintaBlokki(String nimi, int selectionlimit, int size) {
 
 
-    public valintaBlokki(String nimi, int selectionlimit, ArrayList<Pelaaja> pelaaja ) {
-        this.pane = pane;
-        this.pelaajat = pelaaja;
+
+        this.size = size;
+        // this.pelaajat = pelaaja;
         this.listen = new Listener();
         this.nimi = nimi;
         this.uudet = new ArrayList<String>();
@@ -42,8 +47,15 @@ public final class valintaBlokki {
         this.selectionlimit = selectionlimit;
         Configaa();
         this.valitutPelaajat = new ArrayList<Pelaaja>();
+        this.way = true;
 
 
+    }
+
+    public void Convert() {
+        for (Hahmo hah : this.hahmot) {
+            this.pelaajat.add(hah.palautaOmistaja());
+        }
     }
 
     public void asetaPelaajat(ArrayList<Pelaaja> pelaaja) {
@@ -52,9 +64,10 @@ public final class valintaBlokki {
 
     public void Configaa() {
 
-        InitLeftString();
+        //    InitLeftString();
         this.left = new JList();
         this.right = new JList();
+
         this.Lisaa = new JButton("Lisaa");
         this.Lisaa.addActionListener(this.listen);
         this.Tyhjenna = new JButton("Tyhjenna");
@@ -80,13 +93,23 @@ public final class valintaBlokki {
 
 
 
-        left.setVisibleRowCount(10);
+        left.setVisibleRowCount(size);
+
         left.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //   left.setListData(this.uudet.toArray());
+
+
+
+        right.setVisibleRowCount(size);
+
+    }
+
+    public void lataa(ArrayList<Pelaaja> pel) {
+        this.pelaajat = pel;
+        InitLeftString();
         left.setListData(this.uudet.toArray());
-
-
-
-        right.setVisibleRowCount(10);
+        this.left.validate();
+        left.repaint();
 
     }
 
@@ -105,16 +128,25 @@ public final class valintaBlokki {
     }
 
     public void InitLeftString() {
-        this.uudet.clear();
-        for (int i = 0; i < this.pelaajat.size(); i++) {
-            this.uudet.add(this.pelaajat.get(i).PalautaNimi());
+
+        {
+            this.uudet.clear();
+            for (int i = 0; i < this.pelaajat.size(); i++) {
+                this.uudet.add(this.pelaajat.get(i).PalautaNimi());
+            }
+
         }
+
+
     }
 
     public void InitRightString() {
-         this.valitutuudet.clear();
-        for (int i = 0; i < this.valitutPelaajat.size(); i++) {
-            this.valitutuudet.add(this.valitutPelaajat.get(i).PalautaNimi());
+
+        {
+            this.valitutuudet.clear();
+            for (int i = 0; i < this.valitutPelaajat.size(); i++) {
+                this.valitutuudet.add(this.valitutPelaajat.get(i).PalautaNimi());
+            }
         }
     }
 
@@ -123,6 +155,16 @@ public final class valintaBlokki {
             System.out.println("Valittu: " + pelaaja.PalautaNimi());
         }
     }
+    
+    public void Clear()
+    {
+    
+     this.valitutPelaajat.clear();
+     InitRightString();
+      this.Rightpanel.validate();
+      this.Rightpanel.repaint();
+    
+    }
 
     private class Listener implements ActionListener {
 
@@ -130,25 +172,26 @@ public final class valintaBlokki {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == Lisaa) {
                 int j = 0;
+
                 if (valitutPelaajat.size() < selectionlimit) {
-                }
-                j = left.getSelectedIndex();
-                if (!valitutPelaajat.contains(pelaajat.get(j))) {
-                    valitutPelaajat.add(pelaajat.get(j));
-       
-                    InitRightString();
 
-                    right.setListData(valitutuudet.toArray());
-    
-                    right.validate();
-                    right.repaint();
-                 
-                }
+                    j = left.getSelectedIndex();
+                    if (!valitutPelaajat.contains(pelaajat.get(j))) {
+                        valitutPelaajat.add(pelaajat.get(j));
 
+                        InitRightString();
+
+                        right.setListData(valitutuudet.toArray());
+
+                        right.validate();
+                        right.repaint();
+
+                    }
+                }
 
             } else if (e.getSource() == Tyhjenna) {
                 valitutPelaajat.clear();
-                
+
                 InitRightString();
                 right.setListData(valitutuudet.toArray());
                 Mainpanel.validate();

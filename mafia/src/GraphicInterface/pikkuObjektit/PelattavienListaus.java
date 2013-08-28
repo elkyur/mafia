@@ -29,7 +29,7 @@ public class PelattavienListaus {
     
     public PelattavienListaus(ArrayList<Pelattava> pelattavat)
     {
-     this.pelattavt= pelattavat;
+     this.pelattavt = pelattavat;
      this.listaNimia = new ArrayList<String>();
      Init();
     
@@ -39,6 +39,7 @@ public class PelattavienListaus {
     public void Init()
     {
      this.lista= new JList();
+     this.lista.setVisibleRowCount(12);
      this.mainPanel = new JPanel();
      this.mainPanel.setLayout(new BorderLayout());
      this.label = new JLabel("Pelissä mukana olevat:");
@@ -50,12 +51,14 @@ public class PelattavienListaus {
     
     public void Update()
     {
+
     this.listaNimia.clear();
       for (Pelattava pel : pelattavt) {
             for (Hahmo hahmo : pel.getTeam()) {
                 String k = hahmo.getNimi();
                 k = k + ", " + pel.getNimi();
                 k = k + ": " + hahmo.getOmistajanNimi();
+
                  listaNimia.add(k);
                 // this.KyseisetHahmotValittuina.set(i, hahmo);
                 
@@ -65,6 +68,12 @@ public class PelattavienListaus {
       this.lista.validate();
       this.lista.repaint();
     
+    }
+    
+    public void Lataa(ArrayList<Pelattava> pelattava)
+    {
+    this.pelattavt = pelattava;
+    Update();
     }
     
     public JPanel palautaPanelli()

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import mafia.kyvyt.Atribuutti;
 
 /**
@@ -25,14 +26,15 @@ public class KykyjenListaus {
     
     public KykyjenListaus()
     {
-       
+    
     this.atriibuuttienNimet = new ArrayList<String>();
     this.KykyjenListaus = new JList();
+    this.KykyjenListaus.setVisibleRowCount(12);
     this.label = new JLabel("Kyvyt");
     this.mainPanel = new JPanel();
     this.mainPanel.setLayout(new BorderLayout());
     this.mainPanel.add(this.label, BorderLayout.NORTH);
-    this.mainPanel.add(this.KykyjenListaus, BorderLayout.CENTER);
+    this.mainPanel.add(new JScrollPane(this.KykyjenListaus), BorderLayout.CENTER);
     
     
     }

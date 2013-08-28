@@ -4,6 +4,8 @@
  */
 package GraphicInterface;
 
+import GraphicInterface.pikkuObjektit.messagePanel;
+import GraphicInterface.pikkuObjektit.PelattavienListaus;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,8 +35,8 @@ public final class PanelliManageri {
     private JButton aloitaFaasi;
     private GameStartingMenuAction action;
     private JPanel GameChooser, info, ButtonPanel, InsideTheGame, ButtonPanelInsideTheGame, OtherStuffInsideTheGame;
-    JList hahmoList, kykyList;
-    private JButton poistu, LisaaUusi, CustomGame, BasicGame;
+    private ArrayList<Pelattava> pelattavat;
+    private JButton poistu, LisaaUusi, CustomGame, BasicGame, LukitseKyky;
     private PelinRakentaja rakentaja;
     private ArrayList<Pelaaja> pelaajat;
     private String[] pelaajaVector;
@@ -44,19 +46,28 @@ public final class PanelliManageri {
     private PeliKaynnistaja kaynnistaja;
     private GraphicRunHelper Peli;
     private valintaBlokki uusiBlokki;
+    private PelinLataaja pelilataaja;
+    private PelattavienListaus pelattavienlistaus, kakkoslisti;
+    private ItsInTheGame PelinSisainen;
+    private messagePanel panelli;
 
     public PanelliManageri(PelinRakentaja rakentaja, PeliKaynnistaja kaynnistaja) throws FileNotFoundException {
 
+        panelli = new messagePanel();
+        this.pelattavat = new ArrayList<Pelattava>();
+        this.pelattavienlistaus = new PelattavienListaus(this.pelattavat);
+        this.kakkoslisti = new PelattavienListaus(this.pelattavat);
+        this.pelilataaja = new PelinLataaja(this.pelattavienlistaus);
+        this.PelinSisainen = new ItsInTheGame(this.kakkoslisti);
+
         this.rakentaja = rakentaja;
-        this.hahmoList = new JList();
-        this.kykyList = new JList();
         this.kaynnistaja = kaynnistaja;
         this.kaynnistaja.asetaPaaneeliManager(this);
         this.selected = new ArrayList<Pelaaja>();
 
         this.action = new GameStartingMenuAction();
         LoadAll();
-   
+
     }
 
     public void setContainer(Container pane) {
@@ -65,22 +76,13 @@ public final class PanelliManageri {
 
     public void LoadGameChooser() throws FileNotFoundException {
         ConfigaaButtonit();
-
         this.GameChooser = new JPanel();
-
         this.GameChooser.setLayout(new BorderLayout());
-
         this.GameChooser.add(this.ButtonPanel, BorderLayout.SOUTH);
-
-
-
-
         rakentaja.LataaPelaajat();
         this.pelaajat = rakentaja.PalautaPelaajat();
-
-
-
-        this.uusiBlokki = new valintaBlokki("Valitse Näistä", 100, this.pelaajat);
+        this.uusiBlokki = new valintaBlokki("Valitse Näistä", 100, 12);
+        this.uusiBlokki.lataa(pelaajat);
         JPanel panel = this.uusiBlokki.palautaBlokki();
         this.GameChooser.add(panel, BorderLayout.CENTER);
 
@@ -88,8 +90,6 @@ public final class PanelliManageri {
 
 
     }
-
-  
 
     private void ConfigaaButtonit() {
 
@@ -99,6 +99,9 @@ public final class PanelliManageri {
         this.BasicGame.addActionListener(this.action);
         this.CustomGame = new JButton("Custom peli");
         this.CustomGame.addActionListener(this.action);
+        this.LukitseKyky = this.PelinSisainen.palautaPaaButtoni();
+        this.LukitseKyky.addActionListener(this.action);
+
         this.ButtonPanel.add(BasicGame);
         this.ButtonPanel.add(CustomGame);
 
@@ -143,48 +146,15 @@ public final class PanelliManageri {
     }
 
     public void ConfigurateInGame() {
-        this.InsideTheGame = new JPanel();
-        this.InsideTheGame.setLayout(new FlowLayout());
-        JScrollPane scrollauspaneeli = new JScrollPane(this.hahmoList);
-        this.InsideTheGame.add(scrollauspaneeli);
-        JScrollPane scrollauspnaeelli2 = new JScrollPane(this.kykyList);
-        this.InsideTheGame.add(scrollauspnaeelli2);
-        hahmoList.setVisibleRowCount(15);
-        kykyList.setVisibleRowCount(15);
-        this.aloitaFaasi = new JButton("Aloita faasi");
+        this.InsideTheGame = this.pelilataaja.palautaMainPanel();
+        this.aloitaFaasi = this.pelilataaja.palautaNappula();
         this.aloitaFaasi.addActionListener(this.action);
-        this.KyseisetHahmotValittuina = new ArrayList<Hahmo>();
-        this.InsideTheGame.add(this.aloitaFaasi);
-        this.InsideTheGame.setVisible(false);
+        // this.InsideTheGame.setVisible(false);
     }
-    
-    
-  
 
     public void Console(Faasi faasi, ArrayList<Pelattava> pelattavat) {
 
-        String Taulukko[] = new String[faasi.LaskePelattavat()];
-        String KykyTaulukko[] = new String[faasi.palautaAtribuutit().size()];
-        int i = 0;
-        for (Pelattava pel : pelattavat) {
-            for (Hahmo hahmo : pel.getTeam()) {
-                String k = hahmo.getNimi();
-                k = k + ", " + pel.getNimi();
-                k = k + ": " + hahmo.getOmistajanNimi();
-                Taulukko[i] = k;
-                // this.KyseisetHahmotValittuina.set(i, hahmo);
-                i++;
-            }
-        }
-        int j = 0;
-        for (Atribuutti atr : faasi.palautaAtribuutit()) {
-            String k = atr.palautaKyky().palautaNimi();
-            KykyTaulukko[j] = k;
-            j++;
-        }
-
-        this.hahmoList.setListData(Taulukko);
-        this.kykyList.setListData(KykyTaulukko);
+        this.pelilataaja.UpdateFaasi(faasi, pelattavat);
         // this.InsideTheGame.setVisible(true);
         pane.validate();
         pane.repaint();
@@ -233,11 +203,87 @@ public final class PanelliManageri {
                 }
 
             } else if (e.getSource() == aloitaFaasi) {
+
+
                 pane.removeAll();
+                Peli.ExtraRun();
+                Atribuutti atr = Peli.palautaOnGoing();
+                PelinSisainen.update(Peli.pelattavat(), atr);
+                pane.add(PelinSisainen.palautaPaneelli());
                 pane.validate();
                 pane.repaint();
 
+
+            } else if (e.getSource() == LukitseKyky) {
+
+                // Step 1. Checkata ox tarpeeks Pelajii
+                Hahmo castaaja = PelinSisainen.palautaHyokkaaja(Peli.pelattavat());
+                Hahmo targetettava = PelinSisainen.palautaPuolustaja(Peli.pelattavat());
+                Atribuutti atr = Peli.palautaOnGoing();
+
+                boolean k = true;
+                if (castaaja == null) {
+                    k = false;
+                }
+                if (targetettava == null) {
+                    k = false;
+                }
+
+                if (k == true) {
+
+                    String a = Peli.Cast(castaaja, targetettava, atr.palautaKyky());
+                    if (a != null) {
+                        if (!a.isEmpty()) {
+                            JOptionPane.showMessageDialog(new JPanel(), a);
+                        }
+                    }
+
+                    {
+                        if (Peli.ExtraRun() == false) {
+
+                            // Tämmönen tilanne on nyt koittanu
+
+                            ArrayList<Hahmo> kuolemassaOlevat = Peli.hankiKuolleet();
+
+                            JPanel panel = panelli.returnPanelEvenWithPelaajat(kuolemassaOlevat);
+                            JOptionPane.showMessageDialog(panel, "Seuraavat pelaajat kuolevat");
+
+                            if(Peli.tarkistaJatkuukoPeli() == false)
+                            {
+                            String zwwaq = Peli.julistaVoittaja();
+                             JOptionPane.showMessageDialog(new JPanel(), "zwwaaaqqqqt");
+
+                            
+                            }
+                            
+                            
+                            pane.removeAll();
+                            pane.add(InsideTheGame);
+                            InsideTheGame.setVisible(true);
+                            pane.validate();
+                            pane.repaint();
+                            Peli.Run();
+
+
+                        } else {
+
+
+                            pane.removeAll();
+                            Atribuutti atra = Peli.palautaOnGoing();
+                            PelinSisainen.update(Peli.pelattavat(), atra);
+                            pane.add(PelinSisainen.palautaPaneelli());
+                            pane.validate();
+                            pane.repaint();
+
+
+                        }
+                    }
+                }
+
             }
+        }
+
+        public void KykyKasittelija() {
         }
     }
 }
