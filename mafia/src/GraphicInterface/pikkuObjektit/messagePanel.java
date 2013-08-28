@@ -4,12 +4,11 @@
  */
 package GraphicInterface.pikkuObjektit;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import mafia.hahmot.Hahmo;
 
 /**
@@ -18,7 +17,34 @@ import mafia.hahmot.Hahmo;
  */
 public class messagePanel {
 
+    private JPanel kuolleidenPanelli;
+    private JList lista;
+    private ArrayList<String> listData;
+    private JLabel labeli;
+    private JButton nappula;
+
     public messagePanel() {
+        JFrame frame = new JFrame();
+        frame.setVisible(false);
+        frame.setLayout(new BorderLayout());
+        this.labeli = new JLabel("Seuraavat pelaajat kuolivat:");
+        frame.add(this.labeli, BorderLayout.NORTH);
+      //  this.nappula = new JButton("Ookoo");
+        this.kuolleidenPanelli = new JPanel();
+        this.kuolleidenPanelli.setLayout(new FlowLayout());
+
+        this.listData = new ArrayList<String>();
+        this.lista = new JList(this.listData.toArray());
+        this.lista.setVisibleRowCount(5);
+        this.kuolleidenPanelli.add(new JScrollPane(this.lista));
+        
+        this.nappula = new JButton("buttoni");
+        
+        frame.add(this.kuolleidenPanelli, BorderLayout.CENTER);
+       
+
+
+
     }
 
     public JPanel returnThePanel(String k) {
@@ -39,17 +65,27 @@ public class messagePanel {
 
     public JPanel returnPanelEvenWithPelaajat(ArrayList<Hahmo> riseDead) {
 
-         JPanel mainer = new JPanel();
-         mainer.setLayout(new BoxLayout(mainer, BoxLayout.Y_AXIS));
-  
-       
-        for (Hahmo h : riseDead) {
-            
-            JLabel label = new JLabel(h.getOmistajanNimi() + ": " + h.getNimi());
-          //  System.out.println(h.getOmistajanNimi());
-            mainer.add(label);
-        }
         
-       return mainer;
+       
+        listaUpdate(riseDead);
+
+        this.kuolleidenPanelli.repaint();
+        this.kuolleidenPanelli.validate();
+        return this.kuolleidenPanelli;
+    }
+
+    public void listaUpdate(ArrayList<Hahmo> riseDead) {
+        
+        this.listData.clear();
+
+        for (Hahmo hah : riseDead) {
+            this.listData.add(hah.getOmistajanNimi());
+
+        }
+
+        this.lista.setListData(this.listData.toArray());
+        
+        this.lista.repaint();
+        this.lista.validate();
     }
 }

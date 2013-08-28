@@ -35,7 +35,7 @@ public class ItsInTheGame {
     private JLabel label;
 
     public ItsInTheGame(PelattavienListaus listaus) {
-        
+
         this.listaus = listaus;
         this.mainPanelwithoutTitle = new JPanel();
         this.mainPanelwithoutTitle.setLayout(new BoxLayout(this.mainPanelwithoutTitle, BoxLayout.X_AXIS));
@@ -59,7 +59,7 @@ public class ItsInTheGame {
         this.tyokalu = new Misc();
         this.label = new JLabel("lol");
         label.setFont(new Font("Courier New", Font.PLAIN, 20));
-        
+
         this.titleFull = new JPanel();
         this.titleFull.setLayout(new BorderLayout());
         this.titleFull.add(label, BorderLayout.NORTH);
@@ -67,7 +67,7 @@ public class ItsInTheGame {
     }
 
     public void update(ArrayList<Pelattava> pelattavat, Atribuutti atr) {
-      ClearBoxes();
+        ClearBoxes();
         label.setText(atr.palautaKyky().palautaNimi());
         this.atr = atr;
         this.kaikkiPelattavat = pelattavat;
@@ -83,6 +83,12 @@ public class ItsInTheGame {
     }
 
     public Hahmo palautaHyokkaaja(ArrayList<Pelattava> viittaustiimeihin) {
+
+         if(NullChecker(this.blokkiCastaaja))
+        {
+        return null;
+        }
+        
         ArrayList<Hahmo> hah = tyokalu.Muutos(viittaustiimeihin);
         Pelaaja valittu = blokkiCastaaja.palautavalitut().get(0);
 
@@ -90,7 +96,24 @@ public class ItsInTheGame {
 
     }
 
+    public boolean NullChecker(valintaBlokki blokki) {
+
+        if (blokki.palautavalitut() == null) {
+            return true;
+        } else if (blokki.palautavalitut().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
     public Hahmo palautaPuolustaja(ArrayList<Pelattava> viittaustiimeihin) {
+        
+        if(NullChecker(this.blokkiTargetti))
+        {
+        return null;
+        }
+
+
         ArrayList<Hahmo> hah = tyokalu.Muutos(viittaustiimeihin);
         Pelaaja valittu = blokkiTargetti.palautavalitut().get(0);
 
@@ -106,10 +129,9 @@ public class ItsInTheGame {
         return this.titleFull;
 
     }
-    
-    public void ClearBoxes()
-    {
-    this.blokkiCastaaja.Clear();
-    this.blokkiTargetti.Clear();
+
+    public void ClearBoxes() {
+        this.blokkiCastaaja.Clear();
+        this.blokkiTargetti.Clear();
     }
 }

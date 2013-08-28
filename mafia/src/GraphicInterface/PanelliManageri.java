@@ -50,6 +50,7 @@ public final class PanelliManageri {
     private PelattavienListaus pelattavienlistaus, kakkoslisti;
     private ItsInTheGame PelinSisainen;
     private messagePanel panelli;
+    private KaynnistajaLuokka kaynnistajaLuoakka;
 
     public PanelliManageri(PelinRakentaja rakentaja, PeliKaynnistaja kaynnistaja) throws FileNotFoundException {
 
@@ -221,13 +222,7 @@ public final class PanelliManageri {
                 Hahmo targetettava = PelinSisainen.palautaPuolustaja(Peli.pelattavat());
                 Atribuutti atr = Peli.palautaOnGoing();
 
-                boolean k = true;
-                if (castaaja == null) {
-                    k = false;
-                }
-                if (targetettava == null) {
-                    k = false;
-                }
+                boolean k = Checker(castaaja, targetettava);
 
                 if (k == true) {
 
@@ -240,29 +235,7 @@ public final class PanelliManageri {
 
                     {
                         if (Peli.ExtraRun() == false) {
-
-                            // Tämmönen tilanne on nyt koittanu
-
-                            ArrayList<Hahmo> kuolemassaOlevat = Peli.hankiKuolleet();
-
-                            JPanel panel = panelli.returnPanelEvenWithPelaajat(kuolemassaOlevat);
-                            JOptionPane.showMessageDialog(panel, "Seuraavat pelaajat kuolevat");
-
-                            if(Peli.tarkistaJatkuukoPeli() == false)
-                            {
-                            String zwwaq = Peli.julistaVoittaja();
-                             JOptionPane.showMessageDialog(new JPanel(), "zwwaaaqqqqt");
-
-                            
-                            }
-                            
-                            
-                            pane.removeAll();
-                            pane.add(InsideTheGame);
-                            InsideTheGame.setVisible(true);
-                            pane.validate();
-                            pane.repaint();
-                            Peli.Run();
+                            CaseNoExtraRunLeft();
 
 
                         } else {
@@ -279,11 +252,56 @@ public final class PanelliManageri {
                         }
                     }
                 }
+                else
+                {
+                antiTroll();
+                }
 
             }
         }
 
-        public void KykyKasittelija() {
+        public boolean Checker(Hahmo castaaja, Hahmo targetettava) {
+            
+            if (castaaja == null) {
+                return false;
+            }
+            if (targetettava == null) {
+                return false;
+            }
+            return true;
+
         }
+
+        public void CaseNoExtraRunLeft() throws HeadlessException {
+            // Tämmönen tilanne on nyt koittanu
+
+            ArrayList<Hahmo> kuolemassaOlevat = Peli.hankiKuolleet();
+
+            JPanel panel = panelli.returnPanelEvenWithPelaajat(kuolemassaOlevat);
+            panel.validate();
+            pane.repaint();
+            JOptionPane.showMessageDialog(panel, "Seuraavat pelaajat kuolevat");
+
+            if (Peli.tarkistaJatkuukoPeli() == false) {
+
+                String zwwaq = Peli.julistaVoittaja();
+                JOptionPane.showMessageDialog(new JPanel(), "PeliPääättyyyi");
+
+
+            }
+
+
+            pane.removeAll();
+            pane.add(InsideTheGame);
+            InsideTheGame.setVisible(true);
+            pane.validate();
+            pane.repaint();
+            Peli.Run();
+        }
+
+        public void antiTroll() {
+            JOptionPane.showMessageDialog(new JPanel(), "Älä edes yritä, sinulla ei ole mitään mahdollisuuksia kaataa tätä ohjelmaa");
+        }
+        
     }
 }

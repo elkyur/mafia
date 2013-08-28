@@ -95,7 +95,10 @@ public class GraphicRunHelper {
     }
 
     public ArrayList<Hahmo> hankiKuolleet() {
-        this.kuolleet = this.buffmanager.palautaKuolleet();
+        this.kuolleet = (ArrayList<Hahmo>) this.buffmanager.palautaKuolleet().clone();
+        
+
+        
         this.buffmanager.PuhdistetaanKuolleet();
         this.buffmanager.BuffitVanhetuvat();
         return this.kuolleet;
