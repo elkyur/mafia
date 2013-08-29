@@ -6,7 +6,7 @@ package mafia;
 
 
 import GraphicInterface.PanelliManageri;
-import GraphicInterface.GraphicInterfaceCore;
+import GraphicInterface.Valikko;
 import GraphicInterface.pelinStartti.PeliStarttaajaKomentoRivilla;
 import Settings.Settings;
 import java.io.*;

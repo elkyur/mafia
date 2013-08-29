@@ -10,7 +10,7 @@ import GraphicInterface.DataManager.abstractManager;
 import GraphicInterface.pikkuObjektit.InfoPanelli;
 import GraphicInterface.pikkuObjektit.messagePanel;
 import GraphicInterface.pikkuObjektit.PelattavienListaus;
-import GraphicInterface.pikkuObjektit.TheEndGamePanel;
+import GraphicInterface.pikkuObjektit.LoppuPeliPaneeli;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +25,7 @@ import javax.swing.*;
 import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelaaja;
 import mafia.hahmot.Pelattava;
+import mafia.hahmot.Rooli;
 import mafia.kyvyt.Atribuutti;
 import mafia.peli.Faasi;
 import mafia.peli.GraphicRunHelper;
@@ -49,13 +50,13 @@ public final class PanelliManageri {
     private ArrayList<Hahmo> KyseisetHahmotValittuina;
     private PeliKaynnistaja kaynnistaja;
     private GraphicRunHelper Peli;
-    private PelinLataaja pelilataaja;
+    private FaasinAlku pelilataaja;
     private PelattavienListaus pelattavienlistaus, kakkoslisti;
     private PelinSisainen PelinSisainen;
     private messagePanel panelli;
-    private KaynnistajaLuokka kaynnistajaLuokka;
+    private PelinAlkuKaynnistys kaynnistajaLuokka;
     private JPanel iterating;
-    private TheEndGamePanel peliLoppu;
+    private LoppuPeliPaneeli peliLoppu;
     private PelaajaAliObjecti pelaajatietokantalsiaosa;
     private abstractManager pelaajaTietokanta;
     private JPanel PelaajaTietokantaPanelli;
@@ -71,7 +72,7 @@ public final class PanelliManageri {
         this.pelattavat = new ArrayList<Pelattava>();
         this.pelattavienlistaus = new PelattavienListaus(this.pelattavat);
         this.kakkoslisti = new PelattavienListaus(this.pelattavat);
-        this.pelilataaja = new PelinLataaja(this.pelattavienlistaus);
+        this.pelilataaja = new FaasinAlku(this.pelattavienlistaus);
         this.PelinSisainen = new PelinSisainen(this.kakkoslisti);
 
         this.rakentaja = rakentaja;
@@ -83,7 +84,7 @@ public final class PanelliManageri {
         LoadInfo();
         LoadGameChooser();
         ConfigurateInGame();
-        this.peliLoppu = new TheEndGamePanel();
+        this.peliLoppu = new LoppuPeliPaneeli();
         this.iterating = GameChooser;
         InitDatabaseStructures();
 
@@ -155,7 +156,7 @@ public final class PanelliManageri {
         this.LukitseKyky = this.PelinSisainen.palautaPaaButtoni();
         this.LukitseKyky.addActionListener(this.action);
 
-        this.kaynnistajaLuokka = new KaynnistajaLuokka(this.rakentaja);
+        this.kaynnistajaLuokka = new PelinAlkuKaynnistys(this.rakentaja);
         this.GameChooser = this.kaynnistajaLuokka.returnMainPanel();
 
         this.BasicGame = this.kaynnistajaLuokka.returnBasicGame();
@@ -378,7 +379,7 @@ public final class PanelliManageri {
                 }
 
             } else if (e.getSource() == CustomGame) {
-                test();
+               
             }
         }
         
@@ -411,10 +412,12 @@ public final class PanelliManageri {
 
             ArrayList<Hahmo> kuolemassaOlevat = Peli.hankiKuolleet();
 
+            String k = longStringBuilder(kuolemassaOlevat);
+            
             JPanel panel = panelli.returnPanelEvenWithPelaajat(kuolemassaOlevat);
             panel.validate();
             pane.repaint();
-            JOptionPane.showMessageDialog(panel, "Seuraavat pelaajat kuolevat");
+            JOptionPane.showMessageDialog(panel, k);
 
             if (Peli.tarkistaJatkuukoPeli() == false) {
 
@@ -441,21 +444,22 @@ public final class PanelliManageri {
         public void antiTroll() {
             JOptionPane.showMessageDialog(new JPanel(), "Sori, mut näin ei voi tehdä");
         }
-
-        public void test() {
-            Object[] options = {"Yes, please",
-                "No, thanks",
-                "No eggs, no ham!"};
-            int n = JOptionPane.showOptionDialog(new JFrame(),
-                    "Would you like some green eggs to go "
-                    + "with that ham?",
-                    "A Silly Question",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[2]);
-
+        
+        public String longStringBuilder(ArrayList<Hahmo> hah)
+        {
+        String k = "";
+        for (Hahmo haha: hah)
+        {
+        k = k +  haha.palautaOmistaja().PalautaNimi();
+        k = k + ",";
+        k = k + haha.palautaRooli().PalautaNimi();
+        k = k + '\n';
+        
         }
+        
+        return k;
+        }
+
+      
     }
 }

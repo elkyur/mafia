@@ -1,0 +1,3 @@
+Sekoittaja: Antaa roolit algoritmisesti Pelaajille 
+Misc: Kaikki hyödyllisiä operaatiota Pelattava, Pelaaja, Hahmo joukoilla 
+SoryKyky: Sorttaa kyvyt wiki dokumentaation osoittamalla tavalla

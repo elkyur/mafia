@@ -53,7 +53,7 @@ public class TietokantaManageri {
     }
 
     public void asetaParamaterit() throws IOException {
-        File pelaajata = new File(Settings.PelaajatLocation);
+        File pelaajata = new File(this.settings.PelaajaLocation);
 
         kir.asetaPelaajat(pelaajata);
         load.asetaPelaajaTietoKanta(pelaajata);

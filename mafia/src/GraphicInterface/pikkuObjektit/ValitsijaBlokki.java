@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicInterface;
+package GraphicInterface.pikkuObjektit;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

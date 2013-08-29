@@ -20,7 +20,7 @@ import mafia.peli.Faasi;
  *
  * Pelin Lataaja , vastaa faasin alku paneelista, josta näkee kaikki faasin kyvyt ja hahmot
  */
-public class PelinLataaja {
+public class FaasinAlku {
     
     private JPanel mainpanel;
     private JPanel Underpanel;
@@ -38,7 +38,7 @@ public class PelinLataaja {
  * Käynnistää pelinlataajan
  */
     
-    public PelinLataaja(PelattavienListaus pel)
+    public FaasinAlku(PelattavienListaus pel)
     {
     this.listaus = new KykyjenListaus();
     FaasiKyvyt = this.listaus.palautaMainPanelli();

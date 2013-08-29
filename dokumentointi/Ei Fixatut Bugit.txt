@@ -1,0 +1,7 @@
+1. Pelin sisäisessä consolessa / Pelin valitsija consolessa, Listat eivät päivity. Tosin ohjelma ei kaadu siihen ja ei tarvitse painaa Tyhjenna nappulaa että voi lisää uusia Pelaajia. 
+Syy miksi en fixannu: Oli niin kiirre kirjoittaa vältämättöntä graafista logiikka. 
+
+PS. Pelissä ei esiinny muita hirvittäviä bugeja, kannattaa silti olla varovainen tietokantakäsittely / peli switchissä. Suosittelen että ohjelma uudelleen käynnistetään jokaisen operaation jälkeen jossa uudelleen käynnistäminen on luontevaa. 
+
+
+*** Yritin buildaa ohjelman , mutta ei toiminu koneellani

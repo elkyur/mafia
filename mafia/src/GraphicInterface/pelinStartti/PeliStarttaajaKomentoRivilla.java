@@ -4,7 +4,7 @@
  */
 package GraphicInterface.pelinStartti;
 
-import GraphicInterface.GraphicInterfaceCore;
+import GraphicInterface.Valikko;
 import GraphicInterface.PanelliManageri;
 import Settings.Settings;
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class PeliStarttaajaKomentoRivilla {
         PanelliManageri manager = new PanelliManageri(rakentaja, kaynnistaja);
     
       //  manager.LoadAll();
-        GraphicInterfaceCore valikko = new GraphicInterfaceCore(manager);
+        Valikko valikko = new Valikko(manager);
     
     
     }

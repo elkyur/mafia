@@ -4,6 +4,7 @@
  */
 package GraphicInterface;
 
+import GraphicInterface.pikkuObjektit.ValitsijaBlokki;
 import java.awt.BorderLayout;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import mafia.peli.TietokantaHallinta.TietokantaManageri;
  *
  * Tämä luokka vastaa pelin käynnistämisestä, eli kun halutaan aloittaa uusi peli tässä luokassa valitaan mitkä pelaajat siihen osallistuu
  */
-public class KaynnistajaLuokka {
+public class PelinAlkuKaynnistys {
     
     private JPanel GameChooser, ButtonPanel;
     private JButton BasicGame, CustomGame;
@@ -30,7 +31,7 @@ public class KaynnistajaLuokka {
  * Laittaaa alkuArvot
  */
     
-    public KaynnistajaLuokka(TietokantaManageri rakentaja) throws FileNotFoundException
+    public PelinAlkuKaynnistys(TietokantaManageri rakentaja) throws FileNotFoundException
     {    
         ConfigaaButtonit();
         this.rakentaja = rakentaja;

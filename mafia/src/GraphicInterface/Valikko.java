@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * Tämä luokka vastaa pelivalikosta ja sen toiminnalisuudesta
  */
-public class GraphicInterfaceCore extends JFrame {
+public class Valikko extends JFrame {
 
     // private JButton Aloitus, Tietokanta, Statistiikka, Lopetus, vanhatpelit;
     private JMenuBar Valikko;
@@ -36,7 +36,7 @@ public class GraphicInterfaceCore extends JFrame {
      */
     
 
-    public GraphicInterfaceCore(PanelliManageri manager) {
+    public Valikko(PanelliManageri manager) {
          
         
         LahtoPanelli();
@@ -181,7 +181,7 @@ public class GraphicInterfaceCore extends JFrame {
                 try {
                     manager.reLoadGameChooser();
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(GraphicInterfaceCore.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Valikko.class.getName()).log(Level.SEVERE, null, ex);
                 }
              asetaPanelli(manager.returnIterating());
              
@@ -201,7 +201,7 @@ public class GraphicInterfaceCore extends JFrame {
                 try {
                     manager.FinalizeGame();
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(GraphicInterfaceCore.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Valikko.class.getName()).log(Level.SEVERE, null, ex);
                 }
             asetaPanelli(manager.returnIterating());
             }

@@ -4,7 +4,7 @@
  */
 package mafia.peli.ValmiiksAsetetut;
 
-import GraphicInterface.GraphicInterfaceCore;
+import GraphicInterface.Valikko;
 import GraphicInterface.PanelliManageri;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;

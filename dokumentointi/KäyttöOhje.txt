@@ -1,0 +1,24 @@
+Näin käytät Mafiooso appia Alpha versiota:
+
+1. Käynnistät Ohjelma Tekstikäyttöliittymässä
+2. Liittymä kysyy sinulta missä on pelaaja pathi, löydä tiedostoista se file:n pathi esimerkiksi: C:\Users\Elkyur\Documents\GitHub\mafia\mafia\gamedata\structures\Pelaajat.txt
+ja paina entteriä
+3. Jos valitsit Pathin oikein edessäsi pitäisi olla toimiva ohjelma. 
+4. Tällä hetkellä voit tehdä seuraavia asioita ohjelmalla:
+a) Aloittaa uuden pelin: File -> Siirry Peliin
+b) Keskeyttää pelin File -> Keskeytä peli
+c) Muokata Pelaaja tietokanta Aseta -> Lisaa Pelaaja
+d) Katsoa infon info -> info
+*) Voit tehdä asioita samanaikaisesti eli esimerkiksi pelaa peliä, katso info ja palaa peliin. 
+**) En suosittele Aseta -> Lisaa Pelaaja muokkaamista, sillä silloin pelin tulos ei vältämättä kuvaudu oikein
+***) Suositeltavaa on että appia käytetään esimerkiksi näin: Kun halutaan lisätä Pelaaja , teet sen ja painat "Tallenna muutokset tietokantaan" (Välttämätöntä! Jos tätä taikanappia ei paina, niin muutokset eivät ilmesty tietokantaan) 
+5. Pelin Sisäinen Kontrolli:
+5.1: Tällä hetkellä tuettuna ovat vain normimafiooso, mutta ohjelman sisinen rakenne mahdollistaa pelin nopean laajentamisen. (Tarvitsen ehk viel yhden vuorokauden täydellisen mafiooso pelin aikaansaamiseksi) 
+5.2: Kun aloitat pelin valitse ainakin 8 pelaaja. Voit käyttää valmiita asetettuja pokemonien nimiä tai luoda omia pelaajia. Kun olet valinnut ainakin 8 paina "Perus mafiooso" 
+
+Seuraavaksi näet Pelinavaamis consolen. Siellä näkyy Jokaisen pelaajan Rooli ja Kyvyt joita faasissa voi käyttää. Kun olet valmis paina "Faasin" . 
+
+Seuraavaksi Ilmestyy PelinSisainen console, siellä näkyy vasemmalla mukana olevat pelaajat ja oikealla kyseinen kyky, jos castaajia on yksi valitse se (Itseasiassa tällä hetkellä käytössä on vain perusmafiooso, joten sillä ei ole mitään väliä kuka castaa)  ja valitse uhriksi. 
+
+Kun kaikki faasin kyvyt ovat ohi koittaa uusi faasi jne... Kun on jäljellä 0 tai 1 tiimiä julistetaan jotkut voittajaksi.
+Voittajat saavat voittopisteet. 

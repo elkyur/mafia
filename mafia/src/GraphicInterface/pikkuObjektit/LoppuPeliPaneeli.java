@@ -18,7 +18,7 @@ import mafia.peli.YhdenAsianLuokkia.Misc;
  *
  * Kun peli Loppuu tämä paneeli laitetaan päälle. Tässä paneelissa palautetaan pelin voittaneet. 
  */
-public class TheEndGamePanel {
+public class LoppuPeliPaneeli {
 
     private JPanel panelli;
     private JScrollPane scrollausjuttu;
@@ -27,7 +27,7 @@ public class TheEndGamePanel {
     private JList lista;
     private ArrayList<String> addausLista;
 
-    public TheEndGamePanel() {
+    public LoppuPeliPaneeli() {
         this.panelli = new JPanel();
         panelli.setLayout(new BorderLayout());
         this.addausLista = new ArrayList<String>();

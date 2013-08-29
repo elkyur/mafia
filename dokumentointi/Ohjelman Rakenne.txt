@@ -1,0 +1,23 @@
+Ohjelma rakentuu pääosin SovellusLogiikasta ja KäyttöLiittymästä. Tarkat suhteet Näkyy LuokkaKaavioVersioFinal ja LuokkaKaavioLisäOsa pdf:ssä . 
+
+Itse mafia peli koostuu: 
+
+Pelaajista, joilla on Hahmo
+Hahmolla on Rooli
+Hahmolla on Tiimi.
+
+Sitten on Kykyjä (erillaisia)
+Kyvyllä on buffeja
+Buffilla on buffityyppi
+
+On faaseja (Perusmafioosossa vain Yö ja Päivä)
+
+faasiin liitetään atribuutti objecti joka on vain Vektori (Joukko Castaajia, Kyky)
+
+Pelissä on faaseja. 
+
+Sitten on tietokanta ja Graafinen käyttöliittymä.
+
+Tietokanta, käyttöliittymä ja Peli kommunikoi keskenään.
+
+Tarkemmat kuvaukset kannattaa lukea luokkakaaviosta. Esimerkiksi miten graafinen käyttöliittymä oli rakennettu. 

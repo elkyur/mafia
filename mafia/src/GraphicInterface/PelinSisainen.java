@@ -4,6 +4,7 @@
  */
 package GraphicInterface;
 
+import GraphicInterface.pikkuObjektit.ValitsijaBlokki;
 import GraphicInterface.pikkuObjektit.PelattavienListaus;
 import java.awt.BorderLayout;
 import java.awt.Font;

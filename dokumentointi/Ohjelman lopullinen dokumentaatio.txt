@@ -1,0 +1,21 @@
+T‰m‰n hetkinen versio:
+
+- K‰ytt‰j‰ kykenee k‰sittelem‰‰n pelaaja tietokantaa
+- K‰ytt‰j‰ kykenee toimimaan koneavusteisesti pelinjohtajana
+- K‰ytt‰j‰ kykene hallitsemaan pelinsis‰isest‰ tomintaa
+- K‰ytt‰j‰ pystyy k‰ynnist‰m‰‰n vain perusmafiooso pelin.
+
+Pienell‰ lis‰kysell‰:
+
+- K‰ytt‰j‰ pystyy kontroloimaan kykyj‰ joissa on monta castaaja ‰‰nestyksell‰
+- Logi writer toimii myˆs graafisella liittym‰ll‰
+
+Koodin mahdollisuudet:
+
+-Koodi on luotu niin ett‰ sit‰ on mahdollista laajentaa ilman refakturointia hyvin pitk‰lle.
+- K‰ytt‰j‰ pystyy k‰sittelelem‰‰n kaikkia tietokantoja ja luomaan itse pelityyppej‰
+
+
+*****
+
+Ohjelmassa on paljon p‰tki‰ joita ei viell‰ k‰ytet‰, se ei kuiteskaan tarkoita ett‰ niit‰ ei tultaisiin k‰ytt‰‰ tulevaisuudessa. 

@@ -1,0 +1,16 @@
+TestausDokumentaatio
+
+JUnit Testaus:
+Testasin lähes koko sovellusloogikan JUniteilla, ainoastaan ikävä metodi graphicRunHelper piti testata manuaalisesti. 
+
+graphicRunHelperiä testasin käyttöliittymän kautta. Faasiin sirtymiset, pelinvoittaja julistukset yms kaikki metodit osoittautuivat toimiviksi. Kyseinen luokka on myös hyvin cleancodea eli sitä lukemalla voi myös nähdä että sen pitäisi toimia. 
+
+Myös tietokantaa olen joutunu suurimmaksi osaksi testaamaan käsin (myöhemmin graafisen käyttöliittymän avulla), kirjoitin tiedostoon ja katsoin että oikeat rivit tulivat. Jonka jälkeen luin ne viellä lukijalla ja tein niistä objekteja jotka osoittautuivat oikeaksi.
+
+GraafistaKäyttöliittymää en ole testannu JUniteillä ,sillä ainoa logiikka mitä niissä käytetään on MISC:istä otettu ja MISC on hyvin kattavasti testattu. 
+
+GraafistaKäyttöliittymää olen testannu käsin, esimerkiksi antamalla virheellisä syötteitä tai painamalla hiirellä epätriviaaleihin kohtiin 
+
+*** Monet manuaalisesti testatut metodit löytyvät pakkauksesta: manualTestit: manualTesting. 
+
+Tämän hetken version Mafiooso pelin pitäisi toimia hyvin kun antaa pelaaja tiedostolle oikean polun.
