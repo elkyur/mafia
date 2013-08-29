@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mafia.peli.ReadWriting;
+package mafia.peli.TietokantaHallinta;
 
 import GraphicInterface.PanelliManageri;
 import java.io.FileNotFoundException;
@@ -28,7 +28,12 @@ public class PeliKaynnistaja {
     private ArrayList<Tiimi> l;
     private PanelliManageri paneeliManageri;
    
-    
+    /**
+     *
+     *
+     * Tämä luokka on tarkoitettu pelin käynnistämiseen, ikävä kyllä se kykenee vain käynnistämään tavallisen mafiooson.
+     *
+     */
     
     
     public PeliKaynnistaja()
@@ -53,10 +58,24 @@ public class PeliKaynnistaja {
     
     }
     
+       /**
+     *
+     *
+     * Asettaa pelaajat
+     *
+     */
+    
     public void asetaPelaajat(ArrayList<Pelaaja> pelaajat)
     {
     this.pelaajat = pelaajat;
     }
+    
+        /**
+     *
+     *
+     * Käynnistää mafiooson ja antaa pelistä viitteen graphic managerille
+     *
+     */
     
     public GraphicRunHelper LaitaePerusMafioosoPaalle() throws FileNotFoundException, UnsupportedEncodingException
     {

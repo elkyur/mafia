@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import mafia.hahmot.Hahmo;
 import mafia.hahmot.Pelattava;
+import mafia.peli.YhdenAsianLuokkia.Misc;
 
 /*
  * To change this template, choose Tools | Templates
@@ -17,7 +18,7 @@ import mafia.hahmot.Pelattava;
 
 /**
  *
- * @author Elkyur
+ * Listaa Pelissa olevat pelattavat 
  */
 public class PelattavienListaus {
      
@@ -26,11 +27,13 @@ public class PelattavienListaus {
     private ArrayList<Pelattava> pelattavt;
     private ArrayList<String> listaNimia;
     private JLabel label;
+    private Misc misc;
     
     public PelattavienListaus(ArrayList<Pelattava> pelattavat)
     {
      this.pelattavt = pelattavat;
      this.listaNimia = new ArrayList<String>();
+     this.misc = new Misc();
      Init();
     
     }
@@ -52,18 +55,7 @@ public class PelattavienListaus {
     public void Update()
     {
 
-    this.listaNimia.clear();
-      for (Pelattava pel : pelattavt) {
-            for (Hahmo hahmo : pel.getTeam()) {
-                String k = hahmo.getNimi();
-                k = k + ", " + pel.getNimi();
-                k = k + ": " + hahmo.getOmistajanNimi();
-
-                 listaNimia.add(k);
-                // this.KyseisetHahmotValittuina.set(i, hahmo);
-                
-            }
-        }
+      misc.MuutaPelattavaStringTyypiksi(listaNimia, pelattavt);
       this.lista.setListData(listaNimia.toArray());
       this.lista.validate();
       this.lista.repaint();

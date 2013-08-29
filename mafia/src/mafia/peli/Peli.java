@@ -23,6 +23,7 @@ public class Peli {
 
     private ArrayList<Faasi> faasiArray;
     private ArrayList<Pelattava> PelissaMukana;
+    private ArrayList<Pelattava> AlkuPeraisetPelaajat;
     private TekstiRajapinta tekstirajapinta;
     private PanelliManageri manageri;
     private AanestysSysteemi aanestysSysteemi;
@@ -81,6 +82,15 @@ public class Peli {
     public void asetaPelaajat(ArrayList<Pelattava> pelaajat) {
         this.PelissaMukana = pelaajat;
 
+    }
+      /**
+     *
+     * asettaa viittauksen pelajiin
+     */
+    
+    public void asetaKloonit()
+    {
+   
     }
 
     /**

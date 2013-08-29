@@ -4,12 +4,18 @@
  */
 package GraphicInterface;
 
+import GraphicInterface.DataManager.PelaajaAliObjecti;
+import GraphicInterface.DataManager.PelaajaTietokantaManageri;
+import GraphicInterface.DataManager.abstractManager;
+import GraphicInterface.pikkuObjektit.InfoPanelli;
 import GraphicInterface.pikkuObjektit.messagePanel;
 import GraphicInterface.pikkuObjektit.PelattavienListaus;
+import GraphicInterface.pikkuObjektit.TheEndGamePanel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,136 +28,223 @@ import mafia.hahmot.Pelattava;
 import mafia.kyvyt.Atribuutti;
 import mafia.peli.Faasi;
 import mafia.peli.GraphicRunHelper;
-import mafia.peli.ReadWriting.PeliKaynnistaja;
-import mafia.peli.ReadWriting.PelinRakentaja;
+import mafia.peli.TietokantaHallinta.PeliKaynnistaja;
+import mafia.peli.TietokantaHallinta.TietokantaManageri;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka on PaneeliManageri se vastaa koko graafisen käyttöiittymän
+ * luokkarakenteesta
  *
  */
 public final class PanelliManageri {
 
     private JButton aloitaFaasi;
     private GameStartingMenuAction action;
-    private JPanel GameChooser, info, ButtonPanel, InsideTheGame, ButtonPanelInsideTheGame, OtherStuffInsideTheGame;
+    private JPanel GameChooser, info, InsideTheGame;
     private ArrayList<Pelattava> pelattavat;
-    private JButton poistu, LisaaUusi, CustomGame, BasicGame, LukitseKyky;
-    private PelinRakentaja rakentaja;
-    private ArrayList<Pelaaja> pelaajat;
-    private String[] pelaajaVector;
-    private ArrayList<Pelaaja> selected;
+    private JButton CustomGame, BasicGame, LukitseKyky;
+    private TietokantaManageri rakentaja;
     private Container pane;
     private ArrayList<Hahmo> KyseisetHahmotValittuina;
     private PeliKaynnistaja kaynnistaja;
     private GraphicRunHelper Peli;
-    private valintaBlokki uusiBlokki;
     private PelinLataaja pelilataaja;
     private PelattavienListaus pelattavienlistaus, kakkoslisti;
-    private ItsInTheGame PelinSisainen;
+    private PelinSisainen PelinSisainen;
     private messagePanel panelli;
-    private KaynnistajaLuokka kaynnistajaLuoakka;
+    private KaynnistajaLuokka kaynnistajaLuokka;
+    private JPanel iterating;
+    private TheEndGamePanel peliLoppu;
+    private PelaajaAliObjecti pelaajatietokantalsiaosa;
+    private abstractManager pelaajaTietokanta;
+    private JPanel PelaajaTietokantaPanelli;
 
-    public PanelliManageri(PelinRakentaja rakentaja, PeliKaynnistaja kaynnistaja) throws FileNotFoundException {
+    /**
+     *
+     * asettaa Alkuarvoja
+     *
+     */
+    public PanelliManageri(TietokantaManageri rakentaja, PeliKaynnistaja kaynnistaja) throws FileNotFoundException {
 
         panelli = new messagePanel();
         this.pelattavat = new ArrayList<Pelattava>();
         this.pelattavienlistaus = new PelattavienListaus(this.pelattavat);
         this.kakkoslisti = new PelattavienListaus(this.pelattavat);
         this.pelilataaja = new PelinLataaja(this.pelattavienlistaus);
-        this.PelinSisainen = new ItsInTheGame(this.kakkoslisti);
+        this.PelinSisainen = new PelinSisainen(this.kakkoslisti);
 
         this.rakentaja = rakentaja;
         this.kaynnistaja = kaynnistaja;
         this.kaynnistaja.asetaPaaneeliManager(this);
-        this.selected = new ArrayList<Pelaaja>();
 
         this.action = new GameStartingMenuAction();
-        LoadAll();
+
+        LoadInfo();
+        LoadGameChooser();
+        ConfigurateInGame();
+        this.peliLoppu = new TheEndGamePanel();
+        this.iterating = GameChooser;
+        InitDatabaseStructures();
 
     }
 
+    /**
+     *
+     * asentaa Tietokantaan liittyvat Structuurit
+     *
+     */
+    public void InitDatabaseStructures() {
+        pelaajatietokantalsiaosa = new PelaajaAliObjecti();
+        pelaajaTietokanta = new PelaajaTietokantaManageri(rakentaja, pelaajatietokantalsiaosa, "pelaaja");
+        ArrayList<Object> objectit = convertToObject();
+        pelaajaTietokanta.Lataa(objectit);
+        this.PelaajaTietokantaPanelli = pelaajaTietokanta.palautaMain();
+
+
+    }
+
+    /**
+     *
+     * Palauttaa Pelaajatietokanta paneelin
+     *
+     */
+    public JPanel palautaPelaajaTietokanta() {
+        return PelaajaTietokantaPanelli;
+    }
+
+    /**
+     *
+     * convertaa Objectiksi
+     *
+     */
+    public ArrayList<Object> convertToObject() {
+        ArrayList<Pelaaja> pelaajat = rakentaja.PalautaPelaajat();
+        ArrayList<Object> objectit = new ArrayList<Object>();
+        for (Pelaaja p : pelaajat) {
+            objectit.add(p);
+        }
+        return objectit;
+    }
+
+    /**
+     *
+     * palauttaa Iteroivan JPanel (Pelin vaihteen)
+     *
+     */
+    public JPanel returnIterating() {
+        return this.iterating;
+    }
+
+    /**
+     *
+     * asettaa PääPaneelin
+     *
+     */
     public void setContainer(Container pane) {
         this.pane = pane;
     }
 
+    /**
+     *
+     * Loadaa tarvittavat elementit PeliLataajaan
+     *
+     */
     public void LoadGameChooser() throws FileNotFoundException {
-        ConfigaaButtonit();
-        this.GameChooser = new JPanel();
-        this.GameChooser.setLayout(new BorderLayout());
-        this.GameChooser.add(this.ButtonPanel, BorderLayout.SOUTH);
-        rakentaja.LataaPelaajat();
-        this.pelaajat = rakentaja.PalautaPelaajat();
-        this.uusiBlokki = new valintaBlokki("Valitse Näistä", 100, 12);
-        this.uusiBlokki.lataa(pelaajat);
-        JPanel panel = this.uusiBlokki.palautaBlokki();
-        this.GameChooser.add(panel, BorderLayout.CENTER);
 
-
-
-
-    }
-
-    private void ConfigaaButtonit() {
-
-        this.ButtonPanel = new JPanel();
-        ButtonPanel.setLayout(new BoxLayout(ButtonPanel, BoxLayout.X_AXIS));
-        this.BasicGame = new JButton("Perus Mafiooso");
-        this.BasicGame.addActionListener(this.action);
-        this.CustomGame = new JButton("Custom peli");
-        this.CustomGame.addActionListener(this.action);
         this.LukitseKyky = this.PelinSisainen.palautaPaaButtoni();
         this.LukitseKyky.addActionListener(this.action);
 
-        this.ButtonPanel.add(BasicGame);
-        this.ButtonPanel.add(CustomGame);
+        this.kaynnistajaLuokka = new KaynnistajaLuokka(this.rakentaja);
+        this.GameChooser = this.kaynnistajaLuokka.returnMainPanel();
+
+        this.BasicGame = this.kaynnistajaLuokka.returnBasicGame();
+        this.BasicGame.addActionListener(this.action);
+        this.CustomGame = this.kaynnistajaLuokka.returnCustomGame();
+        this.CustomGame.addActionListener(this.action);
+
 
 
     }
 
+    /**
+     *
+     * Lopettaa pelin
+     *
+     */
+    public void FinalizeGame() throws FileNotFoundException {
+        peliResetoitu();
+        reLoadGameChooser();
+        this.iterating = this.GameChooser;
+
+    }
+
+    /**
+     *
+     * Uudistaa peliKäynnistäjän (Lisää sinne Pelaajia etc...)
+     *
+     */
+    public void reLoadGameChooser() throws FileNotFoundException {
+        this.kaynnistajaLuokka.ReLoad();
+
+    }
+
+    /**
+     *
+     * Palauttaa peliValitsijan
+     *
+     */
     public JPanel returnGameChooser() {
         return this.GameChooser;
     }
 
-    private void InitPelaajaVector() {
-
-        for (int i = 0; i < this.pelaajat.size(); i++) {
-            pelaajaVector[i] = pelaajat.get(i).PalautaNimi();
-        }
-
-    }
-
-    public void pelirakentajainit(PelinRakentaja pelinrakentaja) {
+    /**
+     *
+     * Inittaa pelirakentajan
+     *
+     */
+    public void pelirakentajainit(TietokantaManageri pelinrakentaja) {
         this.rakentaja = pelinrakentaja;
     }
 
+    /**
+     *
+     * Loadaa infon
+     *
+     */
     public void LoadInfo() {
-        this.info = new JPanel();
-        this.info.setLayout(new GridLayout(1, 2));
-        JLabel label1 = new JLabel("This APP Was created by: ");
-        JLabel label2 = new JLabel("Elkyur");
-        this.info.add(label1);
-        this.info.add(label2);
+        InfoPanelli panel = new InfoPanelli();
+        this.info = panel.palautaPanelli();
 
 
     }
 
+    /**
+     *
+     * Palauttaa infon
+     *
+     */
     public JPanel PalautaInfo() {
         return this.info;
     }
 
-    public void LoadAll() throws FileNotFoundException {
-        LoadInfo();
-        LoadGameChooser();
-        ConfigurateInGame();
-    }
-
+    /**
+     *
+     * configuroi pelinsisäisiä paneeleja
+     *
+     */
     public void ConfigurateInGame() {
         this.InsideTheGame = this.pelilataaja.palautaMainPanel();
         this.aloitaFaasi = this.pelilataaja.palautaNappula();
         this.aloitaFaasi.addActionListener(this.action);
         // this.InsideTheGame.setVisible(false);
     }
+    
+     /**
+     *
+     * Käynnistää Consolen eli Itse Pelin
+     *
+     */
 
     public void Console(Faasi faasi, ArrayList<Pelattava> pelattavat) {
 
@@ -161,14 +254,41 @@ public final class PanelliManageri {
         pane.repaint();
 
     }
+    
+      /**
+     *
+     * Palautttaa viestin et pelit on pelattu
+     *
+     */
 
+    public void peliResetoitu() {
+        JOptionPane.showMessageDialog(new JPanel(), "Peli Päättyi (en ota kantaa siihen miten)");
+    }
+    
+     /**
+     *
+     * Tämä metodi vastaa paneelin uudistamisesta 
+     *
+     */
+
+     public void asetaPanelliin(JPanel panel) {
+            pane.removeAll();
+            pane.add(panel);
+            pane.validate();
+            pane.repaint();
+
+        }
+     
+          /**
+     *
+     * Tämä luokka vastaa paneelin actioneista 
+     *
+     */
+     
     private class GameStartingMenuAction implements ActionListener {
 
-        private ArrayList<Pelaaja> pelaajate;
-
-        public GameStartingMenuAction() {
-            this.pelaajate = new ArrayList<Pelaaja>();
-        }
+       
+    
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -180,15 +300,12 @@ public final class PanelliManageri {
 
             if (e.getSource() == BasicGame) {
 
-                ArrayList<Pelaaja> valittujenlista = uusiBlokki.palautavalitut();
+                ArrayList<Pelaaja> valittujenlista = kaynnistajaLuokka.palautaPelaajat();
 
                 if (valittujenlista.size() > 7) {
 
-                    pane.removeAll();
-                    pane.add(InsideTheGame);
-                    InsideTheGame.setVisible(true);
-                    pane.validate();
-                    pane.repaint();
+                    iterating = InsideTheGame;
+                    asetaPanelliin(iterating);
                     kaynnistaja.asetaPelaajat(valittujenlista);
                     try {
                         Peli = kaynnistaja.LaitaePerusMafioosoPaalle();
@@ -201,18 +318,20 @@ public final class PanelliManageri {
                     Peli.Run();
                     //   String k = scan.nextLine();
 
+                } else {
+                    antiTroll();
                 }
 
             } else if (e.getSource() == aloitaFaasi) {
 
 
-                pane.removeAll();
+
                 Peli.ExtraRun();
                 Atribuutti atr = Peli.palautaOnGoing();
                 PelinSisainen.update(Peli.pelattavat(), atr);
-                pane.add(PelinSisainen.palautaPaneelli());
-                pane.validate();
-                pane.repaint();
+
+                iterating = PelinSisainen.palautaPaneelli();
+                asetaPanelliin(iterating);
 
 
             } else if (e.getSource() == LukitseKyky) {
@@ -231,37 +350,46 @@ public final class PanelliManageri {
                         if (!a.isEmpty()) {
                             JOptionPane.showMessageDialog(new JPanel(), a);
                         }
-                    }
-
-                    {
                         if (Peli.ExtraRun() == false) {
-                            CaseNoExtraRunLeft();
+                            try {
+                                try {
+                                    CaseNoExtraRunLeft();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(PanelliManageri.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } catch (HeadlessException ex) {
+                                Logger.getLogger(PanelliManageri.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 
 
                         } else {
 
 
-                            pane.removeAll();
                             Atribuutti atra = Peli.palautaOnGoing();
                             PelinSisainen.update(Peli.pelattavat(), atra);
-                            pane.add(PelinSisainen.palautaPaneelli());
-                            pane.validate();
-                            pane.repaint();
 
+                            iterating = PelinSisainen.palautaPaneelli();
+                            asetaPanelliin(iterating);
 
                         }
                     }
-                }
-                else
-                {
-                antiTroll();
+                } else {
+                    antiTroll();
                 }
 
+            } else if (e.getSource() == CustomGame) {
+                test();
             }
         }
+        
+          /**
+     *
+     * Checkaa onko castaaja tai targetettava null palauttaa virheilmoituksen
+     *
+     */
 
         public boolean Checker(Hahmo castaaja, Hahmo targetettava) {
-            
+
             if (castaaja == null) {
                 return false;
             }
@@ -271,8 +399,14 @@ public final class PanelliManageri {
             return true;
 
         }
+        
+         /**
+     *
+     * Jos PeliPaattyy tai kyvytt loppuvat tämä metodi hoitaa asiat
+     *
+     */
 
-        public void CaseNoExtraRunLeft() throws HeadlessException {
+        public void CaseNoExtraRunLeft() throws HeadlessException, FileNotFoundException, IOException {
             // Tämmönen tilanne on nyt koittanu
 
             ArrayList<Hahmo> kuolemassaOlevat = Peli.hankiKuolleet();
@@ -284,12 +418,17 @@ public final class PanelliManageri {
 
             if (Peli.tarkistaJatkuukoPeli() == false) {
 
-                String zwwaq = Peli.julistaVoittaja();
-                JOptionPane.showMessageDialog(new JPanel(), "PeliPääättyyyi");
+                ArrayList<Hahmo> voittaja = Peli.julistaVoittaja();
+                peliLoppu.Update(voittaja);
+                asetaPanelliin(peliLoppu.palautaPanelli());
+                FinalizeGame();
+                Peli.Pisteyta();
+                rakentaja.UudistaPelaajat();
+                return;
+                //   JOptionPane.showMessageDialog(new JPanel(), "Peli Pääättyyyi");
 
 
             }
-
 
             pane.removeAll();
             pane.add(InsideTheGame);
@@ -300,8 +439,23 @@ public final class PanelliManageri {
         }
 
         public void antiTroll() {
-            JOptionPane.showMessageDialog(new JPanel(), "Älä edes yritä, sinulla ei ole mitään mahdollisuuksia kaataa tätä ohjelmaa");
+            JOptionPane.showMessageDialog(new JPanel(), "Sori, mut näin ei voi tehdä");
         }
-        
+
+        public void test() {
+            Object[] options = {"Yes, please",
+                "No, thanks",
+                "No eggs, no ham!"};
+            int n = JOptionPane.showOptionDialog(new JFrame(),
+                    "Would you like some green eggs to go "
+                    + "with that ham?",
+                    "A Silly Question",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[2]);
+
+        }
     }
 }

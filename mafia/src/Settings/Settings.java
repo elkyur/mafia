@@ -22,4 +22,15 @@ public class Settings {
     public static final String buffitlocation = "gamedata/structures/buffs.txt";
     public static final String buffiTyyppiLocation = "gamedata/asetukset/buffityyppiennimitykset.txt";
     public static final String buffitErikoisViittaukset = "gamedata/asetukset/buffitErikoisViittaukset.txt";
+    
+    
+    public String PelaajaLocation;
+    
+    public Settings(String PelaajaLocation)
+    {
+    this.PelaajaLocation = PelaajaLocation;
+    }
+    
+    
+    
 }

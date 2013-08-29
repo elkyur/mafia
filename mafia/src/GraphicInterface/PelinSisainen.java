@@ -20,21 +20,26 @@ import mafia.peli.YhdenAsianLuokkia.Misc;
 
 /**
  *
- * @author Elkyur
+ * Tämä paneeli vastaa pelin sisäisit ätapahtumsita 
  */
-public class ItsInTheGame {
+public class PelinSisainen {
 
     private JPanel mainPanelwithoutTitle, miniPanel, underMainPanel, cast, recieve, titleFull;
     private PelattavienListaus listaus;
     private JButton heratysViesti;
     private JButton Castaa;
-    private valintaBlokki blokkiCastaaja, blokkiTargetti;
+    private ValitsijaBlokki blokkiCastaaja, blokkiTargetti;
     private ArrayList<Pelattava> kaikkiPelattavat;
     private Atribuutti atr;
     private Misc tyokalu;
     private JLabel label;
 
-    public ItsInTheGame(PelattavienListaus listaus) {
+      /**
+ *
+ * _Käynnisttää sen
+ */
+    
+    public PelinSisainen(PelattavienListaus listaus) {
 
         this.listaus = listaus;
         this.mainPanelwithoutTitle = new JPanel();
@@ -50,8 +55,8 @@ public class ItsInTheGame {
         this.Castaa = new JButton("Castaus");
         this.underMainPanel.add(this.heratysViesti, BorderLayout.NORTH);
         this.underMainPanel.add(this.Castaa, BorderLayout.SOUTH);
-        this.blokkiCastaaja = new valintaBlokki("Valitse Castaaja", 1, 5);
-        this.blokkiTargetti = new valintaBlokki("Valitse uhri", 1, 12);
+        this.blokkiCastaaja = new ValitsijaBlokki("Valitse Castaaja", 1, 5);
+        this.blokkiTargetti = new ValitsijaBlokki("Valitse uhri", 1, 12);
         this.cast = blokkiCastaaja.palautaBlokki();
         this.recieve = blokkiTargetti.palautaBlokki();
         this.miniPanel.add(this.cast);
@@ -66,6 +71,11 @@ public class ItsInTheGame {
         this.titleFull.add(this.mainPanelwithoutTitle, BorderLayout.CENTER);
     }
 
+    /**
+ *
+ * Uudistaa
+ */
+    
     public void update(ArrayList<Pelattava> pelattavat, Atribuutti atr) {
         ClearBoxes();
         label.setText(atr.palautaKyky().palautaNimi());
@@ -81,6 +91,12 @@ public class ItsInTheGame {
         this.titleFull.repaint();
 
     }
+    
+       /**
+ *
+ * palautta castaajan
+ */
+    
 
     public Hahmo palautaHyokkaaja(ArrayList<Pelattava> viittaustiimeihin) {
 
@@ -95,8 +111,13 @@ public class ItsInTheGame {
         return tyokalu.EtsiPelaajienJoukossa(valittu, hah);
 
     }
+    
+         /**
+ *
+ * Checkaa ox mikään null
+ */
 
-    public boolean NullChecker(valintaBlokki blokki) {
+    public boolean NullChecker(ValitsijaBlokki blokki) {
 
         if (blokki.palautavalitut() == null) {
             return true;
@@ -105,6 +126,11 @@ public class ItsInTheGame {
         }
         return false;
     }
+    
+         /**
+ *
+ * Palauttaa puolustajan, eli hahmon johon kyky castataan 
+ */
 
     public Hahmo palautaPuolustaja(ArrayList<Pelattava> viittaustiimeihin) {
         
@@ -120,6 +146,10 @@ public class ItsInTheGame {
         return tyokalu.EtsiPelaajienJoukossa(valittu, hah);
 
     }
+    /**
+ *
+ * Palauttaa paabuttonin
+ */
 
     public JButton palautaPaaButtoni() {
         return this.Castaa;

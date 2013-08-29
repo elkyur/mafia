@@ -15,9 +15,9 @@ import mafia.hahmot.Pelaaja;
 
 /**
  *
- * @author Elkyur
+ * Tämä on monessa koodi pätkässä käytettävä boxi, jossa on pelaajat listattuna ja niistä voidaan valita n kappaletta 
  */
-public final class valintaBlokki {
+public class ValitsijaBlokki {
 
     private JList left, right;
     private JPanel Mainpanel, Leftpanel, Rightpanel, Buttonpanel, FusionPanel;
@@ -29,18 +29,23 @@ public final class valintaBlokki {
     private String nimi;
     private ArrayList<String> uudet, valitutuudet;
     private int selectionlimit;
-    private Listener listen;
+    private Listenerr listen;
     private ArrayList<Hahmo> hahmot;
     private int size;
     private boolean way;
+    
+    /**
+ *
+ * Käynnistäää sen
+ */
 
-    public valintaBlokki(String nimi, int selectionlimit, int size) {
+    public ValitsijaBlokki(String nimi, int selectionlimit, int size) {
 
 
 
         this.size = size;
         // this.pelaajat = pelaaja;
-        this.listen = new Listener();
+        this.listen = new Listenerr();
         this.nimi = nimi;
         this.uudet = new ArrayList<String>();
         this.valitutuudet = new ArrayList<String>();
@@ -51,16 +56,30 @@ public final class valintaBlokki {
 
 
     }
+    
+       /**
+ *
+ * Convertaa hahmot pelaajiksi
+ */
 
     public void Convert() {
         for (Hahmo hah : this.hahmot) {
             this.pelaajat.add(hah.palautaOmistaja());
         }
     }
-
+ /**
+ *
+ * asettaa pelaajat
+ */
+    
     public void asetaPelaajat(ArrayList<Pelaaja> pelaaja) {
         this.pelaajat = pelaaja;
     }
+    
+           /**
+ *
+ * Lisaa configii
+ */
 
     public void Configaa() {
 
@@ -103,6 +122,12 @@ public final class valintaBlokki {
         right.setVisibleRowCount(size);
 
     }
+    
+       /**
+ *
+ * lataa pelaajat
+ */
+
 
     public void lataa(ArrayList<Pelaaja> pel) {
         this.pelaajat = pel;
@@ -112,21 +137,39 @@ public final class valintaBlokki {
         left.repaint();
 
     }
+    
+      /**
+ *
+ * Näyttää datan
+ */
 
     public void DisplayData() {
 
         this.FusionPanel.validate();
 
     }
+    
+      /**
+ *
+ * Palautta listassa valitut
+ */
 
     public ArrayList<Pelaaja> palautavalitut() {
         return this.valitutPelaajat;
     }
-
+   /**
+ *
+ * Palauttaa blokin
+ */
+    
     public JPanel palautaBlokki() {
         return this.Mainpanel;
     }
-
+  /**
+ *
+ * Inittaa vasemman paneelin
+ */
+    
     public void InitLeftString() {
 
         {
@@ -139,6 +182,11 @@ public final class valintaBlokki {
 
 
     }
+    
+     /**
+ *
+ * Inittaa oikean paneelin
+ */
 
     public void InitRightString() {
 
@@ -150,31 +198,42 @@ public final class valintaBlokki {
         }
     }
 
-    public void PrinttaaValitut() {
-        for (Pelaaja pelaaja : valitutPelaajat) {
-            System.out.println("Valittu: " + pelaaja.PalautaNimi());
-        }
-    }
+    
+    /**
+ *
+ * Clearaa 
+ */
     
     public void Clear()
     {
     
      this.valitutPelaajat.clear();
      InitRightString();
-      this.Rightpanel.validate();
+     this.Rightpanel.validate();
       this.Rightpanel.repaint();
     
     }
+    
+     /**
+ *
+ * Kuuntelee ja tekee actioneita 
+ */
 
-    private class Listener implements ActionListener {
+    private class Listenerr implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == Lisaa) {
                 int j = 0;
-
+                
+              
                 if (valitutPelaajat.size() < selectionlimit) {
 
+                    if (left.getSelectedValue() == null)
+                    {
+                    antiTroll();
+                    return;
+                    }
                     j = left.getSelectedIndex();
                     if (!valitutPelaajat.contains(pelaajat.get(j))) {
                         valitutPelaajat.add(pelaajat.get(j));
@@ -184,7 +243,7 @@ public final class valintaBlokki {
                         right.setListData(valitutuudet.toArray());
 
                         right.validate();
-                        right.repaint();
+                       right.repaint();
 
                     }
                 }
@@ -197,6 +256,12 @@ public final class valintaBlokki {
                 Mainpanel.validate();
 
             }
+           
+            
+        }
+         public void antiTroll() {
+            JOptionPane.showMessageDialog(new JPanel(), "Et valinnu mitään ja silti painoit sitä nappulaa?");
+            
         }
     }
 }

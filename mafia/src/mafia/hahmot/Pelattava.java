@@ -35,4 +35,6 @@ public interface Pelattava {
     
     
     public boolean poistaTiimista(Hahmo hahmo);
+    
+ 
 }

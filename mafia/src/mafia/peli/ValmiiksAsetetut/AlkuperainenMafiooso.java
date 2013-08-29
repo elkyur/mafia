@@ -24,12 +24,13 @@ import mafia.userinterface.TekstiRajapinta;
 
 /**
  *
- * Massiivinen luokka tämän ohjelman testaamiseksi.
+ * Massiivinen luokka jossa käynnistetään tarvittavat palat tavallisen mafiooson ajamiseen 
  */
 public class AlkuperainenMafiooso {
 
     private ArrayList<Pelaaja> pelaajat;
     private ArrayList<Pelattava> pelattavat;
+    private ArrayList<Pelattava> alkuPeriaset;
     private Sekoittaja sekoittaja;
     private BuffienHallitsija hallitsija;
     private Misc misc;
@@ -115,10 +116,14 @@ public class AlkuperainenMafiooso {
         this.hallitsija.asetaTappo(tappo);
         this.hallitsija.asetaMuutosEsto(healaus);
         AanestysSysteemi aanestysysteemi = new AanestysSysteemi(this.misc.Muutos(this.pelattavat));
-
+        
+        
         if (this.way == true) {
             this.helper = new GraphicRunHelper(this.GraphicManager, this.hallitsija);
             helper.asetaFaasit(faasit);
+            ArrayList<Rooli> roolit = new ArrayList<Rooli>();
+            roolit.add(hullu);
+            helper.asetaWinnersOnZero(roolit);
             helper.asetaPelaajat(this.pelattavat);
             helper.getNext();
          //   helper.Run();

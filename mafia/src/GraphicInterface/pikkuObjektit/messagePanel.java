@@ -13,7 +13,7 @@ import mafia.hahmot.Hahmo;
 
 /**
  *
- * @author Elkyur
+ * Paneeli jota ei ole vielä aktivoitu.
  */
 public class messagePanel {
 
@@ -54,7 +54,6 @@ public class messagePanel {
         label.setFont(new Font("Courier New", Font.ITALIC, 20));
         main.add(label);
         return main;
-
 
 
     }

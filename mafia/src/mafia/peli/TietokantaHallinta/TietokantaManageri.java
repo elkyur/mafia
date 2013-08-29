@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mafia.peli.ReadWriting;
+package mafia.peli.TietokantaHallinta;
 
+import Settings.Settings;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import mafia.peli.BuffienHallitsija;
  * Tarkoituksena on luoda luokka joka käyttäjän syötteestä rakentaisi pelin
  * käyttämällä tallennettuja objekteja tekstitiedostosta.
  */
-public class PelinRakentaja {
+public class TietokantaManageri {
 
     private ArrayList<BuffinTyyppi> tyypit;
     private ArrayList<Pelattava> viittausTiimeihin;
@@ -29,24 +30,33 @@ public class PelinRakentaja {
     private ArrayList<Pelaaja> pelaajat;
     private Kirjoittaja kir;
     private Loader load;
+    private Settings settings;
 
-    public PelinRakentaja() {
+    public TietokantaManageri(Settings settings) {
         this.kir = new Kirjoittaja();
         this.load = new Loader();
         this.viittausTiimeihin = new ArrayList<Pelattava>();
         this.hallitsija = new BuffienHallitsija(this.viittausTiimeihin);
+        this.settings = settings;
+    }
 
+    public Kirjoittaja palautaKirjoittaja() {
+        return this.kir;
+    }
+
+    public Loader palautaLoaderi() {
+        return load;
+    }
+
+    public void asetaPelaajat(ArrayList<Pelaaja> pelaajat) {
+        this.pelaajat = pelaajat;
     }
 
     public void asetaParamaterit() throws IOException {
-        File pelaajat = new File(Settings.Settings.PelaajatLocation);
-        File roolit = new File(Settings.Settings.roolitlocation);
-        File buffit = new File(Settings.Settings.buffitlocation);
-        File kyvyt = new File(Settings.Settings.kyvytlocation);
-        File faasit = new File(Settings.Settings.faasitlocation);
-        File tiimit = new File(Settings.Settings.Tiimitlocation);
-        kir.asetaTietokannat(pelaajat, roolit, buffit, kyvyt, faasit, tiimit);
-        load.asetaTietokannat(pelaajat, roolit, buffit, kyvyt, faasit, tiimit);
+        File pelaajata = new File(Settings.PelaajatLocation);
+
+        kir.asetaPelaajat(pelaajata);
+        load.asetaPelaajaTietoKanta(pelaajata);
 
 
     }
@@ -66,15 +76,33 @@ public class PelinRakentaja {
 
     }
 
+    /**
+     *
+     *
+     * Configaa buffityypit
+     *
+     */
     public BuffinTyyppi Config(BuffinTyyppi tyyppi) {
         this.tyypit.add(tyyppi);
         return tyyppi;
     }
 
+    /**
+     *
+     *
+     * Asettaa ohjelman kannalta funktionaaliset pelaajat
+     *
+     */
     public void LataaPelaajat() throws FileNotFoundException {
         this.pelaajat = this.load.palautaPelaajat();
     }
 
+    /**
+     *
+     *
+     * Palauttaa pelaajat
+     *
+     */
     public ArrayList<Pelaaja> PalautaPelaajat() {
         if (this.pelaajat != null) {
             return this.pelaajat;
@@ -82,5 +110,28 @@ public class PelinRakentaja {
             ArrayList<Pelaaja> pelaajatt = new ArrayList<Pelaaja>();
             return pelaajatt;
         }
+    }
+
+    /**
+     * Kirjoittaa tiedoston pelaajat
+     */
+    public void UudistaPelaajat() throws IOException {
+
+
+        this.kir.MofifyPelaajat(pelaajat);
+
+        /**
+         *
+         *
+         * Kirjoittaa tiedoston pelaajat
+         *
+         */
+    }
+
+    public void UudistaPelaajat(ArrayList<Pelaaja> pel) throws IOException {
+
+        this.kir.MofifyPelaajat(pelaajat);
+
+
     }
 }

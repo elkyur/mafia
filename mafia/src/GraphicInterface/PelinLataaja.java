@@ -18,7 +18,7 @@ import mafia.peli.Faasi;
 
 /**
  *
- * @author Elkyur
+ * Pelin Lataaja , vastaa faasin alku paneelista, josta näkee kaikki faasin kyvyt ja hahmot
  */
 public class PelinLataaja {
     
@@ -32,6 +32,11 @@ public class PelinLataaja {
     private KykyjenListaus listaus;
     private Faasi onRunningFaasi;
     
+    
+/**
+ *
+ * Käynnistää pelinlataajan
+ */
     
     public PelinLataaja(PelattavienListaus pel)
     {
@@ -54,8 +59,14 @@ public class PelinLataaja {
    
     }
     
+    /**
+ *
+ * Päivittää faasin
+ */
+    
     public void UpdateFaasi(Faasi faasi, ArrayList<Pelattava> pel)
     {
+     this.label.setText(faasi.PalautaNimi());
      this.onRunningFaasi = faasi;
      this.pel.Lataa(pel);
      this.listaus.Lataa(faasi.palautaAtribuutit());
@@ -66,10 +77,20 @@ public class PelinLataaja {
      
     }
     
+       /**
+ *
+ * Päivittää otsikon 
+ */
+    
     public void updateLabel(String k)
     {
     this.label.setText(k);
     }
+    
+       /**
+ *
+ * Palauttaa nappulan
+ */
     
     public JButton palautaNappula()
     {

@@ -14,7 +14,7 @@ import mafia.kyvyt.Atribuutti;
 
 /**
  *
- * @author Elkyur
+ * Listaa kyvyt
  */
 public class KykyjenListaus {
     

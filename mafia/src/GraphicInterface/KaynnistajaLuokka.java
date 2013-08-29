@@ -11,36 +11,45 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import mafia.hahmot.Pelaaja;
-import mafia.peli.ReadWriting.PelinRakentaja;
+import mafia.peli.TietokantaHallinta.TietokantaManageri;
 
 /**
  *
- * @author Elkyur
+ * Tämä luokka vastaa pelin käynnistämisestä, eli kun halutaan aloittaa uusi peli tässä luokassa valitaan mitkä pelaajat siihen osallistuu
  */
 public class KaynnistajaLuokka {
     
     private JPanel GameChooser, ButtonPanel;
     private JButton BasicGame, CustomGame;
-    private PelinRakentaja rakentaja;
+    private TietokantaManageri rakentaja;
     private ArrayList<Pelaaja> pelaajat;
-    private valintaBlokki uusiBlokki;
+    private ValitsijaBlokki uusiBlokki;
     
-    public KaynnistajaLuokka(PelinRakentaja rakentaja) throws FileNotFoundException
+/**
+ *
+ * Laittaaa alkuArvot
+ */
+    
+    public KaynnistajaLuokka(TietokantaManageri rakentaja) throws FileNotFoundException
     {    
         ConfigaaButtonit();
         this.rakentaja = rakentaja;
         this.GameChooser = new JPanel();
         this.GameChooser.setLayout(new BorderLayout());
         this.GameChooser.add(this.ButtonPanel, BorderLayout.SOUTH);
-        rakentaja.LataaPelaajat();
+       // rakentaja.LataaPelaajat();
         this.pelaajat = rakentaja.PalautaPelaajat();
-        this.uusiBlokki = new valintaBlokki("Valitse Näistä", 100, 12);
+        this.uusiBlokki = new ValitsijaBlokki("Valitse Näistä", 100, 12);
         this.uusiBlokki.lataa(pelaajat);
         JPanel panel = this.uusiBlokki.palautaBlokki();
         this.GameChooser.add(panel, BorderLayout.CENTER);
            
     
     }
+    /**
+ *
+ * Configaa nappulat
+ */
     
     public void ConfigaaButtonit()
     {
@@ -69,5 +78,21 @@ public class KaynnistajaLuokka {
     public JButton returnCustomGame()
     {
     return this.CustomGame;
+    }
+    public ArrayList<Pelaaja> palautaPelaajat()
+    {
+    return this.uusiBlokki.palautavalitut();
+    }
+       /**
+ *
+ * Päivittää
+ */
+    
+    public void ReLoad() throws FileNotFoundException
+    {
+   // rakentaja.LataaPelaajat();
+    
+    this.pelaajat = rakentaja.PalautaPelaajat();
+    this.uusiBlokki.lataa(pelaajat);
     }
 }

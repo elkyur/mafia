@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mafia.peli.ReadWriting;
+package mafia.peli.TietokantaHallinta;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,6 +31,20 @@ public class Loader {
         
         
     }
+    
+      /**
+     *
+     *Asettaa tietokaknnat
+     *
+     */
+    
+        public void asetaPelaajaTietoKanta(File pelaaja) throws FileNotFoundException
+        {
+        this.pelaajat = pelaaja;
+        this.pelaajaLukija = new Scanner(pelaajat);
+        
+        }
+    
        public void asetaTietokannat(File pelaajat, File hahmot, File buffit, File kyvyt, File faasit, File tiimit) throws IOException {
         this.buffit = buffit;
         this.buffilukija = new Scanner(buffit);
@@ -45,6 +59,12 @@ public class Loader {
         this.tiimit = tiimit;
         this.TiimiLukija = new Scanner(tiimit);
     }
+       
+         /**
+     *
+     *Asettaa buffilukijan 
+     *
+     */
     
     public void setBuffiLukija(File file) throws FileNotFoundException
     {
@@ -52,13 +72,28 @@ public class Loader {
     this.buffityyppilukija = new Scanner(file);
     
     }
+     /**
+     *
+     *Asettaa pelaajalukutiedoston
+     *
+     */
 
     public void setPelaajat(File file) throws FileNotFoundException {
         this.pelaajat = file;
         this.pelaajaLukija = new Scanner(file);
     }
     
+        /**
+     *
+     *
+     * Palauttaa pelaajat tiedostosta
+     *
+     */
+    
     public ArrayList<Pelaaja> palautaPelaajat() throws FileNotFoundException {
+        
+       System.out.println("lukemisKerta");
+        
         ArrayList<Pelaaja> pelattavat = new ArrayList<Pelaaja>();
         while (this.pelaajaLukija.hasNextLine()) {
             String[] iterating;
@@ -73,8 +108,21 @@ public class Loader {
             }
             
         }
+       this.pelaajaLukija.reset();
+       this.pelaajaLukija = new Scanner(pelaajat);
+        
+     
         return pelattavat;
     }
+    
+       /**
+     *
+     *
+     * Palauttaa buffityypit tiedostosta
+     *
+     */
+    
+  
     
     public HashMap<String, BuffinTyyppi> buffityypit()
     {
@@ -93,7 +141,12 @@ public class Loader {
       
       }
     
-    
+    /**
+     *
+     *
+     * palautta buffit
+     *
+     */
         
     return tyyppi;
     }
